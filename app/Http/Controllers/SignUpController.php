@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Address;
+use App\Models\ResponsibleContact;
 
 class SignUpController extends Controller
 {
@@ -16,7 +17,8 @@ class SignUpController extends Controller
 
         $newUserId = $signUpController->saveUser($request);
         $signUpController->saveUserAddress($request, $newUserId);
-        
+        $signUpController->saveUserResponsibleContact($request, $newUserId);
+
         return response()->json([
             'statusCode' => '200',
             'message' => 'success',
@@ -59,6 +61,22 @@ class SignUpController extends Controller
         $address->users_id = $newUserId;
 
         $address->save();
+
+    }
+
+    function saveUserResponsibleContact(Request $request, $newUserId){
+
+        $responsibleContact = new ResponsibleContact();
+
+        $responsibleContact->name = $request->rcName;
+        $responsibleContact->address = $request->rcAddress;
+        $responsibleContact->city = $request->rcCity;
+        $responsibleContact->zip_code = $request->rcZipCode;
+        $responsibleContact->country = $request->rcCountry;
+        $responsibleContact->phone_number = $request->rcPhoneNumber;
+        $responsibleContact->users_id = $newUserId;
+
+        $responsibleContact->save();
 
     }
 }
