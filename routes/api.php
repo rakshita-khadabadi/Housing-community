@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SignUpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/saveUser', [UserController::class, 'saveUser']);
+Route::post('/saveUser', [SignUpController::class, 'signUpNewUser']);
 Route::get('/getUser/{userId}', [UserController::class, 'getUserById']);
 
 Route::get('/getRoles', [RoleController::class, 'getRoles']);
