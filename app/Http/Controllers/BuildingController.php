@@ -26,12 +26,17 @@ class BuildingController extends Controller
         
         $building->save();
 
+        $buildingId = $building->id;
+        
+        $apartmentController = new ApartmentController();
+        $apartmentController->addApartmentsToBuilding($request, $buildingId, $adminUserId);
+
         return response()->json([
             'statusCode' => '200',
             'message' => 'success',
             'error' => '',
             'comments' => 'New building added successfully',
-            'buildingId' => $building->id
+            'buildingId' => $buildingId
         ]);
     }
 }
