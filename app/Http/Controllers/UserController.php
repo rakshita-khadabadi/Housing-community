@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\User;
 
 class UserController extends Controller
 {
     
-    function getUser(){
+    function getUserById($user_id){
 
-        return User::get();
+        // echo "Inside getUserById";
+        // return User::find($user_id)->getRole();
+        return User::find($user_id);
     }
 
     function saveUser(Request $request){
@@ -26,11 +29,16 @@ class UserController extends Controller
         $user->area_code = $request->areaCode;
         $user->phone_number = $request->phoneNumber;
         $user->joining_datetime = $current_date_time;
-        $user->roles_role_id = $request->rolesRoleId;
+        $user->roles_id = $request->rolesId;
 
-        $user->save();
+        $output = $user->save();
 
-        var_dump($user);
-        return 'User saved';
+        return response()->json([
+            'statusCode' => '200',
+            'message' => 'success',
+            'error' => '',
+            'comments' => 'New user saved successfully',
+            'userId' => $user->id
+        ]);
     }
 }

@@ -32,13 +32,7 @@ Route::get('/get-s/{id?}', function ($studentId = 9){
     return 'get-s'. $studentId;
 })->name('home.get?');
 
-Route::get('/getUser/{userId}', [Users::class, 'getUserById']);
+// Route::get('/getUser/{userId}', [Users::class, 'getUserById']);
 
 // By default, csrf token is required. This can be over ridden from Http/Middleware/VerifyCsrfToken.php
 // Route::post('/saveUser', [Users::class, 'saveUser']);
-
-Route::get('/getRoles', [RoleController::class, 'getRoles']);
-
-Route::get('/getUsers', [UserController::class, 'getUser']);
-
-Route::post('/saveUser', [UserController::class, 'saveUser']);
