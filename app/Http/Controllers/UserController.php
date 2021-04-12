@@ -16,6 +16,12 @@ class UserController extends Controller
         return User::find($user_id);
     }
 
+    function deleteUser($userId){
+
+        $user = User::find($userId);
+        $user->delete();
+    }
+
     function saveUser(Request $request){
 
         $current_date_time = \Carbon\Carbon::now()->toDateTimeString();
