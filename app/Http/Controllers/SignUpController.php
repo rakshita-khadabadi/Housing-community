@@ -52,12 +52,56 @@ class SignUpController extends Controller
             return $signUpController->saveSubdivisionManager($request, $newUserId, $signUpController);
         }
         elseif($roleRecord->role_name == 'building manager'){
-
+            return $signUpController->saveBuildingManager($request, $newUserId, $signUpController);
         }
         elseif($roleRecord->role_name == 'apartment owner'){
 
         }
 
+    }
+
+    function saveBuildingManager($request, $newUserId, $signUpController){
+        
+        $buildingController = new BuildingController();
+        $buildingId = $request->buildingId;
+
+        $buildingRecord = $buildingController->getBuildingById($buildingId);
+
+        if($buildingRecord->has_manager == 0){
+            $buildingRecord->has_manager = 1;
+            $buildingRecord->users_id = $newUserId;
+            $buildingRecord->save();
+
+            $signUpController->addAddressAndRC($request, $newUserId, $signUpController);
+
+            return response()->json([
+                'statusCode' => '200',
+                'message' => 'success',
+                'error' => '',
+                'comments' => 'New user saved successfully. You are building manager now.',
+                'userId' => $newUserId
+            ]);
+        }
+        elseif($buildingRecord->has_manager == 1){
+
+            $userController = new UserController();
+            $userController->deleteUser($newUserId);
+
+            return response()->json([
+                'statusCode' => '200',
+                'message' => 'failed',
+                'error' => 'This Building already has a manager. Choose another building.',
+                'comments' => 'This Building already has a manager. Choose another building.'
+            ]); 
+        }
+        else{
+            return response()->json([
+                'statusCode' => '200',
+                'message' => 'failed',
+                'error' => 'has_manager is not 0 or 1. Check DB',
+                'comments' => 'has_manager is not 0 or 1'
+            ]); 
+        }
     }
 
     function saveSubdivisionManager($request, $newUserId, $signUpController){
@@ -94,14 +138,14 @@ class SignUpController extends Controller
                 'statusCode' => '200',
                 'message' => 'failed',
                 'error' => 'This Subdivision already has a manager. Choose another subdivision.',
-                'comments' => 'This Subdivision already has a manager. Choose another subdivision.',
+                'comments' => 'This Subdivision already has a manager. Choose another subdivision.'
             ]); 
         }
         else{
             return response()->json([
                 'statusCode' => '200',
                 'message' => 'failed',
-                'error' => 'has_manager is not 0 or 1',
+                'error' => 'has_manager is not 0 or 1. Check DB',
                 'comments' => 'has_manager is not 0 or 1'
             ]); 
         }
