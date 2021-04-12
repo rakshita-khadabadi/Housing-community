@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Address;
 use App\Models\ResponsibleContact;
+use App\Models\Role;
+use App\Models\Subdivision;
 
 class SignUpController extends Controller
 {
@@ -19,6 +21,15 @@ class SignUpController extends Controller
         $signUpController->saveUserAddress($request, $newUserId);
         $signUpController->saveUserResponsibleContact($request, $newUserId);
 
+        $roleId = $request->roleId;
+
+        $roleController = new RoleController();
+
+
+        $roleRecord = $roleController->getRoleById($roleId);
+
+        echo $roleRecord;
+
         return response()->json([
             'statusCode' => '200',
             'message' => 'success',
@@ -26,6 +37,27 @@ class SignUpController extends Controller
             'comments' => 'New user saved successfully',
             'userId' => $newUserId
         ]);
+    }
+
+    function saveAsPerRole($roleRecord, $request, $signUpController){
+
+        if($roleRecord->role_name == 'subdivision manager'){
+            $signUpController->saveSubdivisionManager($request);
+        }
+        elseif($roleRecord->role_name == 'building manager'){
+
+        }
+        elseif($roleRecord->role_name == 'apartment owner'){
+
+        }
+
+    }
+
+    function saveSubdivisionManager($request){
+
+        $subdivision = new Subdivision();
+
+        
     }
 
     function saveUser(Request $request){

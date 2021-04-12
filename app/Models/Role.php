@@ -9,6 +9,7 @@ use App\Models\User;
 class Role extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     // public $table = "roles";  // this is required for mappiing to table if it does not have plural naming convention
     // protected $primaryKey = 'role_id';
 
