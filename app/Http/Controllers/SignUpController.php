@@ -8,54 +8,137 @@ use App\Models\Address;
 use App\Models\ResponsibleContact;
 use App\Models\Role;
 use App\Models\Subdivision;
+use App\Models\ApartmentUtilityServiceProviderType;
 
 class SignUpController extends Controller
 {
     function signUpNewUser(Request $request){
 
-        // echo "Inside signUpNewUser";
-
         $signUpController = new SignUpController();
 
         $newUserId = $signUpController->saveUser($request);
         
-
         $roleId = $request->roleId;
 
         $roleController = new RoleController();
-
-
         $roleRecord = $roleController->getRoleById($roleId);
 
-        // echo $roleRecord;
-
         return $signUpController->saveAsPerRole($roleRecord, $request, $newUserId, $signUpController);
-
-        // return response()->json([
-        //     'statusCode' => '200',
-        //     'message' => 'success',
-        //     'error' => '',
-        //     'comments' => 'New user saved successfully',
-        //     'userId' => $newUserId
-        // ]);
     }
+
 
     function addAddressAndRC($request, $newUserId, $signUpController){
         $signUpController->saveUserAddress($request, $newUserId);
         $signUpController->saveUserResponsibleContact($request, $newUserId);
     }
 
+
     function saveAsPerRole($roleRecord, $request, $newUserId, $signUpController){
 
         if($roleRecord->role_name == 'subdivision manager'){
-            // echo 'You want subdivision manager';
             return $signUpController->saveSubdivisionManager($request, $newUserId, $signUpController);
         }
         elseif($roleRecord->role_name == 'building manager'){
             return $signUpController->saveBuildingManager($request, $newUserId, $signUpController);
         }
         elseif($roleRecord->role_name == 'apartment owner'){
+            return $signUpController->saveApartmentOwner($request, $newUserId, $signUpController);
+        }
+        else{
+            return response()->json([
+                'statusCode' => '200',
+                'message' => 'failed',
+                'error' => 'Role out of scope',
+                'comments' => 'Role out of scope'
+            ]); 
+        }
 
+    }
+
+    function saveServiceProviderType($request, $apartmentId, $buildingId, $subdivisionId, $userId){
+
+        $utilityController = new UtilityController();
+        $utilityList = $utilityController->getAllUtilities();
+
+        foreach ($utilityList as $utilityRecord){
+            
+            $serviceProviderTypeRecord = new ApartmentUtilityServiceProviderType();
+
+            if ($utilityRecord->utility_name == 'electricity'){
+                $serviceProviderTypeRecord->service_provider_type = $request->electricityServiceProvider;
+            }
+            elseif ($utilityRecord->utility_name == 'gas'){
+                $serviceProviderTypeRecord->service_provider_type = $request->gasServiceProvider;
+            }
+            elseif ($utilityRecord->utility_name == 'water'){
+                $serviceProviderTypeRecord->service_provider_type = $request->waterServiceProvider;
+            }
+            elseif ($utilityRecord->utility_name == 'internet'){
+                $serviceProviderTypeRecord->service_provider_type = $request->internetServiceProvider;
+            }
+
+            $serviceProviderTypeRecord->utilities_id = $utilityRecord->id;
+            $serviceProviderTypeRecord->apartments_id = $apartmentId;
+            $serviceProviderTypeRecord->buildings_id = $buildingId;
+            $serviceProviderTypeRecord->subdivisions_id = $subdivisionId;
+            $serviceProviderTypeRecord->users_id = $userId;
+
+            $serviceProviderTypeRecord->save();
+
+        }
+
+    }
+
+
+    function saveApartmentOwner($request, $newUserId, $signUpController){
+
+        $apartmentController = new ApartmentController();
+        $apartmentId = $request->apartmentId;
+
+        $apartmentRecord = $apartmentController->getApartmentById($apartmentId);
+
+        if($apartmentRecord->occupancy_status == 'empty'){
+
+            $apartmentRecord->occupancy_status = 'occupied';
+            $apartmentRecord->users_id = $newUserId;
+            $apartmentRecord->save();
+
+            $apartmentId = $apartmentRecord->id;
+            $buildingId = $apartmentRecord->buildings_id;
+            $subdivisionId = $apartmentRecord->subdivisions_id;
+            $userId = $apartmentRecord->users_id;
+
+            $signUpController->saveServiceProviderType($request, $apartmentId, $buildingId, $subdivisionId, $userId);
+            $signUpController->addAddressAndRC($request, $newUserId, $signUpController);
+
+            return response()->json([
+                'statusCode' => '200',
+                'message' => 'success',
+                'error' => '',
+                'comments' => 'New user saved successfully. You are apartment owner now.',
+                'userId' => $apartmentId
+            ]);
+
+        }
+        elseif($apartmentRecord->occupancy_status == 'occupied'){
+
+            $userController = new UserController();
+            $userController->deleteUser($newUserId);
+
+            return response()->json([
+                'statusCode' => '200',
+                'message' => 'failed',
+                'error' => 'This Apartment already has an owner. Choose another apartment.',
+                'comments' => 'This Apartment already has an owner. Choose another apartment.'
+            ]); 
+        }
+        else{
+            return response()->json([
+                'statusCode' => '200',
+                'message' => 'failed',
+                'error' => 'occupancy_status is not empty or occupied. Check DB',
+                'comments' => 'occupancy_status is not empty or occupied. Check DB'
+            ]); 
         }
 
     }

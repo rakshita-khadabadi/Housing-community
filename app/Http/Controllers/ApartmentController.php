@@ -7,6 +7,12 @@ use App\Models\Apartment;
 
 class ApartmentController extends Controller
 {
+
+    function getApartmentById($apartmentId){
+
+        return Apartment::find($apartmentId);
+    }
+
     function addApartmentsToBuilding($request, $buildingId, $adminUserId){
 
         for ($i=1; $i<=4; $i = $i+1){
