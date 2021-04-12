@@ -82,6 +82,7 @@ class SignUpController extends Controller
             $serviceProviderTypeRecord->buildings_id = $buildingId;
             $serviceProviderTypeRecord->subdivisions_id = $subdivisionId;
             $serviceProviderTypeRecord->users_id = $userId;
+            $serviceProviderTypeRecord->utility_name = $utilityRecord->utility_name;
 
             $serviceProviderTypeRecord->save();
 
@@ -116,7 +117,7 @@ class SignUpController extends Controller
                 'message' => 'success',
                 'error' => '',
                 'comments' => 'New user saved successfully. You are apartment owner now.',
-                'userId' => $apartmentId
+                'apartmentId' => $apartmentId
             ]);
 
         }
