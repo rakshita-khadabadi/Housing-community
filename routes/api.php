@@ -6,7 +6,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\SubdivisionController;
-
+use App\Http\Controllers\BuildingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,5 +26,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/saveUser', [SignUpController::class, 'signUpNewUser']);
 Route::get('/getUser/{userId}', [UserController::class, 'getUserById']);
 Route::post('/addSubdivision', [SubdivisionController::class, 'addNewSubdivision']);
+Route::post('/addBuilding', [BuildingController::class, 'addNewBuilding']);
 
 Route::get('/getRoles', [RoleController::class, 'getRoles']);
