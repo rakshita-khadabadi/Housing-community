@@ -13,13 +13,12 @@ class SignUpController extends Controller
 {
     function signUpNewUser(Request $request){
 
-        echo "Inside signUpNewUser";
+        // echo "Inside signUpNewUser";
 
         $signUpController = new SignUpController();
 
         $newUserId = $signUpController->saveUser($request);
-        $signUpController->saveUserAddress($request, $newUserId);
-        $signUpController->saveUserResponsibleContact($request, $newUserId);
+        
 
         $roleId = $request->roleId;
 
@@ -28,21 +27,29 @@ class SignUpController extends Controller
 
         $roleRecord = $roleController->getRoleById($roleId);
 
-        echo $roleRecord;
+        // echo $roleRecord;
 
-        return response()->json([
-            'statusCode' => '200',
-            'message' => 'success',
-            'error' => '',
-            'comments' => 'New user saved successfully',
-            'userId' => $newUserId
-        ]);
+        return $signUpController->saveAsPerRole($roleRecord, $request, $newUserId, $signUpController);
+
+        // return response()->json([
+        //     'statusCode' => '200',
+        //     'message' => 'success',
+        //     'error' => '',
+        //     'comments' => 'New user saved successfully',
+        //     'userId' => $newUserId
+        // ]);
     }
 
-    function saveAsPerRole($roleRecord, $request, $signUpController){
+    function addAddressAndRC($request, $newUserId, $signUpController){
+        $signUpController->saveUserAddress($request, $newUserId);
+        $signUpController->saveUserResponsibleContact($request, $newUserId);
+    }
+
+    function saveAsPerRole($roleRecord, $request, $newUserId, $signUpController){
 
         if($roleRecord->role_name == 'subdivision manager'){
-            $signUpController->saveSubdivisionManager($request);
+            // echo 'You want subdivision manager';
+            return $signUpController->saveSubdivisionManager($request, $newUserId, $signUpController);
         }
         elseif($roleRecord->role_name == 'building manager'){
 
@@ -53,11 +60,52 @@ class SignUpController extends Controller
 
     }
 
-    function saveSubdivisionManager($request){
+    function saveSubdivisionManager($request, $newUserId, $signUpController){
 
-        $subdivision = new Subdivision();
-
+        $subdivisionController = new SubdivisionController();
+        $subdivisionId = $request->subdivisionId;
         
+        $subdivisionRecord = $subdivisionController->getSubdivisionById($subdivisionId);
+
+        // echo $subdivisionRecord;
+
+        if($subdivisionRecord->has_manager == 0){
+            
+            $subdivisionRecord->has_manager = 1;
+            $subdivisionRecord->users_id = $newUserId;
+            $subdivisionRecord->save();
+
+            $signUpController->addAddressAndRC($request, $newUserId, $signUpController);
+
+            return response()->json([
+                'statusCode' => '200',
+                'message' => 'success',
+                'error' => '',
+                'comments' => 'New user saved successfully. You are subdivision manager now.',
+                'userId' => $newUserId
+            ]);
+        }
+        elseif($subdivisionRecord->has_manager == 1){
+
+            $userController = new UserController();
+            $userController->deleteUser($newUserId);
+
+            return response()->json([
+                'statusCode' => '200',
+                'message' => 'failed',
+                'error' => 'This Subdivision already has a manager. Choose another subdivision.',
+                'comments' => 'This Subdivision already has a manager. Choose another subdivision.',
+            ]); 
+        }
+        else{
+            return response()->json([
+                'statusCode' => '200',
+                'message' => 'failed',
+                'error' => 'has_manager is not 0 or 1',
+                'comments' => 'has_manager is not 0 or 1'
+            ]); 
+        }
+
     }
 
     function saveUser(Request $request){

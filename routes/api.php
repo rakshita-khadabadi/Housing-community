@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::get('/deleteUser/{userId}', [UserController::class, 'deleteUser']);
 Route::post('/saveUser', [SignUpController::class, 'signUpNewUser']);
 Route::get('/getUser/{userId}', [UserController::class, 'getUserById']);
 Route::post('/addSubdivision', [SubdivisionController::class, 'addNewSubdivision']);
