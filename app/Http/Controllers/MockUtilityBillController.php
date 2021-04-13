@@ -19,8 +19,6 @@ class MockUtilityBillController extends Controller
         $apartmentId = $request->apartmentId;
         $utilitySPChoiceList = $utilityServiceProviderTypeController->getServiceProviderByApartmentId($apartmentId);
 
-        // echo $utilitySPChoiceList;
-
         foreach ($utilitySPChoiceList as $utilitySPChoiceRecord){
 
             $apartmentUtilityBillRecord = new ApartmentUtilityBill();
