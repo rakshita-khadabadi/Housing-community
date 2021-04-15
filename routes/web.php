@@ -44,4 +44,8 @@ Route::get('/get-s/{id?}', function ($studentId = 9){
 
 Route::view('/', 'city-view.index')->name('city-view.index');
 
+Route::get('/change', function() {
+    return redirect('/showRoles');
+});
+
 Route::get('/showRoles', [RoleController::class, 'getRoles']);
