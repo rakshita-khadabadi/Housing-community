@@ -38,8 +38,10 @@ Route::get('/get-s/{id?}', function ($studentId = 9){
 // Route::post('/saveUser', [Users::class, 'saveUser']);
 
 
-Route::get('/', function(){
-    return view('city-view.index', []);
-})->name('home.index');
+// Route::get('/', function(){
+//     return view('city-view.index', []);
+// })->name('home.index');
+
+Route::view('/', 'city-view.index')->name('city-view.index');
 
 Route::get('/showRoles', [RoleController::class, 'getRoles']);
