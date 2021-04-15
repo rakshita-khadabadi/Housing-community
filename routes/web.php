@@ -15,10 +15,10 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    // return view('welcome');
-    return 'Amlan Alok';
-})->name('home.basic');
+// Route::get('/', function () {
+//     // return view('welcome');
+//     return 'Amlan Alok';
+// })->name('home.basic');
 
 Route::get('/getinfo/{id}', function ($id){
     return 'get info '. $id;
@@ -36,3 +36,10 @@ Route::get('/get-s/{id?}', function ($studentId = 9){
 
 // By default, csrf token is required. This can be over ridden from Http/Middleware/VerifyCsrfToken.php
 // Route::post('/saveUser', [Users::class, 'saveUser']);
+
+
+Route::get('/', function(){
+    return view('city-view.index', []);
+})->name('home.index');
+
+Route::get('/showRoles', [RoleController::class, 'getRoles']);

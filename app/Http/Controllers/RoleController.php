@@ -11,7 +11,11 @@ class RoleController extends Controller
 
     function getRoles(){
 
-        return Role::all();
+        // return Role::all();
+
+        // abort_if(isset($roleList[0]), 404);      // if isset returns false then the page will show a 404 error
+        $roleList = Role::all();
+        return view('city-view.index', ['role' => $roleList[0]]);
     }
 
     function getRoleById($roleId){
