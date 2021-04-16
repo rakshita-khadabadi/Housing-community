@@ -5,10 +5,10 @@ Khadabadi, Rakshita Kadappa, - 1001865656
 Vadla, Saikishore chary - 1001851300
 */
 
-/* body {
-    background-image: url("YouareonDefault/pictures/light-grey-terrazo-2V4H.png");
-    
-} */
+body {
+    background-image: url("/pictures/light-grey-terrazo-2V4H.png");
+    /* Source = https://www.toptal.com/designers/subtlepatterns/light-grey-terrazzo/ */
+}
 
 /* ----- For New Admin Page ----- */
 a {

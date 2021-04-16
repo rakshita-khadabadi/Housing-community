@@ -5,9 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class UserController extends Controller
 {
+    function loginUser($email, $password){
+
+        try{
+            $loginRecord = DB::table('users')->where('email_id','=',$email)->where('password', '=', $password)->get()->first();
+
+            return [
+                'message' => 'success',
+                'userRecord' => $loginRecord
+            ];
+        }
+        catch(Exception $e){
+            return [
+                'message' => 'failed',
+                'error' => $e->getMessage()
+            ];
+        }
+    }
     
     function getUserById($user_id){
 
