@@ -33,7 +33,7 @@
 
         <input type="text" id="year" name="year" value="" placeholder="year"> <br><br>
 
-        <input id="btnSubmit" type="submit" value="Submit">
+        <input class="btn btn-success" id="btnSubmit" type="submit" value="Submit">
 
     </div>
 </form>

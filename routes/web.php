@@ -5,6 +5,7 @@ use App\Http\Controllers\Users;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MockUtilityBillController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +56,6 @@ Route::view('/mock-utility-bill', 'city-view.mock-utility-bill')->name('city-vie
 Route::post('/mock-utility-bill', [MockUtilityBillController::class, 'addMockUtilityBill']);
 
 Route::get('/showRoles', [RoleController::class, 'getRoles']);
+
+// Route::view('/admin', 'city-view.post-login.admin.admin')->name('city-view.post-login.admin.admin');
+Route::get('/admin', [AdminController::class, 'initializeAdmin']);
