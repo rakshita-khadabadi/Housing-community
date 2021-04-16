@@ -5,12 +5,12 @@
 @section('content')
 <div class="topnav">
     City View
-    <a href="./login.php">Login</a>
-    <a class="active" href="./sign-up.php">SignUp</a>
-    <a href="./contact_us.php">Contact Us</a>
+    <a href="./login">Login</a>
+    <a class="active" href="./sign-up">SignUp</a>
+    <a href="./contact_us">Contact Us</a>
     <a href="/blog">Forum</a>
-    <a href="./about.php">About Us</a>
-    <a href="../index.php">Home</a>
+    <a href="./about">About Us</a>
+    <a href="../">Home</a>
 </div>
 <div class="container">
     <div class="contact_container">
