@@ -9,6 +9,11 @@ use App\Models\Role;
 class RoleController extends Controller
 {
 
+    function getSignUpRoles(){
+        $roleList = DB::table('roles')->where('role_name','!=','admin')->get();
+        return $roleList;
+    }
+
     function getRoles(){
 
         // return Role::all();

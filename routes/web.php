@@ -6,6 +6,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MockUtilityBillController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +54,6 @@ Route::get('/change', function() {
 });
 
 Route::view('/mock-utility-bill', 'city-view.mock-utility-bill')->name('city-view.mock-utility-bill');
-
 Route::post('/mock-utility-bill', [MockUtilityBillController::class, 'addMockUtilityBill']);
 
 Route::get('/showRoles', [RoleController::class, 'getRoles']);
@@ -60,3 +61,8 @@ Route::get('/showRoles', [RoleController::class, 'getRoles']);
 // Route::view('/admin', 'city-view.post-login.admin.admin')->name('city-view.post-login.admin.admin');
 Route::get('/admin', [AdminController::class, 'initializeAdmin']);
 Route::post('/admin', [AdminController::class, 'checkFeature']);
+
+Route::get('/sign-up', [SignUpController::class, 'initializeSignUp']);
+Route::post('/sign-up', [SignUpController::class, 'signUpNewUser']);
+
+Route::get('/login', [LoginController::class, 'showLogin']);

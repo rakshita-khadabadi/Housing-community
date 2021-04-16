@@ -9,14 +9,55 @@ use App\Models\ResponsibleContact;
 use App\Models\Role;
 use App\Models\Subdivision;
 use App\Models\ApartmentUtilityServiceProviderType;
+use Exception;
+use Illuminate\Support\Str;
 
 class SignUpController extends Controller
-{
+{   
+
+    function initializeSignUp(){
+
+        $roleController = new RoleController();
+        $rolesList = $roleController->getSignUpRoles();
+
+        $apartmentController = new ApartmentController();
+        $apartmentsList = $apartmentController->fetchAllEmptyApartments();
+
+        $buildingController = new BuildingController();
+        $buildingsList = $buildingController->fetchAllBuildings();
+
+        $subdivisionController = new SubdivisionController();
+        $subdivisionsList = $subdivisionController->fetchAllSubdivisions();
+
+        return view('city-view.sign-up', [
+            'rolesList' => $rolesList,
+            'apartmentsList' => $apartmentsList,
+            'buildingsList' => $buildingsList,
+            'subdivisionsList' => $subdivisionsList
+            ]);
+    }
+
     function signUpNewUser(Request $request){
 
         $signUpController = new SignUpController();
 
-        $newUserId = $signUpController->saveUser($request);
+        // $newUserId = $signUpController->saveUser($request);
+        $newUserId;
+        $output = $signUpController->saveUser($request);
+
+        echo gettype($output);
+
+        if($output['message'] == 'success'){
+            if ($output['message'] == 'success'){
+                echo 'received new userId';
+                $newUserId = $output['newUserId'];
+            }
+        }
+        elseif ($output['message'] == 'failed'){
+            echo 'User has not been saved.';
+            echo $output['error'];
+            return redirect()->back()->with(['error'=> $output['error']]);
+        }
         
         $roleId = $request->roleId;
 
@@ -240,20 +281,49 @@ class SignUpController extends Controller
 
         $current_date_time = \Carbon\Carbon::now()->toDateTimeString();
 
+        // $date = new DateTime("now", new DateTimeZone('America/Chicago') );
+        // $current_date_time = $date->format('Y-m-d H:i:s');
+
         $user = new User();
 
         $user->first_name = $request->firstName;
         $user->last_name = $request->lastName;
         $user->email_id = $request->email;
-        $user->password = $request->password;
+        $user->password = md5($request->password);
         $user->area_code = $request->userZipCode;
         $user->phone_number = $request->userPhoneNumber;
         $user->joining_datetime = $current_date_time;
         $user->roles_id = $request->roleId;
 
-        $output = $user->save();
+        // This try catch is to catch duplicate email id 
+        try{
+            $output = $user->save();
+            return [
+                'message' => 'success',
+                'newUserId' => $user->id
+            ];
+            // return $user->id;
+        }
+        catch(Exception $e){
 
-        return $user->id;
+            $errorMessage = '';
+            $duplicateError = Str::contains($e->getMessage(), 'Integrity constraint violation: 1062 Duplicate entry');
+            $emailDuplicateError = Str::contains($e->getMessage(), "for key 'users.email_id_UNIQUE'");
+
+            if($duplicateError && $emailDuplicateError){
+                $errorMessage = 'email '.$request->email.' already exists. Choose another email.';
+            }
+            else{
+                $errorMessage = $e->getMessage();
+            }
+
+            return [
+                'message' => 'failed',
+                'error' => $errorMessage
+            ];
+            
+        }
+        
     }
     
     function saveUserAddress(Request $request, $newUserId){

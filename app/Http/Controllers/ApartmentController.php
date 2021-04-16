@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use Illuminate\Support\Facades\DB;
 
 class ApartmentController extends Controller
 {
+    function fetchAllEmptyApartments(){
+
+        return DB::table('apartments')->where('occupancy_status','=','empty')->get();
+    }
 
     function getApartmentById($apartmentId){
 

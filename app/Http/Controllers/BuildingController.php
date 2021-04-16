@@ -7,7 +7,12 @@ use App\Models\Building;
 use Exception;
 
 class BuildingController extends Controller
-{
+{   
+    function fetchAllBuildings(){
+        
+        return Building::all();
+    }
+
     function getBuildingById($buildingId){
 
         return Building::find($buildingId);
