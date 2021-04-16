@@ -32,8 +32,8 @@ Route::get('/getUser/{userId}', [UserController::class, 'getUserById']);
 Route::get('/getRoles', [RoleController::class, 'getRoles']);
 
 // Admin APIs
-Route::post('/addSubdivision', [SubdivisionController::class, 'addNewSubdivision']);
-Route::post('/addBuilding', [BuildingController::class, 'addNewBuilding']);
+// Route::post('/addSubdivision', [SubdivisionController::class, 'addNewSubdivision']);
+// Route::post('/addBuilding', [BuildingController::class, 'addNewBuilding']);
 
 // Add Bills APIs
 // Route::post('/addMockUtilityBill', [MockUtilityBillController::class, 'addMockUtilityBill']);

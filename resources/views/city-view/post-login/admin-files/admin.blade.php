@@ -121,6 +121,7 @@
                 <div class="input-box">
 
                     <form method="post">
+                        @csrf
                         <table>
                         <tr>
                             <td><label for="subdivision-name">Select Subdivision Name:</label></td>

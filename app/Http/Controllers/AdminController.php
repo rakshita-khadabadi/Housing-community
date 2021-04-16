@@ -25,24 +25,22 @@ class AdminController extends Controller
             $adminController = new AdminController();
             return $adminController->saveNewSubdivision($subdivisionName, $userId);
         }
+        elseif(isset($request['new-building-name'])){
+            $userId = $request['userId'];
+            $buildingName = $request['new-building-name'];
+
+            $adminController = new AdminController();
+        }
+
+    }
+
+    function saveNewBuilding($buildingName, $userId){
+        
     }
 
     function saveNewSubdivision($subdivisionName, $userId){
         
         $subdivisionController = new SubdivisionController();
         return $subdivisionController->saveSubdivision($subdivisionName, $userId);
-
-        // if ($output == 'success'){
-
-        // }
-        // else{
-        //     return response()->json([
-        //         'statusCode' => '500',
-        //         'message' => 'success',
-        //         'error' => '',
-        //         'comments' => 'Mock Utility Bill added successfully.',
-        //         'apartmentId' => $apartmentId
-        //     ]);
-        // }
     }
 }
