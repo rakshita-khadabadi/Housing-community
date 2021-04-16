@@ -66,3 +66,4 @@ Route::get('/sign-up', [SignUpController::class, 'initializeSignUp']);
 Route::post('/sign-up', [SignUpController::class, 'signUpNewUser']);
 
 Route::get('/login', [LoginController::class, 'showLogin']);
+Route::post('/login', [LoginController::class, 'login']);

@@ -26,21 +26,23 @@
 
         <div style="padding:100px 20px">
 
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            {{-- <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> --}}
+            <form method="post">
+                @csrf
                 <label for="email"></label>
                 @if(session('newUserEmail'))
                 <input type="email" id="email" name="email" required placeholder="Email" value="{{ session('newUserEmail') ?? '' }}"> <br><br>
                 @else
                 <input type="email" id="email" name="email" required placeholder="Email"> <br><br>
                 @endif
-                
+
                 <label for="password"></label>
                 @if(session('newUserPassword'))
                 <input type="password" id="password" name="password" required placeholder="Password" value="{{ session('newUserPassword') ?? '' }}"> <br><br>
                 @else
                 <input type="password" id="password" name="password" required placeholder="Password"> <br><br>
                 @endif
-                
+
                 <div class="SignUpFormButtons" style="text-align: center;">
                     <button class="login-button">Login</button>
                 </div>
