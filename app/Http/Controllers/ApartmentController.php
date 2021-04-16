@@ -13,7 +13,7 @@ class ApartmentController extends Controller
         return Apartment::find($apartmentId);
     }
 
-    function addApartmentsToBuilding($request, $buildingId, $adminUserId){
+    function addApartmentsToBuilding($request, $buildingId, $subdivisionId, $userId){
 
         for ($i=1; $i<=4; $i = $i+1){
             for ($j=1; $j<=4; $j = $j+1){
@@ -24,8 +24,8 @@ class ApartmentController extends Controller
                 $apartment->apartment_number = $request->$apartmentIndex;
                 $apartment->occupancy_status = 'empty';
                 $apartment->buildings_id = $buildingId;
-                $apartment->subdivisions_id = $request->subdivisionId;
-                $apartment->users_id = $adminUserId;
+                $apartment->subdivisions_id = $subdivisionId;
+                $apartment->users_id = $userId;
 
                 $apartment->save();
             }

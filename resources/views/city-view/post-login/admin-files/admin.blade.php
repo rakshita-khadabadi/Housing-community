@@ -129,7 +129,7 @@
                                 <optgroup label="Subdivision Names">
                                     <?php ?>
                                     <?php foreach ($subdivisionList as $subdivision): ?>
-                                        <option value="<?= $subdivision->subdivision_id?>">
+                                        <option value="<?= $subdivision->id?>">
                                         <?= $subdivision->subdivision_name; ?> 
                                         </option>
                                     <?php endforeach; ?>

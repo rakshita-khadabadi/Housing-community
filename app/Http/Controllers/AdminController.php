@@ -26,16 +26,24 @@ class AdminController extends Controller
             return $adminController->saveNewSubdivision($subdivisionName, $userId);
         }
         elseif(isset($request['new-building-name'])){
+            echo 'Inside feature check of new building name.';
             $userId = $request['userId'];
             $buildingName = $request['new-building-name'];
+            $subdivisionId = $request['subdivision-name'];
+            echo '=======';
+            echo $subdivisionId;
+            echo '=======';
 
             $adminController = new AdminController();
+            return $adminController->saveNewBuilding($request, $buildingName, $subdivisionId, $userId);
         }
 
     }
 
-    function saveNewBuilding($buildingName, $userId){
-        
+    function saveNewBuilding($request, $buildingName, $subdivisionId, $userId){
+        echo 'Inside saveNewBuilding';
+        $buildingController = new BuildingController();
+        return $buildingController->addNewBuilding($request, $buildingName, $subdivisionId, $userId);
     }
 
     function saveNewSubdivision($subdivisionName, $userId){

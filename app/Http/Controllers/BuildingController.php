@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Building;
+use Exception;
 
 class BuildingController extends Controller
 {
@@ -12,31 +13,35 @@ class BuildingController extends Controller
         return Building::find($buildingId);
     }
 
-    function addNewBuilding(Request $request){
+    function addNewBuilding($request, $buildingName, $subdivisionId, $userId){
 
-        $roleController = new RoleController();
-        $adminUserId = $roleController->getAdminUserId();
+        echo 'Inside addNewBuilding';
+        // $roleController = new RoleController();
+        // $adminUserId = $roleController->getAdminUserId();
 
         $building = new Building();
-        $building->building_name = $request->buildingName;
+        $building->building_name = $buildingName;
         $building->occupancy_status = 'empty';
         $building->has_manager = 0;              // 0 means no manager
-        $building->subdivisions_id = $request->subdivisionId;
-        $building->users_id = $adminUserId;
-        
-        $building->save();
+        $building->subdivisions_id = $subdivisionId;
+        $building->users_id = $userId;
 
-        $buildingId = $building->id;
-        
-        $apartmentController = new ApartmentController();
-        $apartmentController->addApartmentsToBuilding($request, $buildingId, $adminUserId);
+        try{
+            $building->save();
 
-        return response()->json([
-            'statusCode' => '200',
-            'message' => 'success',
-            'error' => '',
-            'comments' => 'New building added successfully',
-            'buildingId' => $buildingId
-        ]);
+            $buildingId = $building->id;
+            
+            $apartmentController = new ApartmentController();
+            $apartmentController->addApartmentsToBuilding($request, $buildingId, $subdivisionId, $userId);
+
+            $successMessage = 'Successfully added Building '.$buildingName;
+            return redirect()->back()->with(['success'=> $successMessage]);
+        }
+        catch(Exception $e){
+
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->with(['error'=> $errorMessage]);
+        }
+
     }
 }
