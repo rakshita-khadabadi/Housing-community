@@ -59,3 +59,4 @@ Route::get('/showRoles', [RoleController::class, 'getRoles']);
 
 // Route::view('/admin', 'city-view.post-login.admin.admin')->name('city-view.post-login.admin.admin');
 Route::get('/admin', [AdminController::class, 'initializeAdmin']);
+Route::post('/admin', [AdminController::class, 'checkFeature']);

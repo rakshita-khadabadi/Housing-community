@@ -54,6 +54,15 @@
             <div class="page-heading">
                 <h1>Admin </h1>
             </div>
+
+            @if (session('error'))
+                <div class = "alert alert-danger">{{ session('error') }}</div>
+            @endif
+
+            @if (session('success'))
+                <div class = "alert alert-success">{{ session('success') }}</div>
+            @endif
+
             
             <div id="reset-credentials" class="section-content">
                 <div class="section-heading"><h1>Reset Credentials</h1></div>
@@ -91,6 +100,7 @@
 
                 <div class="input-box">
                     <form method="POST">
+                        @csrf
                         <table>
                         <tr>
                             <td><label for="new-subdivision-name">New Subdivision Name:</label></td>
@@ -105,7 +115,7 @@
                 </div>
             </div>
 
-            {{-- <div id="add-building" class="section-content">
+            <div id="add-building" class="section-content">
                 <div class="section-heading"><h1>Add Building</h1></div>
 
                 <div class="input-box">
@@ -207,7 +217,7 @@
                     
                 </div>
             </div>
-
+{{--
             <!-- Admin Apartment Owner Details -->
 
             <div id="apartment-details" class="section-content">
