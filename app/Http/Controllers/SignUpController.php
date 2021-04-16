@@ -246,33 +246,26 @@ class SignUpController extends Controller
 
             $signUpController->addAddressAndRC($request, $newUserId, $signUpController);
 
-            return response()->json([
-                'statusCode' => '200',
-                'message' => 'success',
-                'error' => '',
-                'comments' => 'New user saved successfully. You are subdivision manager now.',
-                'userId' => $newUserId
-            ]);
+            $successMessage = 'Successfully added as Subdivision Manager. Please Login.';
+
+            return redirect('/login')->with([
+                'success'=> $successMessage, 
+                'newUserEmail' => $request->email,
+                'newUserPassword' => $request->password
+                ]);
         }
         elseif($subdivisionRecord->has_manager == 1){
 
             $userController = new UserController();
             $userController->deleteUser($newUserId);
 
-            return response()->json([
-                'statusCode' => '200',
-                'message' => 'failed',
-                'error' => 'This Subdivision already has a manager. Choose another subdivision.',
-                'comments' => 'This Subdivision already has a manager. Choose another subdivision.'
-            ]); 
+            $errorMessage = 'This Subdivision already has a manager. Choose another subdivision.';
+            return redirect()->back()->with(['error'=> $errorMessage]);
         }
-        else{
-            return response()->json([
-                'statusCode' => '200',
-                'message' => 'failed',
-                'error' => 'has_manager is not 0 or 1. Check DB',
-                'comments' => 'has_manager is not 0 or 1'
-            ]); 
+        else{           
+
+            $errorMessage = 'This scenario should not occur. has_manager is not 0 or 1. Check DB';
+            return redirect()->back()->with(['error'=> $errorMessage]);
         }
 
     }
