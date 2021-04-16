@@ -18,13 +18,13 @@
 <form method="POST">
     @csrf
     <div>
-        <!-- <label for="fname"></label> -->
+
         <input type="text" id="fname" name="apartmentId" value="" placeholder="apartmentId"> <br><br>
-        <!-- <label for="lname"></label> -->
+
         <input type="text" id="lname" name="electricityBill" value="" placeholder="electricity"> <br><br>
-        <!-- <label for="email"></label> -->
+
         <input type="text" id="w-bill" name="waterBill" value="" placeholder="water"> <br><br>
-        <!-- <label for="password"></label> -->
+
         <input type="text" id="g-bill" name="gasBill" value="" placeholder="gas"> <br><br>
 
         <input type="text" id="i-bill" name="internetBill" value="" placeholder="internet"> <br><br>

@@ -36,6 +36,6 @@ Route::post('/addSubdivision', [SubdivisionController::class, 'addNewSubdivision
 Route::post('/addBuilding', [BuildingController::class, 'addNewBuilding']);
 
 // Add Bills APIs
-Route::post('/addMockUtilityBill', [MockUtilityBillController::class, 'addMockUtilityBill']);
+// Route::post('/addMockUtilityBill', [MockUtilityBillController::class, 'addMockUtilityBill']);
 Route::post('/addMockCSBill', [MockCommunityServiceBillController::class, 'addCommunityServiceBill']);
 
