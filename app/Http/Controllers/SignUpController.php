@@ -41,11 +41,15 @@ class SignUpController extends Controller
 
         $signUpController = new SignUpController();
 
-        // $newUserId = $signUpController->saveUser($request);
-        $newUserId;
-        $output = $signUpController->saveUser($request);
+        $roleName = $request->roleName;
 
-        echo gettype($output);
+        $roleController = new RoleController();
+        $roleRecord = $roleController->getRoleByName($roleName);
+        echo json_encode($roleRecord);
+        $roleId = $roleRecord->id;
+
+        $newUserId;
+        $output = $signUpController->saveUser($request, $roleId);
 
         if($output['message'] == 'success'){
             if ($output['message'] == 'success'){
@@ -59,10 +63,9 @@ class SignUpController extends Controller
             return redirect()->back()->with(['error'=> $output['error']]);
         }
         
-        $roleId = $request->roleId;
+        
 
-        $roleController = new RoleController();
-        $roleRecord = $roleController->getRoleById($roleId);
+        // $roleId = $roleRecord->role_name;
 
         return $signUpController->saveAsPerRole($roleRecord, $request, $newUserId, $signUpController);
     }
@@ -86,12 +89,8 @@ class SignUpController extends Controller
             return $signUpController->saveApartmentOwner($request, $newUserId, $signUpController);
         }
         else{
-            return response()->json([
-                'statusCode' => '200',
-                'message' => 'failed',
-                'error' => 'Role out of scope',
-                'comments' => 'Role out of scope'
-            ]); 
+            $errorMessage = 'This scenario should not occur. Role out of scope. Check DB';
+            return redirect()->back()->with(['error'=> $errorMessage]);
         }
 
     }
@@ -199,33 +198,48 @@ class SignUpController extends Controller
 
             $signUpController->addAddressAndRC($request, $newUserId, $signUpController);
 
-            return response()->json([
-                'statusCode' => '200',
-                'message' => 'success',
-                'error' => '',
-                'comments' => 'New user saved successfully. You are building manager now.',
-                'userId' => $newUserId
-            ]);
+            // return response()->json([
+            //     'statusCode' => '200',
+            //     'message' => 'success',
+            //     'error' => '',
+            //     'comments' => 'New user saved successfully. You are building manager now.',
+            //     'userId' => $newUserId
+            // ]);
+
+            $successMessage = 'Successfully added as Building Manager. Please Login.';
+
+            return redirect('/login')->with([
+                'success'=> $successMessage, 
+                'newUserEmail' => $request->email,
+                'newUserPassword' => $request->password
+                ]);
         }
         elseif($buildingRecord->has_manager == 1){
 
             $userController = new UserController();
             $userController->deleteUser($newUserId);
 
-            return response()->json([
-                'statusCode' => '200',
-                'message' => 'failed',
-                'error' => 'This Building already has a manager. Choose another building.',
-                'comments' => 'This Building already has a manager. Choose another building.'
-            ]); 
+            // return response()->json([
+            //     'statusCode' => '200',
+            //     'message' => 'failed',
+            //     'error' => 'This Building already has a manager. Choose another building.',
+            //     'comments' => 'This Building already has a manager. Choose another building.'
+            // ]);
+            
+            $errorMessage = 'This Building already has a manager. Choose another building.';
+            return redirect()->back()->with(['error'=> $errorMessage]);
+            
         }
         else{
-            return response()->json([
-                'statusCode' => '200',
-                'message' => 'failed',
-                'error' => 'has_manager is not 0 or 1. Check DB',
-                'comments' => 'has_manager is not 0 or 1'
-            ]); 
+            // return response()->json([
+            //     'statusCode' => '200',
+            //     'message' => 'failed',
+            //     'error' => 'has_manager is not 0 or 1. Check DB',
+            //     'comments' => 'has_manager is not 0 or 1'
+            // ]);
+            
+            $errorMessage = 'This scenario should not occur. has_manager is not 0 or 1. Check DB';
+            return redirect()->back()->with(['error'=> $errorMessage]);
         }
     }
 
@@ -270,7 +284,7 @@ class SignUpController extends Controller
 
     }
 
-    function saveUser(Request $request){
+    function saveUser(Request $request, $roleId){
 
         $current_date_time = \Carbon\Carbon::now()->toDateTimeString();
 
@@ -286,7 +300,8 @@ class SignUpController extends Controller
         $user->area_code = $request->userZipCode;
         $user->phone_number = $request->userPhoneNumber;
         $user->joining_datetime = $current_date_time;
-        $user->roles_id = $request->roleId;
+        // $user->roles_id = $request->roleId;
+        $user->roles_id = $roleId;
 
         // This try catch is to catch duplicate email id 
         try{

@@ -23,6 +23,10 @@ class RoleController extends Controller
         return view('city-view.index', ['roleList' => $roleList]);
     }
 
+    function getRoleByName($roleName){
+        return DB::table('roles')->where('role_name','=',$roleName)->get()->first();
+    }
+
     function getRoleById($roleId){
 
         return Role::find($roleId);

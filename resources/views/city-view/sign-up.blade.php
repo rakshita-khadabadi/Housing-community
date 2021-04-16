@@ -79,9 +79,10 @@
             <div>
 
                 <label for="role">Role:</label>
-                <select name="roleId" id="role" onchange="getRoleDropdownValue()">
+                <select name="roleName" id="role" onchange="getRoleDropdownValue()">
                     <?php foreach ($rolesList as $role): ?>
-                    <option value="<?= htmlspecialchars($role->id); ?>"><?= htmlspecialchars($role->role_name); ?></option>
+                    {{-- VERY IMPORTANT => value must be equal to role_name as JS functionality uses it. DO NOT CHANGE THIS. --}}
+                    <option value="<?= htmlspecialchars($role->role_name); ?>"><?= htmlspecialchars($role->role_name); ?></option>
                     <?php endforeach; ?>
 
                 </select><br><br>
