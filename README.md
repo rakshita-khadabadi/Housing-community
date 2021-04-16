@@ -1,61 +1,32 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+Credentials of 4 user roles:
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Admin User
 
-## About Laravel
+email = admin@gmail.com	
+password = admin999
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Subdivision Manager User
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+email = smanager@gmail.com	
+password = smanager
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Building Manager User
 
-## Learning Laravel
+email = bmanager@gmail.com	
+password = bmanager
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Apartment Owner User
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+email = aptowner@gmail.com	
+password = aptowner
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Sources
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Code references from - https://www.w3schools.com/
+2. Background image from - https://www.toptal.com/designers/subtlepatterns/light-grey-terrazzo/
+3. About Us Image - https://www.google.com/search?sa=G&hl=en&tbs=simg:CAQS9wEJ9F6u_1Qdhvvsa6wELELCMpwgaOgo4CAQSFMELmAj5JtMg6xObI-MngCXON6syGhprQDzXHu3bi1_1bWUR-KsMjLSKXIMZ77RuR3iAFMAQMCxCOrv4IGgoKCAgBEgT_1htpnDAsQne3BCRqLAQocCglmbG93ZXJwb3TapYj2AwsKCS9tLzBmbTN6aAofCgxyb29mIHNoaW5nbGXapYj2AwsKCS9tLzA3cXkyZwoXCgR5YXJk2qWI9gMLCgkvbS8wNDlfM3YKFwoFaG91c2XapYj2AwoKCC9tLzAzam01ChgKBXZpbGxh2qWI9gMLCgkvbS8wMXk4eHcM&sxsrf=ALeKk03trzRo3fLwJtA4ULQiMShekbk0yg:1615762552876&q=richwoods+homes+for+sale+frisco&tbm=isch&ved=2ahUKEwjrg4XI8LDvAhXBVc0KHbKTA18Qwg4oAHoECBAQMQ#imgrc=9F6u_QdhvvviOM
+4. Chat icon - https://www.google.com/search?q=chat+icon&tbm=isch&ved=2ahUKEwjIn5r98LDvAhUPgK0KHQ30AOcQ2-cCegQIABAA&oq=chat+icon&gs_lcp=CgNpbWcQAzIHCAAQsQMQQzICCAAyAggAMgIIADICCAAyAggAMgIIADICCAAyAggAMgIIADoFCAAQsQM6BAgAEENQ9TJY9DZg7jhoAHAAeACAAUuIAYwCkgEBNZgBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=6JROYMiLFo-AtgWN6IO4Dg&bih=706&biw=1440&hl=en#imgrc=X_QYriH7n9P4cM
+5. Roles icon - https://www.google.com/search?sa=G&hl=en&tbs=simg:CAQS-AEJZdiyIz3JcUka7AELELCMpwgaOgo4CAQSFM0_1_1gf4JckpxwPVDcoWgBeLCp8vGhr3gaZUiT5RxyZFX6j8EhSpPB1hphV_14jGXzSAFMAQMCxCOrv4IGgoKCAgBEgQ761c8DAsQne3BCRqMAQobCghsYW5ndWFnZdqliPYDCwoJL2ovMnNoX3k0ChkKB2RyYXdpbmfapYj2AwoKCC9tLzAyY3NmCh8KDGlsbHVzdHJhdGlvbtqliPYDCwoJL20vMDFrcjhmChsKCGNsaXAgYXJ02qWI9gMLCgkvbS8wM2cwOXQKFAoDYXJ02qWI9gMJCgcvbS8wamp3DA&sxsrf=ALeKk006nrLPXo6mczhQfk39h-6F7M6G3A:1615762781123&q=coexistence+clipart&tbm=isch&ved=2ahUKEwihifC08bDvAhUbHs0KHcawD64Qwg4oAHoECBAQMQ
+6. Maintenance Icon - https://www.google.com/search?sa=G&hl=en&tbs=simg:CAQSlgIJj6P43tFEPVYaigILELCMpwgaOQo3CAQSE4sKSuE72xjNC4Az9A28PY4PtQ8aGl3tUkxP3p61yPH0Rj05wZAaz-LpAwUKzR5lIAUwBAwLEI6u_1ggaCgoICAESBIFbhzEMCxCd7cEJGqsBCh8KC2NvbmUgd3JlbmNo2qWI9gMMCgovbS8wNnc3OHRqCh0KCmhvcml6b250YWzapYj2AwsKCS9hLzJtcXZ6YwokChJob3VzZWhvbGQgaGFyZHdhcmXapYj2AwoKCC9tLzAzanZrCikKFm1ldGFsd29ya2luZyBoYW5kIHRvb2zapYj2AwsKCS9tLzA3dmM0dgoYCgZoYW1tZXLapYj2AwoKCC9tLzAzbDlnDA&sxsrf=ALeKk02ISG9lxDs1NB_UFe-wsZmTMG0elg:1615762853523&q=maintenance+icon&tbm=isch&ved=2ahUKEwjShbPX8bDvAhVCHc0KHQvGCpsQwg4oAHoECBAQMQ
+7. Homepage image - https://www.google.com/search?sa=G&hl=en&tbs=simg:CAQSlQIJUevAr59YWT4aiQILELCMpwgaOgo4CAQSFJoF4TOYB7UvriD2KZE97Cy9DdkrGhrYlSyWhJRayD7lXq9yH_18nFvP10-VF4_1kRQSAFMAQMCxCOrv4IGgoKCAgBEgTswe6jDAsQne3BCRqpAQolChFvdXRkb29yIGZ1cm5pdHVyZdqliPYDDAoKL20vMGNwMmQ0awoZCgdsZWlzdXJl2qWI9gMKCggvbS8wNGczcgodCglhbHVtaW5pdW3apYj2AwwKCi9tLzAyN3ZqMnYKHgoLcmVzb3J0IHRvd27apYj2AwsKCS9tLzBjYnNubAomChNwZW50aG91c2UgYXBhcnRtZW502qWI9gMLCgkvbS8wMnI1emwM&sxsrf=ALeKk02NZ0_C9nK0tNotKhvDdoYU7uVgjQ:1615762904025&q=atlanta+city+view+apartments&tbm=isch&ved=2ahUKEwjFx73v8bDvAhWids0KHe5jD0AQwg4oAHoECA8QMQ
