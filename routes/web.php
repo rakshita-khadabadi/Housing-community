@@ -25,17 +25,17 @@ use App\Http\Controllers\LoginController;
 //     return 'Amlan Alok';
 // })->name('home.basic');
 
-Route::get('/getinfo/{id}', function ($id){
-    return 'get info '. $id;
-})
+// Route::get('/getinfo/{id}', function ($id){
+//     return 'get info '. $id;
+// })
 // ->where([
 //     'id' => '[0-9]+'                // this is regex constraint to check only numerial value is passed for $id
 // ])
-->name('home.get');
+// ->name('home.get');
 
-Route::get('/get-s/{id?}', function ($studentId = 9){
-    return 'get-s'. $studentId;
-})->name('home.get?');
+// Route::get('/get-s/{id?}', function ($studentId = 9){
+//     return 'get-s'. $studentId;
+// })->name('home.get?');
 
 // Route::get('/getUser/{userId}', [Users::class, 'getUserById']);
 
@@ -47,16 +47,16 @@ Route::get('/get-s/{id?}', function ($studentId = 9){
 //     return view('city-view.index', []);
 // })->name('home.index');
 
-Route::view('/', 'city-view.index')->name('city-view.index');
+Route::view('/', 'city-view.home')->name('city-view.home');
 
-Route::get('/change', function() {
-    return redirect('/showRoles');
-});
+// Route::get('/change', function() {
+//     return redirect('/showRoles');
+// });
 
 Route::view('/mock-utility-bill', 'city-view.mock-utility-bill')->name('city-view.mock-utility-bill');
 Route::post('/mock-utility-bill', [MockUtilityBillController::class, 'addMockUtilityBill']);
 
-Route::get('/showRoles', [RoleController::class, 'getRoles']);
+// Route::get('/showRoles', [RoleController::class, 'getRoles']);
 
 // Route::view('/admin', 'city-view.post-login.admin.admin')->name('city-view.post-login.admin.admin');
 Route::get('/admin', [AdminController::class, 'initializeAdmin']);
