@@ -168,7 +168,7 @@
             </div>
             <div class="SignUpFormButtons" style="text-align: center;">
                 <input id="btnSubmit" type="submit" value="Submit"> &nbsp;&nbsp;
-                <input type="reset">
+                {{-- <input type="reset"> --}}
             </div>
 
         </form>

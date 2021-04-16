@@ -152,13 +152,13 @@ class SignUpController extends Controller
             $signUpController->saveServiceProviderType($request, $apartmentId, $buildingId, $subdivisionId, $userId);
             $signUpController->addAddressAndRC($request, $newUserId, $signUpController);
 
-            return response()->json([
-                'statusCode' => '200',
-                'message' => 'success',
-                'error' => '',
-                'comments' => 'New user saved successfully. You are apartment owner now.',
-                'apartmentId' => $apartmentId
-            ]);
+            $successMessage = 'Successfully added as Apartment Owner. Please Login.';
+
+            return redirect('/login')->with([
+                'success'=> $successMessage, 
+                'newUserEmail' => $request->email,
+                'newUserPassword' => $request->password
+                ]);
 
         }
         elseif($apartmentRecord->occupancy_status == 'occupied'){
@@ -166,20 +166,13 @@ class SignUpController extends Controller
             $userController = new UserController();
             $userController->deleteUser($newUserId);
 
-            return response()->json([
-                'statusCode' => '200',
-                'message' => 'failed',
-                'error' => 'This Apartment already has an owner. Choose another apartment.',
-                'comments' => 'This Apartment already has an owner. Choose another apartment.'
-            ]); 
+            $errorMessage = 'This Apartment is occupied. Choose another apartment.';
+            return redirect()->back()->with(['error'=> $errorMessage]);
         }
         else{
-            return response()->json([
-                'statusCode' => '200',
-                'message' => 'failed',
-                'error' => 'occupancy_status is not empty or occupied. Check DB',
-                'comments' => 'occupancy_status is not empty or occupied. Check DB'
-            ]); 
+            
+            $errorMessage = 'This scenario should not occur. occupancy_status is not empty or occupied. Check DB';
+            return redirect()->back()->with(['error'=> $errorMessage]);
         }
 
     }
@@ -198,14 +191,6 @@ class SignUpController extends Controller
 
             $signUpController->addAddressAndRC($request, $newUserId, $signUpController);
 
-            // return response()->json([
-            //     'statusCode' => '200',
-            //     'message' => 'success',
-            //     'error' => '',
-            //     'comments' => 'New user saved successfully. You are building manager now.',
-            //     'userId' => $newUserId
-            // ]);
-
             $successMessage = 'Successfully added as Building Manager. Please Login.';
 
             return redirect('/login')->with([
@@ -218,25 +203,12 @@ class SignUpController extends Controller
 
             $userController = new UserController();
             $userController->deleteUser($newUserId);
-
-            // return response()->json([
-            //     'statusCode' => '200',
-            //     'message' => 'failed',
-            //     'error' => 'This Building already has a manager. Choose another building.',
-            //     'comments' => 'This Building already has a manager. Choose another building.'
-            // ]);
             
             $errorMessage = 'This Building already has a manager. Choose another building.';
             return redirect()->back()->with(['error'=> $errorMessage]);
             
         }
         else{
-            // return response()->json([
-            //     'statusCode' => '200',
-            //     'message' => 'failed',
-            //     'error' => 'has_manager is not 0 or 1. Check DB',
-            //     'comments' => 'has_manager is not 0 or 1'
-            // ]);
             
             $errorMessage = 'This scenario should not occur. has_manager is not 0 or 1. Check DB';
             return redirect()->back()->with(['error'=> $errorMessage]);
