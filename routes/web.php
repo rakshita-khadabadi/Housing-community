@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MockUtilityBillController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,5 +49,9 @@ Route::view('/', 'city-view.index')->name('city-view.index');
 Route::get('/change', function() {
     return redirect('/showRoles');
 });
+
+Route::view('/mock-utility-bill', 'city-view.mock-utility-bill')->name('city-view.mock-utility-bill');
+
+Route::post('/mock-utility-bill', [MockUtilityBillController::class, 'addMockUtilityBill']);
 
 Route::get('/showRoles', [RoleController::class, 'getRoles']);
