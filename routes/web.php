@@ -8,6 +8,7 @@ use App\Http\Controllers\MockUtilityBillController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SubdivisionManagerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,9 @@ Route::post('/mock-utility-bill', [MockUtilityBillController::class, 'addMockUti
 // Route::view('/admin', 'city-view.post-login.admin.admin')->name('city-view.post-login.admin.admin');
 Route::get('/admin', [AdminController::class, 'initializeAdmin']);
 Route::post('/admin', [AdminController::class, 'checkFeature']);
+
+Route::get('/subdivision-manager', [SubdivisionManagerController::class, 'initializeSubdivisionManager']);
+Route::post('/subdivision-manager', [SubdivisionManagerController::class, 'checkFeature']);
 
 Route::get('/sign-up', [SignUpController::class, 'initializeSignUp']);
 Route::post('/sign-up', [SignUpController::class, 'signUpNewUser']);
