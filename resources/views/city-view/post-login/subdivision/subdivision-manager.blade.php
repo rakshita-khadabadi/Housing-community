@@ -590,7 +590,7 @@
 
         {{-- <!-- Subdivision Manager community Service Bill --> --}}
 
-        {{-- <div id="community-service-bill-report" class="section-content">
+        <div id="community-service-bill-report" class="section-content">
             <div class="section-heading">
                 <h1>Community Service Bill Report</h1>
             </div>
@@ -613,21 +613,21 @@
                         <tr>
                             <td><?= $csbr->building_name ?></td>
                             <td><?= $csbr->apartment_number ?></td>
-                            <td><?= $csbr->community_service_monthly_bill_amount ?></td>
+                            <td><?= $csbr->bill_amount ?></td>
                             <td><?= $csbr->community_service_name ?></td>
                         </tr>
                         <?php endforeach; ?>
 
                         <tr>
                             <td>Subdivision Total</td>
-                            <td><?= $aptCSCount['count(a.apartment_number)']; ?></td>
-                            <td><?= $csBillTotal['sum(acsb.community_service_monthly_bill_amount)']; ?></td>
+                            <td><?= $apartmentCountCommunityService->total_apartments ?></td>
+                            <td><?= $communityServiceBillTotal->total_community_service_bill ?></td>
                             <td></td>
                         </tr>
                     </table>
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         <div id="dashboard-electricity-bill" class="section-content">
             <div class="section-heading">

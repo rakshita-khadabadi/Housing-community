@@ -40,6 +40,10 @@ class SubdivisionManagerController extends Controller
         $gasBillLabels = json_encode($subdivisionManagerController->getGasChartLabels($subdivisionId));
         $waterBillLabels = json_encode($subdivisionManagerController->getWaterChartLabels($subdivisionId));
 
+        $communityServiceBillRecordList = $subdivisionManagerController->getLastMonthCommunityServiceReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
+        $apartmentCountCommunityService = $subdivisionManagerController->getApartmentCountForCommunityServiceReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
+        $communityServiceBillTotal = $subdivisionManagerController->getCommunityServiceBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear);
+
         return view('city-view.post-login.subdivision.subdivision-manager', [
             'personalDetails' => $personalDetails,
             'utilityReportMonth' => $utilityReportMonth,
@@ -53,7 +57,10 @@ class SubdivisionManagerController extends Controller
             'monthLabels' => $monthLabels,
             'electricityBillLabels' => $electricityBillLabels,
             'gasBillLabels' => $gasBillLabels,
-            'waterBillLabels' => $waterBillLabels
+            'waterBillLabels' => $waterBillLabels,
+            'communityServiceBillRecordList' => $communityServiceBillRecordList,
+            'apartmentCountCommunityService' => $apartmentCountCommunityService,
+            'communityServiceBillTotal' => $communityServiceBillTotal
             ]);
     }
 
@@ -215,6 +222,38 @@ class SubdivisionManagerController extends Controller
             ->where('eb.year',"=",$utilityReportYear)
             ->get()->first();
     }
+
+    function getLastMonthCommunityServiceReport($subdivisionId, $utilityReportMonth, $utilityReportYear){
+        
+        return DB::table('apartment_community_service_bills AS acsb')
+            ->select('b.building_name', 'a.apartment_number','acsb.bill_amount', 'cs.community_service_name')
+            ->join('community_services AS cs','cs.id','=','acsb.community_services_id')
+            ->join('buildings AS b','b.id','=','acsb.buildings_id')
+            ->join('apartments AS a','a.id','=','acsb.apartments_id')
+            ->where('acsb.subdivisions_id','=',$subdivisionId)
+            ->where('acsb.month','=',$utilityReportMonth)
+            ->where('acsb.year',"=",$utilityReportYear)
+            ->get();
+    }
     
+    function getApartmentCountForCommunityServiceReport($subdivisionId, $utilityReportMonth, $utilityReportYear){
+
+        return DB::table('apartment_community_service_bills AS acsb')
+            ->select(DB::raw('count(*) as total_apartments'))
+            ->where('acsb.subdivisions_id','=',$subdivisionId)
+            ->where('acsb.month','=',$utilityReportMonth)
+            ->where('acsb.year',"=",$utilityReportYear)
+            ->get()->first();
+    }
+
+    function getCommunityServiceBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear){
+
+        return DB::table('apartment_community_service_bills AS acsb')
+            ->select(DB::raw('SUM(acsb.bill_amount) as total_community_service_bill'))
+            ->where('acsb.subdivisions_id','=',$subdivisionId)
+            ->where('acsb.month','=',$utilityReportMonth)
+            ->where('acsb.year',"=",$utilityReportYear)
+            ->get()->first();
+    }
 
 }
