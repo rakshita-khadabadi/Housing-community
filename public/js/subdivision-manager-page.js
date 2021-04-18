@@ -151,3 +151,18 @@ function viewApartmentDetails(event, elementId){
     console.log(event.currentTarget)
     event.currentTarget.className += " active";
 }
+
+// let eChart = document.getElementById('electricity-chart').getContext('2d');
+//                 // let polo = JSON.stringify(<?php $ebilljson ?>);
+
+//                 let eDashboard = new Chart(eChart, {
+//                     type: 'bar'
+//                     , data: {
+//                         labels: ['Jan','Feb'] 
+//                         , datasets: [{
+//                             label: 'Total Electricty Bill of Subdivision/Month'
+//                             , data: [10,20] 
+//                             , backgroundColor: 'green'
+//                         }]
+//                     }
+//                 });

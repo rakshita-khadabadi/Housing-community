@@ -352,92 +352,9 @@
             </div>
         </div> --}}
 
-        {{-- <div id="dashboard-electricity-bill" class="section-content">
-            <div class="section-heading">
-                <h1>Electricity Dashboard</h1>
-            </div>
+        
 
-            <div>
-                <canvas id="electricity-chart"></canvas>
-            </div>
-
-            <script>
-                let eChart = document.getElementById('electricity-chart').getContext('2d');
-                // let polo = JSON.stringify(<?php $ebilljson ?>);
-
-                let eDashboard = new Chart(eChart, {
-                    type: 'bar'
-                    , data: {
-                        labels: < ? php echo $monthLabels ? > 
-                        , datasets: [{
-                            label: 'Total Electricty Bill of Subdivision/Month'
-                            , data: < ? php echo $electricityBillLabels ? > 
-                            , backgroundColor: 'green'
-                        }]
-                    }
-                });
-
-            </script>
-
-        </div> --}}
-
-        {{-- <div id="dashboard-gas-bill" class="section-content">
-            <div class="section-heading">
-                <h1>Gas Dashboard</h1>
-            </div>
-
-            <div>
-                <canvas id="gas-chart"></canvas>
-            </div>
-
-            <script>
-                let gasChart = document.getElementById('gas-chart').getContext('2d');
-                // let polo = JSON.stringify(<?php $ebilljson ?>);
-
-                let gasDashboard = new Chart(gasChart, {
-                    type: 'bar'
-                    , data: {
-                        labels: < ? php echo $monthLabels ? > 
-                        , datasets: [{
-                            label: 'Total Gas Bill of Subdivision/Month'
-                            , data: < ? php echo $gasBillLabels ? > 
-                            , backgroundColor: 'red'
-                        }]
-                    }
-                });
-
-            </script>
-
-        </div> --}}
-
-        {{-- <div id="dashboard-water-bill" class="section-content">
-            <div class="section-heading">
-                <h1>Water Dashboard</h1>
-            </div>
-
-            <div>
-                <canvas id="water-chart"></canvas>
-            </div>
-
-            <script>
-                let waterChart = document.getElementById('water-chart').getContext('2d');
-                // let polo = JSON.stringify(<?php $ebilljson ?>);
-
-                let waterDashboard = new Chart(waterChart, {
-                    type: 'bar'
-                    , data: {
-                        labels: < ? php echo $monthLabels ? > 
-                        , datasets: [{
-                            label: 'Total Gas Bill of Subdivision/Month'
-                            , data: < ? php echo $waterBillLabels ? > 
-                            , backgroundColor: 'blue'
-                        }]
-                    }
-                });
-
-            </script>
-
-        </div> --}}
+        
 
 
         {{-- <!-- Subdivision Manager New IT Requests --> --}}
@@ -711,6 +628,35 @@
                 </div>
             </div>
         </div> --}}
+
+        <div id="dashboard-electricity-bill" class="section-content">
+            <div class="section-heading">
+                <h1>Electricity Dashboard</h1>
+            </div>
+
+            <div>
+                <canvas id="electricity-chart"></canvas>
+            </div>
+
+            <script>
+                let eChart = document.getElementById('electricity-chart').getContext('2d');
+                // let polo = JSON.stringify(<?php $ebilljson ?>);
+
+                let eDashboard = new Chart(eChart, {
+                    type: 'bar'
+                    , data: {
+                        labels: <?php echo $monthLabels ?>
+                        , datasets: [{
+                            label: 'Total Electricty Bill of Subdivision/Month'
+                            , data: <?php echo $electricityBillLabels ?> 
+                            , backgroundColor: 'green'
+                        }]
+                    }
+                });
+
+            </script>
+
+        </div>
 
 
     </div>

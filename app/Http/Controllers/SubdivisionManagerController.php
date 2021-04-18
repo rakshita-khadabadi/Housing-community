@@ -28,13 +28,16 @@ class SubdivisionManagerController extends Controller
         // echo json_encode($subdivisionRecord);
         $subdivisionId = $subdivisionRecord->id;
 
+        // This fetches data for utility report
         $utilityBillRecordList = $subdivisionManagerController->getLastMonthUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
-
         $apartmentCount = $subdivisionManagerController->getApartmentCountForUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
         $electricityBillTotal = $subdivisionManagerController->getElectricityBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear);
         $gasBillTotal = $subdivisionManagerController->getGasBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear);
         $waterBillTotal = $subdivisionManagerController->getWaterBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear);
         $utilityBillTotal = $electricityBillTotal->total_electricity_bill + $gasBillTotal->total_gas_bill + $waterBillTotal->total_water_bill;
+        $monthLabels = json_encode(['Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec']);
+        $electricityBillLabels = json_encode($subdivisionManagerController->getElectricityChartLabels($subdivisionId));
+        // echo $electricityBillLabels;
 
         return view('city-view.post-login.subdivision.subdivision-manager', [
             'personalDetails' => $personalDetails,
@@ -45,7 +48,9 @@ class SubdivisionManagerController extends Controller
             'electricityBillTotal' => $electricityBillTotal,
             'gasBillTotal' => $gasBillTotal,
             'waterBillTotal' => $waterBillTotal,
-            'utilityBillTotal' => $utilityBillTotal
+            'utilityBillTotal' => $utilityBillTotal,
+            'monthLabels' => $monthLabels,
+            'electricityBillLabels' => $electricityBillLabels
             ]);
     }
 
@@ -89,6 +94,35 @@ class SubdivisionManagerController extends Controller
 
 		return  $date->format('Y');
 	}
+
+    function getElectricityChartLabels($subdivisionId){
+
+        $electricityLabels = [];
+        $date = new DateTime("last month", new DateTimeZone('America/Chicago') );
+		$currentYear = $date->format('Y');
+
+        for ($i=1; $i<=12; $i=$i+1){
+
+            $currentMonth = $i;
+
+            $monthTotal = DB::table('electricity_bills AS eb')
+                        ->select(DB::raw('SUM(eb.bill_amount) as total_electricity_bill'))
+                        ->where('eb.subdivisions_id','=',$subdivisionId)
+                        ->where('eb.month','=',$currentMonth)
+                        ->where('eb.year',"=",$currentYear)
+                        ->get()->first();
+
+            if ($monthTotal->total_electricity_bill == null){
+                array_push($electricityLabels, 0);
+            }
+            else{
+                array_push($electricityLabels, $monthTotal->total_electricity_bill);
+            }
+            
+        }
+
+        return $electricityLabels;
+    }
 
     function getApartmentCountForUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear){
 
