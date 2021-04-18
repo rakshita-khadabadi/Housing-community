@@ -23,13 +23,29 @@ class SubdivisionManagerController extends Controller
         $utilityReportYear = $subdivisionManagerController->getPreviousMonthYear();
         // echo $utilityReportYear;
 
-        $utilityBillRecordList = $subdivisionManagerController->fetchUtilityReportOfSubdivision($userId, $utilityReportMonth, $utilityReportYear);
+        $subdivisionController = new SubdivisionController();
+        $subdivisionRecord = $subdivisionController->getSubdivisionIdByUserId($userId);
+        // echo json_encode($subdivisionRecord);
+        $subdivisionId = $subdivisionRecord->id;
+
+        $utilityBillRecordList = $subdivisionManagerController->getLastMonthUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
+
+        $apartmentCount = $subdivisionManagerController->getApartmentCountForUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
+        $electricityBillTotal = $subdivisionManagerController->getElectricityBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear);
+        $gasBillTotal = $subdivisionManagerController->getGasBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear);
+        $waterBillTotal = $subdivisionManagerController->getWaterBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear);
+        $utilityBillTotal = $electricityBillTotal->total_electricity_bill + $gasBillTotal->total_gas_bill + $waterBillTotal->total_water_bill;
 
         return view('city-view.post-login.subdivision.subdivision-manager', [
             'personalDetails' => $personalDetails,
             'utilityReportMonth' => $utilityReportMonth,
             'utilityReportYear' => $utilityReportYear,
-            'utilityBillRecordList' => $utilityBillRecordList
+            'utilityBillRecordList' => $utilityBillRecordList,
+            'apartmentCount' => $apartmentCount,
+            'electricityBillTotal' => $electricityBillTotal,
+            'gasBillTotal' => $gasBillTotal,
+            'waterBillTotal' => $waterBillTotal,
+            'utilityBillTotal' => $utilityBillTotal
             ]);
     }
 
@@ -37,19 +53,14 @@ class SubdivisionManagerController extends Controller
         echo 'Inside checkFeature';
     }
 
-    function fetchUtilityReportOfSubdivision($userId, $utilityReportMonth, $utilityReportYear){
+    // function fetchUtilityReportOfSubdivision($subdivisionId, $utilityReportMonth, $utilityReportYear){
         
-        $subdivisionController = new SubdivisionController();
-        $subdivisionRecord = $subdivisionController->getSubdivisionIdByUserId($userId);
-        // echo json_encode($subdivisionRecord);
+    //     $subdivisionManagerController = new SubdivisionManagerController();
+    //     $utilityReport = $subdivisionManagerController->getLastMonthUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
+    //     // echo $utilityReport;
+    //     return $utilityReport;
 
-        $subdivisionId = $subdivisionRecord->id;
-        $subdivisionManagerController = new SubdivisionManagerController();
-        $utilityReport = $subdivisionManagerController->getLastMonthUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
-        // echo $utilityReport;
-        return $utilityReport;
-
-    }
+    // }
 
     function getLastMonthUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear){
         
@@ -78,5 +89,46 @@ class SubdivisionManagerController extends Controller
 
 		return  $date->format('Y');
 	}
+
+    function getApartmentCountForUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear){
+
+        return DB::table('electricity_bills AS eb')
+            ->select(DB::raw('count(*) as total_apartments'))
+            ->where('eb.subdivisions_id','=',$subdivisionId)
+            ->where('eb.month','=',$utilityReportMonth)
+            ->where('eb.year',"=",$utilityReportYear)
+            ->get()->first();
+    }
+
+    function getElectricityBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear){
+
+        return DB::table('electricity_bills AS eb')
+            ->select(DB::raw('SUM(eb.bill_amount) as total_electricity_bill'))
+            ->where('eb.subdivisions_id','=',$subdivisionId)
+            ->where('eb.month','=',$utilityReportMonth)
+            ->where('eb.year',"=",$utilityReportYear)
+            ->get()->first();
+    }
+
+    function getGasBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear){
+
+        return DB::table('gas_bills AS eb')
+            ->select(DB::raw('SUM(eb.bill_amount) as total_gas_bill'))
+            ->where('eb.subdivisions_id','=',$subdivisionId)
+            ->where('eb.month','=',$utilityReportMonth)
+            ->where('eb.year',"=",$utilityReportYear)
+            ->get()->first();
+    }
+
+    function getWaterBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear){
+
+        return DB::table('water_bills AS eb')
+            ->select(DB::raw('SUM(eb.bill_amount) as total_water_bill'))
+            ->where('eb.subdivisions_id','=',$subdivisionId)
+            ->where('eb.month','=',$utilityReportMonth)
+            ->where('eb.year',"=",$utilityReportYear)
+            ->get()->first();
+    }
+    
 
 }

@@ -657,13 +657,14 @@
                         </tr>
                         <?php endforeach; ?>
 
-                        {{--  <tr>
+                        <tr>
                             <td>Subdivision Total</td>
-                            <td><?= $aptCount['count(a.apartment_number)']; ?></td>
-                            <td><?= $billTotal['sum(aub.utility_monthly_bill_amount)']; ?></td>
-                            <td></td>
-                            <td></td>
-                        </tr>  --}}
+                            <td><?= $apartmentCount->total_apartments ?></td>
+                            <td><?= $electricityBillTotal->total_electricity_bill ?></td>
+                            <td>{{ $gasBillTotal->total_gas_bill }}</td>
+                            <td>{{ $waterBillTotal->total_water_bill }}</td>
+                            <td>{{ $utilityBillTotal }}</td>
+                        </tr>
 
                     </table>
                 </div>
