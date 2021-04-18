@@ -6,14 +6,13 @@
 
 <h1>Mock Utility Bill</h1>
 
-@isset($outputResponse)
-<div>
-    <p>outputResponse</p>
-    <p>{{ $outputResponse['statusCode'] }}</p>
-    <p>{{ $outputResponse['message'] }}</p>
-</div>
+@if (session('error'))
+<div class="alert alert-danger">{{ session('error') }}</div>
+@endif
 
-@endisset
+@if (session('success'))
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
 <form method="POST">
     @csrf

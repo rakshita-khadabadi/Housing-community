@@ -6,15 +6,6 @@
 
 <h1>Mock Community Bill</h1>
 
-{{-- @isset($outputResponse)
-<div>
-    <p>outputResponse</p>
-    <p>{{ $outputResponse['statusCode'] }}</p>
-<p>{{ $outputResponse['message'] }}</p>
-</div>
-
-@endisset --}}
-
 @if (session('error'))
 <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
