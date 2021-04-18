@@ -658,6 +658,63 @@
 
         </div>
 
+        <div id="dashboard-gas-bill" class="section-content">
+            <div class="section-heading">
+                <h1>Gas Dashboard</h1>
+            </div>
+
+            <div>
+                <canvas id="gas-chart"></canvas>
+            </div>
+
+            <script>
+                let gasChart = document.getElementById('gas-chart').getContext('2d');
+                // let polo = JSON.stringify(<?php $ebilljson ?>);
+
+                let gasDashboard = new Chart(gasChart, {
+                    type: 'bar'
+                    , data: {
+                        labels: <?php echo $monthLabels ?> 
+                        , datasets: [{
+                            label: 'Total Gas Bill of Subdivision/Month'
+                            , data: <?php echo $gasBillLabels ?> 
+                            , backgroundColor: 'red'
+                        }]
+                    }
+                });
+
+            </script>
+
+        </div>
+
+        <div id="dashboard-water-bill" class="section-content">
+            <div class="section-heading">
+                <h1>Water Dashboard</h1>
+            </div>
+
+            <div>
+                <canvas id="water-chart"></canvas>
+            </div>
+
+            <script>
+                let waterChart = document.getElementById('water-chart').getContext('2d');
+                // let polo = JSON.stringify(<?php $ebilljson ?>);
+
+                let waterDashboard = new Chart(waterChart, {
+                    type: 'bar'
+                    , data: {
+                        labels: <?php echo $monthLabels ?> 
+                        , datasets: [{
+                            label: 'Total Gas Bill of Subdivision/Month'
+                            , data: <?php echo $waterBillLabels ?> 
+                            , backgroundColor: 'blue'
+                        }]
+                    }
+                });
+
+            </script>
+
+        </div>
 
     </div>
 
