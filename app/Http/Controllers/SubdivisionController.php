@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Subdivision;
 use Exception;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class SubdivisionController extends Controller
 {
@@ -50,26 +51,12 @@ class SubdivisionController extends Controller
         try{
             $subdivision->save();
 
-            // return response()->json([
-            //     'statusCode' => '200',
-            //     'message' => 'success',
-            //     'error' => $e->getMessage(),
-            //     'comments' => 'Added new subdivision.',
-            //     'subdivisionId' => $subdivision->id
-            // ]);
             $successMessage = 'Successfully added Subdivision '.$subdivisionName;
             return redirect()->back()->with(['success'=> $successMessage]);
         }
         catch(Exception $e){
             echo 'Inside catch block';
             echo $e->getMessage();
-            
-            // return response()->json([
-            //     'statusCode' => '500',
-            //     'message' => 'failed',
-            //     'error' => $e->getMessage(),
-            //     'comments' => 'Failed to add new subdivision.'
-            // ]);
 
             $errorMessage = '';
             $duplicateError = Str::contains($e->getMessage(), 'Integrity constraint violation: 1062 Duplicate entry');
@@ -84,8 +71,12 @@ class SubdivisionController extends Controller
             return redirect()->back()->with(['error'=> $errorMessage]);
 
         }
-        
-
 
     }
+
+    function getSubdivisionIdByUserId($userId){
+
+        return DB::table('subdivisions')->where('users_id','=',$userId)->get()->first();
+    }
+
 }

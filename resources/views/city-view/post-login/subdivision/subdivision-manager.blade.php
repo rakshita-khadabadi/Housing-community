@@ -626,7 +626,7 @@
 
         {{-- <!-- Subdivision Manager Utility Bill --> --}}
 
-        {{-- <div id="utility-bill-report" class="section-content">
+        <div id="utility-bill-report" class="section-content">
             <div class="section-heading">
                 <h1>Utility Bill Report</h1>
             </div>
@@ -666,7 +666,7 @@
                     </table>
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         {{-- <!-- Subdivision Manager community Service Bill --> --}}
 
