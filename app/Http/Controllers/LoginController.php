@@ -50,7 +50,7 @@ class LoginController extends Controller
             return redirect('/admin?userId='.$userId);
         }
         elseif($roleName == 'subdivision manager'){
-
+            return redirect('/subdivision-manager?userId='.$userId);
         }
         elseif($roleName == 'building manager'){
 
