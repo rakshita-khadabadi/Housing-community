@@ -641,27 +641,29 @@
                         <tr>
                             <th>Building Name</th>
                             <th>Apartment Number</th>
-                            <th>Bill Amount</th>
-                            <th>Utility Name</th>
-                            <th>Service Provider</th>
+                            <th>Electricity Bill</th>
+                            <th>Gas Bill</th>
+                            <th>water Bill</th>
+                            <th>Total</th>
                         </tr>
                         <?php foreach ($utilityBillRecordList as $ubr): ?>
                         <tr>
                             <td><?= $ubr->building_name ?></td>
                             <td><?= $ubr->apartment_number ?></td>
-                            <td><?= $ubr->utility_monthly_bill_amount ?></td>
-                            <td><?= $ubr->utility_name ?></td>
-                            <td><?= $ubr->service_provider_type ?></td>
+                            <td><?= $ubr->electricity_bill ?></td>
+                            <td><?= $ubr->gas_bill ?></td>
+                            <td><?= $ubr->water_bill ?></td>
+                            <td><?= $ubr->total ?></td>
                         </tr>
                         <?php endforeach; ?>
 
-                        <tr>
+                        {{--  <tr>
                             <td>Subdivision Total</td>
                             <td><?= $aptCount['count(a.apartment_number)']; ?></td>
                             <td><?= $billTotal['sum(aub.utility_monthly_bill_amount)']; ?></td>
                             <td></td>
                             <td></td>
-                        </tr>
+                        </tr>  --}}
 
                     </table>
                 </div>

@@ -23,13 +23,14 @@ class SubdivisionManagerController extends Controller
         $utilityReportYear = $subdivisionManagerController->getPreviousMonthYear();
         // echo $utilityReportYear;
 
-        $subdivisionManagerController->fetchUtilityReportOfSubdivision($userId, $utilityReportMonth, $utilityReportYear);
+        $utilityBillRecordList = $subdivisionManagerController->fetchUtilityReportOfSubdivision($userId, $utilityReportMonth, $utilityReportYear);
 
-        // return view('city-view.post-login.subdivision.subdivision-manager', [
-        //     'personalDetails' => $personalDetails,
-        //     'utilityReportMonth' => $utilityReportMonth,
-        //     'utilityReportYear' => $utilityReportYear
-        //     ]);
+        return view('city-view.post-login.subdivision.subdivision-manager', [
+            'personalDetails' => $personalDetails,
+            'utilityReportMonth' => $utilityReportMonth,
+            'utilityReportYear' => $utilityReportYear,
+            'utilityBillRecordList' => $utilityBillRecordList
+            ]);
     }
 
     function checkFeature(){
@@ -45,7 +46,8 @@ class SubdivisionManagerController extends Controller
         $subdivisionId = $subdivisionRecord->id;
         $subdivisionManagerController = new SubdivisionManagerController();
         $utilityReport = $subdivisionManagerController->getLastMonthUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
-        echo $utilityReport;
+        // echo $utilityReport;
+        return $utilityReport;
 
     }
 
