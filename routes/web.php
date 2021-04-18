@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SubdivisionManagerController;
+use App\Http\Controllers\MockCommunityServiceBillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,8 @@ Route::view('/', 'city-view.home')->name('city-view.home');
 Route::view('/mock-utility-bill', 'city-view.mock-utility-bill')->name('city-view.mock-utility-bill');
 Route::post('/mock-utility-bill', [MockUtilityBillController::class, 'addMockUtilityBill']);
 
+Route::view('/mock-community-bill', 'city-view.mock-community-bill');
+Route::post('/mock-community-bill', [MockCommunityServiceBillController::class, 'addCommunityServiceBill']);
 // Route::get('/showRoles', [RoleController::class, 'getRoles']);
 
 // Route::view('/admin', 'city-view.post-login.admin.admin')->name('city-view.post-login.admin.admin');

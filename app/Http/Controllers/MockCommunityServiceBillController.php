@@ -42,13 +42,8 @@ class MockCommunityServiceBillController extends Controller
             $apartmentCSBill->save();
         }
 
-        return response()->json([
-            'statusCode' => '200',
-            'message' => 'success',
-            'error' => '',
-            'comments' => 'Mock Community Service Bill added successfully.',
-            'apartmentId' => $apartmentId
-        ]);
+        $successMessage = 'Mock Community Service Bill added successfully for apartmentId = '.$apartmentId;
+        return redirect()->back()->with(['success'=> $successMessage]);
 
     }
 }
