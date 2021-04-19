@@ -52,9 +52,11 @@ function menuFunction(event){
     }
 }
 
-function inputApartmentOwnerChat(event){
-
-    inputMessage = document.getElementById("apartment-owner-send").value
+function inputApartmentOwnerChat(event, inputBoxId){
+    console.log('----------');
+    console.log(inputBoxId);
+    console.log('----------');
+    inputMessage = document.getElementById(inputBoxId).value
     console.log(inputMessage)
 }
 

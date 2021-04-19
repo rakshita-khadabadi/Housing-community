@@ -116,7 +116,7 @@
 
         <!-- Subdivision Manager Apartment Owner Chat -->
 
-        {{-- <div id="apartment-owner-chat" class="section-content">
+        <div id="apartment-owner-chat" class="section-content">
             <div class="section-heading">
                 <h1>Chat</h1>
             </div>
@@ -170,10 +170,10 @@
                             <div class="chat-input-bar">
                                 <div class="chat-input">
                                     <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
+                                    <input type="text" id="apartment-owner-send-1" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="inputApartmentOwnerChat()">Send</button>
+                                    <button class="send-button" onclick="inputApartmentOwnerChat(event, 'apartment-owner-send-1')">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -231,7 +231,7 @@
                 </div>
 
             </div>
-        </div> --}}
+        </div>
 
         <!-- Subdivision Manager Building Manager Chat -->
 

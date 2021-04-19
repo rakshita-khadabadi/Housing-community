@@ -74,3 +74,5 @@ Route::post('/sign-up', [SignUpController::class, 'signUpNewUser']);
 
 Route::get('/login', [LoginController::class, 'showLogin']);
 Route::post('/login', [LoginController::class, 'login']);
+
+Route::view('/chat', 'city-view.post-login.chat.chat');
