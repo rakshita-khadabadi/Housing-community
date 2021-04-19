@@ -9,6 +9,7 @@ npm install
 npm run dev
 
 npm install websocket
+npm install websockets
 
 Note:
 
