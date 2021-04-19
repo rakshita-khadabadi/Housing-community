@@ -1,10 +1,10 @@
 @extends('city-view.app')
 
-@section('title', 'Mock Utility Bill')
+@section('title', 'Mock Community Bill')
 
 @section('content')
 
-<h1>Mock Utility Bill</h1>
+<h1>Mock Community Bill</h1>
 
 @if (session('error'))
 <div class="alert alert-danger">{{ session('error') }}</div>
@@ -20,19 +20,17 @@
 
         <input type="text" id="fname" name="apartmentId" value="" placeholder="apartmentId"> <br><br>
 
-        <input type="text" id="lname" name="electricityBill" value="" placeholder="electricity"> <br><br>
+        <input type="text" id="lname" name="maintenanceBill" value="" placeholder="maintenanceFeeBill"> <br><br>
 
-        <input type="text" id="w-bill" name="waterBill" value="" placeholder="water"> <br><br>
+        <input type="text" id="w-bill" name="poolBill" value="" placeholder="poolBill"> <br><br>
 
-        <input type="text" id="g-bill" name="gasBill" value="" placeholder="gas"> <br><br>
-
-        <input type="text" id="i-bill" name="internetBill" value="" placeholder="internet"> <br><br>
+        <input type="text" id="g-bill" name="gymBill" value="" placeholder="gymBill"> <br><br>
 
         <input type="text" id="month" name="month" value="" placeholder="month"> <br><br>
 
         <input type="text" id="year" name="year" value="" placeholder="year"> <br><br>
 
-        <input class="btn btn-success" id="btnSubmit" type="submit" value="Submit">
+        <input id="btnSubmit" type="submit" value="Submit">
 
     </div>
 </form>

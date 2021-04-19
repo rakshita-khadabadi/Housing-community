@@ -56,23 +56,26 @@ class MockUtilityBillController extends Controller
 
         }
 
-        // return response()->json([
-        //     'statusCode' => '200',
-        //     'message' => 'success',
-        //     'error' => '',
-        //     'comments' => 'Mock Utility Bill added successfully.',
-        //     'apartmentId' => $apartmentId
-        // ]);
+        // // return response()->json([
+        // //     'statusCode' => '200',
+        // //     'message' => 'success',
+        // //     'error' => '',
+        // //     'comments' => 'Mock Utility Bill added successfully.',
+        // //     'apartmentId' => $apartmentId
+        // // ]);
 
-        $outputResponse =[
-                'statusCode' => '200',
-                'message' => 'success',
-                'error' => '',
-                'comments' => 'Mock Utility Bill added successfully.',
-                'apartmentId' => $apartmentId
-        ];
+        // $outputResponse =[
+        //         'statusCode' => '200',
+        //         'message' => 'success',
+        //         'error' => '',
+        //         'comments' => 'Mock Utility Bill added successfully.',
+        //         'apartmentId' => $apartmentId
+        // ];
 
-        return view('city-view.mock-utility-bill', ['outputResponse' => $outputResponse]);
+        // return view('city-view.mock-utility-bill', ['outputResponse' => $outputResponse]);
+
+        $successMessage = 'Mock Utility Bill added successfully for apartmentId = '.$apartmentId;
+        return redirect()->back()->with(['success'=> $successMessage]);
     }
 
     function addToElectricityBill($request, $utilitySPChoiceRecord){
