@@ -52,19 +52,11 @@ function menuFunction(event){
     }
 }
 
-function inputApartmentOwnerChat(event, inputBoxId){
-    console.log('----------');
-    console.log(inputBoxId);
-    console.log('----------');
-    inputMessage = document.getElementById(inputBoxId).value
-    console.log(inputMessage)
-}
+// function inputBuildingManagerChat(event, inputBoxId){
 
-function inputBuildingManagerChat(event){
-
-    inputMessage = document.getElementById("building-manager-send").value
-    console.log(inputMessage)
-}
+//     inputMessage = document.getElementById("building-manager-send").value
+//     console.log(inputMessage)
+// }
 
 function viewApartmentOwnerChatMenu(event, elementId){
 
@@ -154,17 +146,16 @@ function viewApartmentDetails(event, elementId){
     event.currentTarget.className += " active";
 }
 
-// let eChart = document.getElementById('electricity-chart').getContext('2d');
-//                 // let polo = JSON.stringify(<?php $ebilljson ?>);
+function inputForChat(event, inputBoxId, receiverUserId, senderUserId){
 
-//                 let eDashboard = new Chart(eChart, {
-//                     type: 'bar'
-//                     , data: {
-//                         labels: ['Jan','Feb'] 
-//                         , datasets: [{
-//                             label: 'Total Electricty Bill of Subdivision/Month'
-//                             , data: [10,20] 
-//                             , backgroundColor: 'green'
-//                         }]
-//                     }
-//                 });
+    inputMessage = document.getElementById(inputBoxId).value
+    console.log(inputMessage)
+
+    console.log('receiverUserId = ' + receiverUserId)
+    console.log('senderUserId = ' + senderUserId)
+
+    var ajax = new XMLHttpRequest();
+	ajax.open("POST", "php-send-message.php", true);
+	ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	ajax.send("name=" + name + "&message=" + message);
+}
