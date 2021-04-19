@@ -267,7 +267,7 @@ class SubdivisionManagerController extends Controller
     function getBuildingManagerList($subdivisionId){
 
         return DB::table('users as u')
-                ->select('b.building_name','u.first_name','u.last_name','u.email_id','u.phone_number','u.joining_datetime')
+                ->select('u.id','b.building_name','u.first_name','u.last_name','u.email_id','u.phone_number','u.joining_datetime')
                 ->join('buildings AS b','b.users_id','=','u.id')
                 ->where('b.subdivisions_id','=',$subdivisionId)
                 ->where('b.has_manager','=','1')
@@ -277,7 +277,7 @@ class SubdivisionManagerController extends Controller
     function getApartmentOwnerList($subdivisionId){
 
         return DB::table('users as u')
-                ->select('b.building_name','a.apartment_number','u.first_name','u.last_name','u.email_id','u.phone_number','u.joining_datetime')
+                ->select('u.id','b.building_name','a.apartment_number','u.first_name','u.last_name','u.email_id','u.phone_number','u.joining_datetime')
                 ->join('apartments AS a','a.users_id','=','u.id')
                 ->join('buildings AS b','b.id','=','a.buildings_id')
                 ->where('a.subdivisions_id','=',$subdivisionId)
