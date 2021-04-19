@@ -44,6 +44,12 @@ class SubdivisionManagerController extends Controller
         $apartmentCountCommunityService = $subdivisionManagerController->getApartmentCountForCommunityServiceReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
         $communityServiceBillTotal = $subdivisionManagerController->getCommunityServiceBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear);
 
+        $buildingList = $subdivisionManagerController->getBuildingManagerList($subdivisionId);
+        // echo $buildingList;
+
+        $aptList = $subdivisionManagerController->getApartmentOwnerList($subdivisionId);
+        // echo $aptList;
+
         return view('city-view.post-login.subdivision.subdivision-manager', [
             'personalDetails' => $personalDetails,
             'utilityReportMonth' => $utilityReportMonth,
@@ -60,7 +66,9 @@ class SubdivisionManagerController extends Controller
             'waterBillLabels' => $waterBillLabels,
             'communityServiceBillRecordList' => $communityServiceBillRecordList,
             'apartmentCountCommunityService' => $apartmentCountCommunityService,
-            'communityServiceBillTotal' => $communityServiceBillTotal
+            'communityServiceBillTotal' => $communityServiceBillTotal,
+            'buildingList' => $buildingList,
+            'aptList' => $aptList
             ]);
     }
 
@@ -254,6 +262,27 @@ class SubdivisionManagerController extends Controller
             ->where('acsb.month','=',$utilityReportMonth)
             ->where('acsb.year',"=",$utilityReportYear)
             ->get()->first();
+    }
+
+    function getBuildingManagerList($subdivisionId){
+
+        return DB::table('users as u')
+                ->select('b.building_name','u.first_name','u.last_name','u.email_id','u.phone_number','u.joining_datetime')
+                ->join('buildings AS b','b.users_id','=','u.id')
+                ->where('b.subdivisions_id','=',$subdivisionId)
+                ->where('b.has_manager','=','1')
+                ->get();
+    }
+
+    function getApartmentOwnerList($subdivisionId){
+
+        return DB::table('users as u')
+                ->select('b.building_name','a.apartment_number','u.first_name','u.last_name','u.email_id','u.phone_number','u.joining_datetime')
+                ->join('apartments AS a','a.users_id','=','u.id')
+                ->join('buildings AS b','b.id','=','a.buildings_id')
+                ->where('a.subdivisions_id','=',$subdivisionId)
+                ->where('a.occupancy_status','=','occupied')
+                ->get();
     }
 
 }

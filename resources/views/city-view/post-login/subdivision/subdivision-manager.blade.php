@@ -416,7 +416,7 @@
 
         {{-- <!-- Subdivision Manager Apartment Details --> --}}
 
-        {{-- <div id="apartment-details" class="section-content">
+        <div id="apartment-details" class="section-content">
             <div class="section-heading">
                 <h1>Apartment Details</h1>
             </div>
@@ -480,11 +480,11 @@
 
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         {{-- <!-- Subdivision Manager Building Manager Details --> --}}
 
-        {{-- <div id="building-manager-details" class="section-content">
+        <div id="building-manager-details" class="section-content">
             <div class="section-heading">
                 <h1>Building Manager Details</h1>
             </div>
@@ -539,7 +539,7 @@
 
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         {{-- <!-- Subdivision Manager Utility Bill --> --}}
 
