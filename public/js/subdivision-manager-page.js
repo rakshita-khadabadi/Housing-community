@@ -154,10 +154,10 @@ function inputForChat(event, inputBoxId, receiverUserId, senderUserId){
     console.log('receiverUserId = ' + receiverUserId)
     console.log('senderUserId = ' + senderUserId)
 
-    var ajax = new XMLHttpRequest();
-	ajax.open("POST", "php-send-message.php", true);
-	ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	ajax.send("name=" + name + "&message=" + message);
+    // var ajax = new XMLHttpRequest();
+	// ajax.open("POST", "php-send-message.php", true);
+	// ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	// ajax.send("name=" + name + "&message=" + message);
 }
 
 

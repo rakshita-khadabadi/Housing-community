@@ -515,8 +515,8 @@ eval("// removed by extract-text-webpack-plugin//# sourceURL=[module]\n//# sourc
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/amlanalok/Documents/UTA/MS-CS/1-Spring-2021/CSE 5335 - Web Data Management/Assignments/Phase-5/Laravel/city-view/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/amlanalok/Documents/UTA/MS-CS/1-Spring-2021/CSE 5335 - Web Data Management/Assignments/Phase-5/Laravel/city-view/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/wdm-phase-5-laravel/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/wdm-phase-5-laravel/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
