@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Exception;
 use App\Models\ItRequest;
+use Illuminate\Support\Facades\DB;
 
 class ItRequestController extends Controller
 {
+    function fetchItRequestWithSubdivisionId($subdivisionId){
+
+        return DB::table('it_requests')
+                    ->where('subdivisions_id','=',$subdivisionId)
+                    ->get();
+    }
+
     function saveItRequest($itrMessage, $subdivisionId){
 
         $current_date_time = \Carbon\Carbon::now()->toDateTimeString();

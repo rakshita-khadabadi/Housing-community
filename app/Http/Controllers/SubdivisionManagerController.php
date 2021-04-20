@@ -48,7 +48,9 @@ class SubdivisionManagerController extends Controller
         // echo $buildingList;
         $aptList = $subdivisionManagerController->getApartmentOwnerList($subdivisionId);
         // echo $aptList;
-
+        $itRequestController = new ItRequestController();
+        $itrlist = $itRequestController->fetchItRequestWithSubdivisionId($subdivisionId);
+        // echo $itrlist;
 
         return view('city-view.post-login.subdivision.subdivision-manager', [
             'personalDetails' => $personalDetails,
@@ -68,7 +70,8 @@ class SubdivisionManagerController extends Controller
             'apartmentCountCommunityService' => $apartmentCountCommunityService,
             'communityServiceBillTotal' => $communityServiceBillTotal,
             'buildingList' => $buildingList,
-            'aptList' => $aptList
+            'aptList' => $aptList,
+            'itrlist' => $itrlist
             ]);
     }
 

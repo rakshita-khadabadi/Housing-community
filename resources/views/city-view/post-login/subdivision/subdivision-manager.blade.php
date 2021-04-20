@@ -57,7 +57,8 @@
                 <button class="subdivision-it-request-menu-option sidebar-option text-left opacity" onclick="myFunction(event, 'view-it-requests')">View IT Requests</button>
             </div>
 
-            <a href="../../index.php">
+            {{-- <a href="../../index.php"> --}}
+            <a href="/">
                 <button class="admin-option text-left opacity" onclick="myFunction(event, 'sign-out')">Sign out</button>
             </a>
 
@@ -275,7 +276,7 @@
 
         {{-- <!-- Subdivision Manager View IT Requests --> --}}
 
-        {{-- <div id="view-it-requests" class="section-content">
+        <div id="view-it-requests" class="section-content">
             <div class="section-heading">
                 <h1>IT Request</h1>
             </div>
@@ -284,11 +285,11 @@
 
                 <div class="it-request-list">
                     <?php foreach ($itrlist as $itr): ?>
-                    <button class="it-request" onclick="viewItDetails(event, 'it-<?= $itr->it_request_id ?>')">
-                        IT Request ID: <?= $itr->it_request_id ?> <br />
-                        Date: <?= $itr->message_datetime ?> <br />
-                        Status: <?= $itr->status ?>
-                    </button>
+                        <button class="it-request" onclick="viewItDetails(event, 'it-<?= $itr->id ?>')">
+                            IT Request ID: <?= $itr->id ?> <br />
+                            Date: <?= $itr->message_datetime ?> <br />
+                            Status: <?= $itr->status ?>
+                        </button>
                     <?php endforeach; ?>
 
                 </div>
@@ -296,20 +297,20 @@
                 <div class="display-it-request">
                     <?php foreach ($itrlist as $itr): ?>
 
-                    <div id="it-<?= $itr->it_request_id ?>" class="it-request-details">
-                        <h3>Datetime</h3>
-                        <p><?= $itr->message_datetime ?></p>
-                        <h3>Message</h3>
-                        <p><?= $itr->message ?></p>
-                        <h3>Status</h3>
-                        <p><?= $itr->status ?></p>
-                    </div>
+                        <div id="it-<?= $itr->id ?>" class="it-request-details">
+                            <h3>Datetime</h3>
+                            <p><?= $itr->message_datetime ?></p>
+                            <h3>Message</h3>
+                            <p><?= $itr->message ?></p>
+                            <h3>Status</h3>
+                            <p><?= $itr->status ?></p>
+                        </div>
                     <?php endforeach; ?>
 
                 </div>
             </div>
 
-        </div> --}}
+        </div>
 
         {{-- <!-- Subdivision Manager Apartment Details --> --}}
 
