@@ -338,7 +338,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div>--}}
 
             <!-- Subdivision Manager View IT Requests -->
 
@@ -353,7 +353,7 @@
                         <?php foreach ($itrList as $key => $value): ?>
                             <a href='#it-<?= htmlspecialchars($key); ?>'>
                                 <button class="it-request" onclick="viewItDetails(event, 'it-<?= htmlspecialchars($key); ?>')">
-                                    IT Request ID: <?= $value->it_request_id; ?> <br />
+                                    IT Request ID: <?= $value->id; ?> <br />
                                     Date: <?= $value->message_datetime; ?> <br />
                                     Status: <?= $value->status; ?>
                                 </button>
@@ -365,12 +365,15 @@
 
                         <?php foreach ($itrList as $key => $value): ?>
                             <div id="it-<?= htmlspecialchars($key); ?>" class="it-request-details">
+                            
                                 <h3>Datetime</h3>
                                 <p><?= $value->message_datetime; ?></p>
                                 <h3>Message</h3>
                                 <p><?= $value->message; ?></p>
                                 <h3>Status</h3>
                                 <p><?= $value->status; ?></p>
+                                <h3>Subdivision Id</h3>
+                                <p><?= $value->subdivisions_id; ?></p>
                             </div>
                         <?php endforeach ?>
 
@@ -381,7 +384,7 @@
 
             <!-- Contact Us Messages -->
 
-            <div id="contact-us-messages" class="section-content">
+            {{-- <div id="contact-us-messages" class="section-content">
                 <div class="section-heading">
                     <h1>Contact Us Messages</h1>
                 </div>

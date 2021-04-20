@@ -10,7 +10,14 @@ class AdminController extends Controller
 
         $subdivisionController = new SubdivisionController();
         $subdivisionList = $subdivisionController->fetchAllSubdivisions();
-        return view('city-view.post-login.admin-files.admin', ['subdivisionList' => $subdivisionList]);
+
+        $itRequestController = new ItRequestController();
+        $itrList = $itRequestController->fetchAllItRequests();
+
+        return view('city-view.post-login.admin-files.admin', [
+            'subdivisionList' => $subdivisionList,
+            'itrList' => $itrList
+            ]);
     }
 
     function checkFeature(Request $request){
