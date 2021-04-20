@@ -7,7 +7,7 @@ $db_user = "root";
 $db_pass = "";
 
 // function to connect to the DB
-$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+$mysqli = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
 
 // checkng if the connection was successful
 if (mysqli_connect_error()) {

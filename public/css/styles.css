@@ -601,6 +601,23 @@ tr {
     margin-top: 20px;
 }
 
+.receiver-msg{
+    display: block;
+    float: left;
+    width: 100%;
+    /* border: 1px solid black; */
+}
+
+.sender-msg{
+    display: block;
+    float: right;
+    /* border: 1px solid black; */
+}
+
+/* .chat-msg-width{
+    width: 100%;
+} */
+
 
 
 @media screen and (max-width: 768px) {

@@ -17,6 +17,12 @@ if (mysqli_connect_error()) {
 	echo "connected successfully";
 }
 
+$senderUserId = $_GET['senderUserId'];
+$receiverUserId = $_GET['receiverUserId'];
+
+echo $senderUserId;
+echo $receiverUserId;
+
 ?>
 
 @extends('city-view.app')
@@ -26,6 +32,10 @@ if (mysqli_connect_error()) {
 @section('content')
 <div>
     <div class="small-chat-display-box">
+        <span class="receiver-msg">How are you?</span>
+        <span class="sender-msg">Great!</span>
+        <div id="connecting">Connecting to web sockets server...</div>
+        
 
     </div>
 
@@ -35,7 +45,7 @@ if (mysqli_connect_error()) {
             <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
         </div>
         <div>
-            <button class="send-button" onclick="inputForChat(event, 'apartment-owner-send', 4, 2)">Send</button>
+            <button class="send-button" onclick="inputForChat(event, 'apartment-owner-send', $receiverUserId, $senderUserId)">Send</button>
         </div>
     </div>
 </div>
