@@ -71,6 +71,14 @@
             <h1>Subdivision Manager</h1>
         </div>
 
+        @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
+        @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
         <div id="personal-details" class="show-initial section-content">
             <div class="section-heading">
                 <h1>Personal Details</h1>
@@ -131,19 +139,19 @@
 
                     <div class="chat-name-list">
                         <?php foreach ($aptList as $key => $value): ?>
-                        {{--  <a href="#apartment-owner-detail-<?= htmlspecialchars($key); ?>">
+                        {{-- <a href="#apartment-owner-detail-<?= htmlspecialchars($key); ?>">
                             <button class="apartment-owner-detail-tile" onclick="viewApartmentDetails(event, 'apartment-owner-detail-<?= htmlspecialchars($key); ?>')">
                                 Apartment Number: <?= $value->apartment_number; ?> <br />
                                 Building Name: <?= $value->building_name; ?>
                             </button>
                         </a>
                         </a>  --}}
-                            <a href="#apartment-owner-<?= htmlspecialchars($key); ?>">
-                                <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-<?= htmlspecialchars($key); ?>')">
-                                    <?= $value->first_name; ?>  <?= $value->last_name; ?>, <?= $value->apartment_number; ?><br />
-                                    <?= $value->building_name; ?> <br />
-                                </button>
-                            </a>
+                        <a href="#apartment-owner-<?= htmlspecialchars($key); ?>">
+                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-<?= htmlspecialchars($key); ?>')">
+                                <?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?><br />
+                                <?= $value->building_name; ?> <br />
+                            </button>
+                        </a>
                         <?php endforeach; ?>
                     </div>
 
@@ -154,25 +162,25 @@
                     <div class="chat-name-display">
 
                         <?php foreach ($aptList as $key => $value): ?>
-                            <div id="apartment-owner-<?= htmlspecialchars($key); ?>" class="display-chat-name">
-                                <h3><?= $value->first_name; ?>  <?= $value->last_name; ?>, <?= $value->apartment_number; ?>, <?= $value->building_name; ?></h3>
-                                <div class="small-chat-display-box">
+                        <div id="apartment-owner-<?= htmlspecialchars($key); ?>" class="display-chat-name">
+                            <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?>, <?= $value->building_name; ?></h3>
+                            <div class="small-chat-display-box">
 
+                            </div>
+
+                            <div class="chat-input-bar">
+                                <div class="chat-input">
+                                    <label for="send"></label>
+                                    <input type="text" id="apartment-owner-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
-
-                                <div class="chat-input-bar">
-                                    <div class="chat-input">
-                                        <label for="send"></label>
-                                        <input type="text" id="apartment-owner-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
-                                    </div>
-                                    <div>
-                                        <button class="send-button" onclick="inputApartmentOwnerChat(event, 'apartment-owner-send-<?= htmlspecialchars($key); ?>')">Send</button>
-                                    </div>
+                                <div>
+                                    <button class="send-button" onclick="inputApartmentOwnerChat(event, 'apartment-owner-send-<?= htmlspecialchars($key); ?>')">Send</button>
                                 </div>
                             </div>
+                        </div>
                         <?php endforeach; ?>
-                        
-                        
+
+
                     </div>
 
 
@@ -198,12 +206,12 @@
 
                     <div class="chat-name-list">
                         <?php foreach ($buildingList as $key => $value): ?>
-                            <a href="#building-manager-<?= htmlspecialchars($key); ?>">
-                                <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-<?= htmlspecialchars($key); ?>')">
-                                    <?= $value->first_name; ?> <?= $value->last_name; ?> <br />
-                                    <?= $value->building_name; ?> <br />
-                                </button>
-                            </a>
+                        <a href="#building-manager-<?= htmlspecialchars($key); ?>">
+                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-<?= htmlspecialchars($key); ?>')">
+                                <?= $value->first_name; ?> <?= $value->last_name; ?> <br />
+                                <?= $value->building_name; ?> <br />
+                            </button>
+                        </a>
                         <?php endforeach; ?>
                     </div>
 
@@ -212,24 +220,24 @@
                 <div class="small-chat-frame">
 
                     <div class="chat-name-display">
-                        
+
                         <?php foreach ($buildingList as $key => $value): ?>
-                            <div id="building-manager-<?= htmlspecialchars($key); ?>" class="display-chat-name">
-                                <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->building_name; ?></h3>
-                                <div class="small-chat-display-box">
+                        <div id="building-manager-<?= htmlspecialchars($key); ?>" class="display-chat-name">
+                            <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->building_name; ?></h3>
+                            <div class="small-chat-display-box">
 
+                            </div>
+
+                            <div class="chat-input-bar">
+                                <div class="chat-input">
+                                    <label for="send"></label>
+                                    <input type="text" id="building-manager-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
-
-                                <div class="chat-input-bar">
-                                    <div class="chat-input">
-                                        <label for="send"></label>
-                                        <input type="text" id="building-manager-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
-                                    </div>
-                                    <div>
-                                        <button class="send-button" onclick="inputForChat(event, 'building-manager-send-<?= htmlspecialchars($key); ?>')">Send</button>
-                                    </div>
+                                <div>
+                                    <button class="send-button" onclick="inputForChat(event, 'building-manager-send-<?= htmlspecialchars($key); ?>')">Send</button>
                                 </div>
                             </div>
+                        </div>
                         <?php endforeach; ?>
 
                     </div>
@@ -240,14 +248,14 @@
             </div>
         </div>
 
-        
 
-        
+
+
 
 
         {{-- <!-- Subdivision Manager New IT Requests --> --}}
 
-        {{-- <div id="new-it-request" class="section-content">
+        <div id="new-it-request" class="section-content">
             <div class="section-heading">
                 <h1>IT Request</h1>
             </div>
@@ -255,6 +263,7 @@
 
             <div>
                 <form method="post">
+                    @csrf
                     <label for="it-request-input-message">
                         <h4>Enter details:</h4>
                     </label>
@@ -262,7 +271,7 @@
                     <input type="submit" value="Submit" class="submit-button">
                 </form>
             </div>
-        </div> --}}
+        </div>
 
         {{-- <!-- Subdivision Manager View IT Requests --> --}}
 
@@ -533,10 +542,10 @@
                 let eDashboard = new Chart(eChart, {
                     type: 'bar'
                     , data: {
-                        labels: <?php echo $monthLabels ?>
+                        labels: < ? php echo $monthLabels ? > 
                         , datasets: [{
                             label: 'Total Electricty Bill of Subdivision/Month'
-                            , data: <?php echo $electricityBillLabels ?> 
+                            , data: < ? php echo $electricityBillLabels ? > 
                             , backgroundColor: 'green'
                         }]
                     }
@@ -562,10 +571,10 @@
                 let gasDashboard = new Chart(gasChart, {
                     type: 'bar'
                     , data: {
-                        labels: <?php echo $monthLabels ?> 
+                        labels: < ? php echo $monthLabels ? > 
                         , datasets: [{
                             label: 'Total Gas Bill of Subdivision/Month'
-                            , data: <?php echo $gasBillLabels ?> 
+                            , data: < ? php echo $gasBillLabels ? > 
                             , backgroundColor: 'red'
                         }]
                     }
@@ -591,10 +600,10 @@
                 let waterDashboard = new Chart(waterChart, {
                     type: 'bar'
                     , data: {
-                        labels: <?php echo $monthLabels ?> 
+                        labels: < ? php echo $monthLabels ? > 
                         , datasets: [{
                             label: 'Total Gas Bill of Subdivision/Month'
-                            , data: <?php echo $waterBillLabels ?> 
+                            , data: < ? php echo $waterBillLabels ? > 
                             , backgroundColor: 'blue'
                         }]
                     }

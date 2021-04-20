@@ -72,8 +72,26 @@ class SubdivisionManagerController extends Controller
             ]);
     }
 
-    function checkFeature(){
+    function checkFeature(Request $request){
         echo 'Inside checkFeature';
+
+        $userId = $request['userId'];
+
+        if (isset($request['it-request-input-message'])){
+            echo 'add IT request feature has been called.';
+            $itrMessage = $request['it-request-input-message'];
+            
+            $subdivisionController = new SubdivisionController();
+            $subdivisionRecord = $subdivisionController->getSubdivisionIdByUserId($userId);
+            $subdivisionId = $subdivisionRecord->id;
+
+            // echo $subdivisionId;
+            // echo '-------';
+            // echo $userId;
+            $itRequestController = new ItRequestController();
+            return $itRequestController->saveItRequest($itrMessage, $subdivisionId);
+
+        }
     }
 
     function getLastMonthUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear){
