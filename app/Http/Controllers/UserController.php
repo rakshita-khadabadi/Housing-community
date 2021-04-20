@@ -66,4 +66,16 @@ class UserController extends Controller
             'userId' => $user->id
         ]);
     }
+
+    function resetPasswordGivenUserId($userIdForResetPassowrd, $newPassword){
+        
+        $userRecord = User::find($userIdForResetPassowrd);
+
+        $userRecord->password = $newPassword;
+
+        $userRecord->save();
+
+        $successMessage = 'Password successfully reset';
+        return redirect()->back()->with(['success'=> $successMessage]);
+    }
 }
