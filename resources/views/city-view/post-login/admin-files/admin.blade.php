@@ -218,7 +218,7 @@
                     
                 </div>
             </div>
-{{--
+
             <!-- Admin Apartment Owner Details -->
 
             <div id="apartment-details" class="section-content">
@@ -257,7 +257,7 @@
 
                     </div>
                 </div>
-            </div>--}}
+            </div>
 
             <!-- Admin Building Manager Details -->
 

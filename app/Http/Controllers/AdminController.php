@@ -21,12 +21,15 @@ class AdminController extends Controller
         // echo $subdivisionManagerRecordList;
         $buildingManagerRecordList = $adminController->getAllBuildingManagerList();
         // echo $buildingManagerRecordList;
+        $apartmentOwnerRecordList = $adminController->getAllApartmentOwnerList();
+        // echo $apartmentOwnerRecordList;
 
         return view('city-view.post-login.admin-files.admin', [
             'subdivisionList' => $subdivisionList,
             'itrList' => $itrList,
             'subdivisionManagerRecordList' => $subdivisionManagerRecordList,
-            'buildingManagerRecordList' => $buildingManagerRecordList
+            'buildingManagerRecordList' => $buildingManagerRecordList,
+            'apartmentOwnerRecordList' => $apartmentOwnerRecordList
             ]);
     }
 
@@ -78,9 +81,20 @@ class AdminController extends Controller
     }
 
     function getAllBuildingManagerList(){
+
         return DB::table('users as u')
             ->join('buildings AS b','b.users_id','=','u.id')
             ->where('b.has_manager','=',1)
             ->get();
     }
+
+    function getAllApartmentOwnerList(){
+        
+        return DB::table('users as u')
+            ->join('apartments AS a','a.users_id','=','u.id')
+            ->join('buildings AS b','b.id','=','a.buildings_id')
+            ->where('a.occupancy_status','=','occupied')
+            ->get();
+    }
+
 }
