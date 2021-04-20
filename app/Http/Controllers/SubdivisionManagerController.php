@@ -43,6 +43,14 @@ class SubdivisionManagerController extends Controller
         $communityServiceBillRecordList = $subdivisionManagerController->getLastMonthCommunityServiceReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
         $apartmentCountCommunityService = $subdivisionManagerController->getApartmentCountForCommunityServiceReport($subdivisionId, $utilityReportMonth, $utilityReportYear);
         $communityServiceBillTotal = $subdivisionManagerController->getCommunityServiceBillTotal($subdivisionId, $utilityReportMonth, $utilityReportYear);
+        
+        $buildingList = $subdivisionManagerController->getBuildingManagerList($subdivisionId);
+        // echo $buildingList;
+        $aptList = $subdivisionManagerController->getApartmentOwnerList($subdivisionId);
+        // echo $aptList;
+        $itRequestController = new ItRequestController();
+        $itrlist = $itRequestController->fetchItRequestWithSubdivisionId($subdivisionId);
+        // echo $itrlist;
 
         return view('city-view.post-login.subdivision.subdivision-manager', [
             'personalDetails' => $personalDetails,
@@ -60,12 +68,33 @@ class SubdivisionManagerController extends Controller
             'waterBillLabels' => $waterBillLabels,
             'communityServiceBillRecordList' => $communityServiceBillRecordList,
             'apartmentCountCommunityService' => $apartmentCountCommunityService,
-            'communityServiceBillTotal' => $communityServiceBillTotal
+            'communityServiceBillTotal' => $communityServiceBillTotal,
+            'buildingList' => $buildingList,
+            'aptList' => $aptList,
+            'itrlist' => $itrlist
             ]);
     }
 
-    function checkFeature(){
+    function checkFeature(Request $request){
         echo 'Inside checkFeature';
+
+        $userId = $request['userId'];
+
+        if (isset($request['it-request-input-message'])){
+            echo 'add IT request feature has been called.';
+            $itrMessage = $request['it-request-input-message'];
+            
+            $subdivisionController = new SubdivisionController();
+            $subdivisionRecord = $subdivisionController->getSubdivisionIdByUserId($userId);
+            $subdivisionId = $subdivisionRecord->id;
+
+            // echo $subdivisionId;
+            // echo '-------';
+            // echo $userId;
+            $itRequestController = new ItRequestController();
+            return $itRequestController->saveItRequest($itrMessage, $subdivisionId);
+
+        }
     }
 
     function getLastMonthUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear){
@@ -254,6 +283,27 @@ class SubdivisionManagerController extends Controller
             ->where('acsb.month','=',$utilityReportMonth)
             ->where('acsb.year',"=",$utilityReportYear)
             ->get()->first();
+    }
+
+    function getBuildingManagerList($subdivisionId){
+
+        return DB::table('users as u')
+                ->select('u.id','b.building_name','u.first_name','u.last_name','u.email_id','u.phone_number','u.joining_datetime')
+                ->join('buildings AS b','b.users_id','=','u.id')
+                ->where('b.subdivisions_id','=',$subdivisionId)
+                ->where('b.has_manager','=','1')
+                ->get();
+    }
+
+    function getApartmentOwnerList($subdivisionId){
+
+        return DB::table('users as u')
+                ->select('u.id','b.building_name','a.apartment_number','u.first_name','u.last_name','u.email_id','u.phone_number','u.joining_datetime')
+                ->join('apartments AS a','a.users_id','=','u.id')
+                ->join('buildings AS b','b.id','=','a.buildings_id')
+                ->where('a.subdivisions_id','=',$subdivisionId)
+                ->where('a.occupancy_status','=','occupied')
+                ->get();
     }
 
 }

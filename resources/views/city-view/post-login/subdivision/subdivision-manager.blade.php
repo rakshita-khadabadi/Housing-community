@@ -57,7 +57,8 @@
                 <button class="subdivision-it-request-menu-option sidebar-option text-left opacity" onclick="myFunction(event, 'view-it-requests')">View IT Requests</button>
             </div>
 
-            <a href="../../index.php">
+            {{-- <a href="../../index.php"> --}}
+            <a href="/">
                 <button class="admin-option text-left opacity" onclick="myFunction(event, 'sign-out')">Sign out</button>
             </a>
 
@@ -70,6 +71,14 @@
         <div class="page-heading">
             <h1>Subdivision Manager</h1>
         </div>
+
+        @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
+        @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
         <div id="personal-details" class="show-initial section-content">
             <div class="section-heading">
@@ -116,7 +125,7 @@
 
         <!-- Subdivision Manager Apartment Owner Chat -->
 
-        {{-- <div id="apartment-owner-chat" class="section-content">
+        <div id="apartment-owner-chat" class="section-content">
             <div class="section-heading">
                 <h1>Chat</h1>
             </div>
@@ -130,30 +139,21 @@
                     </div>
 
                     <div class="chat-name-list">
-                        <a href="#apartment-owner-1">
-                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-1')">
-                                Amlan <br />
-                                Apartment Number: 101 <br />
+                        <?php foreach ($aptList as $key => $value): ?>
+                        {{-- <a href="#apartment-owner-detail-<?= htmlspecialchars($key); ?>">
+                            <button class="apartment-owner-detail-tile" onclick="viewApartmentDetails(event, 'apartment-owner-detail-<?= htmlspecialchars($key); ?>')">
+                                Apartment Number: <?= $value->apartment_number; ?> <br />
+                                Building Name: <?= $value->building_name; ?>
                             </button>
                         </a>
-                        <a href="#apartment-owner-2">
-                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-2')">
-                                Kishore <br />
-                                Apartment Number: 102 <br />
+                        </a>  --}}
+                        <a href="#apartment-owner-<?= htmlspecialchars($key); ?>">
+                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-<?= htmlspecialchars($key); ?>')">
+                                <?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?><br />
+                                <?= $value->building_name; ?> <br />
                             </button>
                         </a>
-                        <a href="#apartment-owner-3">
-                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-3')">
-                                Rakshita <br />
-                                Apartment Number: 103 <br />
-                            </button>
-                        </a>
-                        <a href="#apartment-owner-4">
-                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-4')">
-                                Alok <br />
-                                Apartment Number: 104 <br />
-                            </button>
-                        </a>
+                        <?php endforeach; ?>
                     </div>
 
                 </div>
@@ -161,8 +161,10 @@
                 <div class="small-chat-frame">
 
                     <div class="chat-name-display">
-                        <div id="apartment-owner-1" class="display-chat-name">
-                            <h3>Apartment Number: 101, Amlan</h3>
+
+                        <?php foreach ($aptList as $key => $value): ?>
+                        <div id="apartment-owner-<?= htmlspecialchars($key); ?>" class="display-chat-name">
+                            <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?>, <?= $value->building_name; ?></h3>
                             <div class="small-chat-display-box">
 
                             </div>
@@ -170,72 +172,27 @@
                             <div class="chat-input-bar">
                                 <div class="chat-input">
                                     <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
+                                    <input type="text" id="apartment-owner-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="inputApartmentOwnerChat()">Send</button>
+                                    <button class="send-button" onclick="inputApartmentOwnerChat(event, 'apartment-owner-send-<?= htmlspecialchars($key); ?>')">Send</button>
                                 </div>
                             </div>
                         </div>
-                        <div id="apartment-owner-2" class="display-chat-name">
-                            <h3>Apartment Number: 102, Kishore</h3>
-                            <div class="small-chat-display-box">
+                        <?php endforeach; ?>
 
-                            </div>
 
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputApartmentOwnerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="apartment-owner-3" class="display-chat-name">
-                            <h3>Apartment Number: 103, Rakshita</h3>
-                            <div class="small-chat-display-box">
-
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputApartmentOwnerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="apartment-owner-4" class="display-chat-name">
-                            <h3>Apartment Number: 104, Alok</h3>
-                            <div class="small-chat-display-box">
-
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputApartmentOwnerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
 
                 </div>
 
             </div>
-        </div> --}}
+        </div>
 
         <!-- Subdivision Manager Building Manager Chat -->
 
-        {{-- <div id="building-manager-chat" class="section-content">
+        <div id="building-manager-chat" class="section-content">
             <div class="section-heading">
                 <h1>Chat</h1>
             </div>
@@ -249,30 +206,14 @@
                     </div>
 
                     <div class="chat-name-list">
-                        <a href="#building-manager-1">
-                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-1')">
-                                Amlan <br />
-                                Building Name: Sapphire <br />
+                        <?php foreach ($buildingList as $key => $value): ?>
+                        <a href="#building-manager-<?= htmlspecialchars($key); ?>">
+                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-<?= htmlspecialchars($key); ?>')">
+                                <?= $value->first_name; ?> <?= $value->last_name; ?> <br />
+                                <?= $value->building_name; ?> <br />
                             </button>
                         </a>
-                        <a href="#building-manager-2">
-                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-2')">
-                                Kishore <br />
-                                Building Name: Ruby <br />
-                            </button>
-                        </a>
-                        <a href="#building-manager-3">
-                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-3')">
-                                Rakshita <br />
-                                Building Name: Emerald <br />
-                            </button>
-                        </a>
-                        <a href="#building-manager-4">
-                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-4')">
-                                Alok <br />
-                                Building Name: Diamond <br />
-                            </button>
-                        </a>
+                        <?php endforeach; ?>
                     </div>
 
                 </div>
@@ -280,8 +221,10 @@
                 <div class="small-chat-frame">
 
                     <div class="chat-name-display">
-                        <div id="building-manager-1" class="display-chat-name">
-                            <h3>Building Name: Sapphire, Amlan</h3>
+
+                        <?php foreach ($buildingList as $key => $value): ?>
+                        <div id="building-manager-<?= htmlspecialchars($key); ?>" class="display-chat-name">
+                            <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->building_name; ?></h3>
                             <div class="small-chat-display-box">
 
                             </div>
@@ -289,77 +232,31 @@
                             <div class="chat-input-bar">
                                 <div class="chat-input">
                                     <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
+                                    <input type="text" id="building-manager-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="inputBuildingManagerChat()">Send</button>
+                                    <button class="send-button" onclick="inputForChat(event, 'building-manager-send-<?= htmlspecialchars($key); ?>')">Send</button>
                                 </div>
                             </div>
                         </div>
-                        <div id="building-manager-2" class="display-chat-name">
-                            <h3>Building Name: Ruby, Kishore</h3>
-                            <div class="small-chat-display-box">
+                        <?php endforeach; ?>
 
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputBuildingManagerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="building-manager-3" class="display-chat-name">
-                            <h3>Building Name: Emerald, Rakshita</h3>
-                            <div class="small-chat-display-box">
-
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputBuildingManagerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="building-manager-4" class="display-chat-name">
-                            <h3>Building Name: Diamond, Alok</h3>
-                            <div class="small-chat-display-box">
-
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputBuildingManagerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
 
                 </div>
 
             </div>
-        </div> --}}
+        </div>
 
-        
 
-        
+
+
 
 
         {{-- <!-- Subdivision Manager New IT Requests --> --}}
 
-        {{-- <div id="new-it-request" class="section-content">
+        <div id="new-it-request" class="section-content">
             <div class="section-heading">
                 <h1>IT Request</h1>
             </div>
@@ -367,6 +264,7 @@
 
             <div>
                 <form method="post">
+                    @csrf
                     <label for="it-request-input-message">
                         <h4>Enter details:</h4>
                     </label>
@@ -374,11 +272,11 @@
                     <input type="submit" value="Submit" class="submit-button">
                 </form>
             </div>
-        </div> --}}
+        </div>
 
         {{-- <!-- Subdivision Manager View IT Requests --> --}}
 
-        {{-- <div id="view-it-requests" class="section-content">
+        <div id="view-it-requests" class="section-content">
             <div class="section-heading">
                 <h1>IT Request</h1>
             </div>
@@ -387,11 +285,11 @@
 
                 <div class="it-request-list">
                     <?php foreach ($itrlist as $itr): ?>
-                    <button class="it-request" onclick="viewItDetails(event, 'it-<?= $itr->it_request_id ?>')">
-                        IT Request ID: <?= $itr->it_request_id ?> <br />
-                        Date: <?= $itr->message_datetime ?> <br />
-                        Status: <?= $itr->status ?>
-                    </button>
+                        <button class="it-request" onclick="viewItDetails(event, 'it-<?= $itr->id ?>')">
+                            IT Request ID: <?= $itr->id ?> <br />
+                            Date: <?= $itr->message_datetime ?> <br />
+                            Status: <?= $itr->status ?>
+                        </button>
                     <?php endforeach; ?>
 
                 </div>
@@ -399,24 +297,24 @@
                 <div class="display-it-request">
                     <?php foreach ($itrlist as $itr): ?>
 
-                    <div id="it-<?= $itr->it_request_id ?>" class="it-request-details">
-                        <h3>Datetime</h3>
-                        <p><?= $itr->message_datetime ?></p>
-                        <h3>Message</h3>
-                        <p><?= $itr->message ?></p>
-                        <h3>Status</h3>
-                        <p><?= $itr->status ?></p>
-                    </div>
+                        <div id="it-<?= $itr->id ?>" class="it-request-details">
+                            <h3>Datetime</h3>
+                            <p><?= $itr->message_datetime ?></p>
+                            <h3>Message</h3>
+                            <p><?= $itr->message ?></p>
+                            <h3>Status</h3>
+                            <p><?= $itr->status ?></p>
+                        </div>
                     <?php endforeach; ?>
 
                 </div>
             </div>
 
-        </div> --}}
+        </div>
 
         {{-- <!-- Subdivision Manager Apartment Details --> --}}
 
-        {{-- <div id="apartment-details" class="section-content">
+        <div id="apartment-details" class="section-content">
             <div class="section-heading">
                 <h1>Apartment Details</h1>
             </div>
@@ -480,11 +378,11 @@
 
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         {{-- <!-- Subdivision Manager Building Manager Details --> --}}
 
-        {{-- <div id="building-manager-details" class="section-content">
+        <div id="building-manager-details" class="section-content">
             <div class="section-heading">
                 <h1>Building Manager Details</h1>
             </div>
@@ -539,7 +437,7 @@
 
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         {{-- <!-- Subdivision Manager Utility Bill --> --}}
 
@@ -645,10 +543,10 @@
                 let eDashboard = new Chart(eChart, {
                     type: 'bar'
                     , data: {
-                        labels: <?php echo $monthLabels ?>
+                        labels: < ? php echo $monthLabels ? > 
                         , datasets: [{
                             label: 'Total Electricty Bill of Subdivision/Month'
-                            , data: <?php echo $electricityBillLabels ?> 
+                            , data: < ? php echo $electricityBillLabels ? > 
                             , backgroundColor: 'green'
                         }]
                     }
@@ -674,10 +572,10 @@
                 let gasDashboard = new Chart(gasChart, {
                     type: 'bar'
                     , data: {
-                        labels: <?php echo $monthLabels ?> 
+                        labels: < ? php echo $monthLabels ? > 
                         , datasets: [{
                             label: 'Total Gas Bill of Subdivision/Month'
-                            , data: <?php echo $gasBillLabels ?> 
+                            , data: < ? php echo $gasBillLabels ? > 
                             , backgroundColor: 'red'
                         }]
                     }
@@ -703,10 +601,10 @@
                 let waterDashboard = new Chart(waterChart, {
                     type: 'bar'
                     , data: {
-                        labels: <?php echo $monthLabels ?> 
+                        labels: < ? php echo $monthLabels ? > 
                         , datasets: [{
                             label: 'Total Gas Bill of Subdivision/Month'
-                            , data: <?php echo $waterBillLabels ?> 
+                            , data: < ? php echo $waterBillLabels ? > 
                             , backgroundColor: 'blue'
                         }]
                     }
