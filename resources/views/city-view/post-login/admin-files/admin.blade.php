@@ -257,7 +257,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div>--}}
 
             <!-- Admin Building Manager Details -->
 
@@ -270,7 +270,7 @@
                         <?php foreach($buildingManagerRecordList as $key => $value): ?>
                             <a href="#building-manager-detail-<?= htmlspecialchars($key); ?>">
                                 <button class="apartment-owner-detail-tile" onclick="viewApartmentDetails(event, 'building-manager-detail-<?= htmlspecialchars($key); ?>')">
-                                    <?= $value->first_name; ?> <br />
+                                    <?= $value->first_name; ?> <?= $value->last_name; ?><br />
                                     Building Name: <?= $value->building_name; ?>
                                 </button>
                             </a>
@@ -310,7 +310,7 @@
                         <?php foreach($subdivisionManagerRecordList as $key => $value): ?>
                             <a href="#subdivision-manager-detail-<?= htmlspecialchars($key); ?>">
                                 <button class="subdivision-manager-detail-tile" onclick="viewSubdivisionDetails(event, 'subdivision-manager-detail-<?= htmlspecialchars($key); ?>')">
-                                    <?= $value->first_name; ?><br />
+                                    <?= $value->first_name; ?> <?= $value->last_name; ?><br />
                                     Subdivision Name: <?= $value->subdivision_name; ?>
                                 </button>
                             </a>
@@ -338,7 +338,7 @@
 
                     </div>
                 </div>
-            </div>--}}
+            </div>
 
             <!-- Subdivision Manager View IT Requests -->
 
@@ -365,7 +365,7 @@
 
                         <?php foreach ($itrList as $key => $value): ?>
                             <div id="it-<?= htmlspecialchars($key); ?>" class="it-request-details">
-                            
+
                                 <h3>Datetime</h3>
                                 <p><?= $value->message_datetime; ?></p>
                                 <h3>Message</h3>

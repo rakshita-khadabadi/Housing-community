@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -14,9 +15,18 @@ class AdminController extends Controller
         $itRequestController = new ItRequestController();
         $itrList = $itRequestController->fetchAllItRequests();
 
+        $adminController = new AdminController();
+
+        $subdivisionManagerRecordList = $adminController->getAllSubdivisionManagerList();
+        // echo $subdivisionManagerRecordList;
+        $buildingManagerRecordList = $adminController->getAllBuildingManagerList();
+        // echo $buildingManagerRecordList;
+
         return view('city-view.post-login.admin-files.admin', [
             'subdivisionList' => $subdivisionList,
-            'itrList' => $itrList
+            'itrList' => $itrList,
+            'subdivisionManagerRecordList' => $subdivisionManagerRecordList,
+            'buildingManagerRecordList' => $buildingManagerRecordList
             ]);
     }
 
@@ -57,5 +67,20 @@ class AdminController extends Controller
         
         $subdivisionController = new SubdivisionController();
         return $subdivisionController->saveSubdivision($subdivisionName, $userId);
+    }
+
+    function getAllSubdivisionManagerList(){
+
+        return DB::table('users as u')
+            ->join('subdivisions AS s','s.users_id','=','u.id')
+            ->where('s.has_manager','=',1)
+            ->get();
+    }
+
+    function getAllBuildingManagerList(){
+        return DB::table('users as u')
+            ->join('buildings AS b','b.users_id','=','u.id')
+            ->where('b.has_manager','=',1)
+            ->get();
     }
 }
