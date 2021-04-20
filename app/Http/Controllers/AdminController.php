@@ -57,6 +57,23 @@ class AdminController extends Controller
             $adminController = new AdminController();
             return $adminController->saveNewBuilding($request, $buildingName, $subdivisionId, $userId);
         }
+        elseif(isset($request['new-password'])){
+            echo 'Inside reset password flow';
+
+            $userIdForResetPassowrd = $request['user-id'];
+            $newPassword = md5($request['new-password']);
+            $confirmPassword = md5($request['confirm-password']);
+
+            if ($newPassword == $confirmPassword){
+                $userController = new UserController();
+                return $userController->resetPasswordGivenUserId($userIdForResetPassowrd, $newPassword);
+            }
+            else{
+                $errorMessage = 'Passwords does not match. Try Again.';
+                return redirect()->back()->with(['error'=> $errorMessage]);
+            }
+
+        }
 
     }
 

@@ -70,6 +70,7 @@
                 <div class="input-box">
 
                     <form method="post">
+                        @csrf
                         <table>
                             <tr>
                                 <td><label for="user-id">User Id:</label></td>
