@@ -183,7 +183,7 @@
 
         <!-- Subdivision Manager Building Manager Chat -->
 
-        {{-- <div id="building-manager-chat" class="section-content">
+        <div id="building-manager-chat" class="section-content">
             <div class="section-heading">
                 <h1>Chat</h1>
             </div>
@@ -197,30 +197,14 @@
                     </div>
 
                     <div class="chat-name-list">
-                        <a href="#building-manager-1">
-                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-1')">
-                                Amlan <br />
-                                Building Name: Sapphire <br />
-                            </button>
-                        </a>
-                        <a href="#building-manager-2">
-                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-2')">
-                                Kishore <br />
-                                Building Name: Ruby <br />
-                            </button>
-                        </a>
-                        <a href="#building-manager-3">
-                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-3')">
-                                Rakshita <br />
-                                Building Name: Emerald <br />
-                            </button>
-                        </a>
-                        <a href="#building-manager-4">
-                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-4')">
-                                Alok <br />
-                                Building Name: Diamond <br />
-                            </button>
-                        </a>
+                        <?php foreach ($buildingList as $key => $value): ?>
+                            <a href="#building-manager-<?= htmlspecialchars($key); ?>">
+                                <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-<?= htmlspecialchars($key); ?>')">
+                                    <?= $value->first_name; ?> <?= $value->last_name; ?> <br />
+                                    <?= $value->building_name; ?> <br />
+                                </button>
+                            </a>
+                        <?php endforeach; ?>
                     </div>
 
                 </div>
@@ -228,77 +212,33 @@
                 <div class="small-chat-frame">
 
                     <div class="chat-name-display">
-                        <div id="building-manager-1" class="display-chat-name">
-                            <h3>Building Name: Sapphire, Amlan</h3>
-                            <div class="small-chat-display-box">
+                        
+                        <?php foreach ($buildingList as $key => $value): ?>
+                            <div id="building-manager-<?= htmlspecialchars($key); ?>" class="display-chat-name">
+                                <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->building_name; ?></h3>
+                                <div class="small-chat-display-box">
 
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
-                                <div>
-                                    <button class="send-button" onclick="inputBuildingManagerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="building-manager-2" class="display-chat-name">
-                            <h3>Building Name: Ruby, Kishore</h3>
-                            <div class="small-chat-display-box">
 
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputBuildingManagerChat()">Send</button>
+                                <div class="chat-input-bar">
+                                    <div class="chat-input">
+                                        <label for="send"></label>
+                                        <input type="text" id="building-manager-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
+                                    </div>
+                                    <div>
+                                        <button class="send-button" onclick="inputForChat(event, 'building-manager-send-<?= htmlspecialchars($key); ?>')">Send</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="building-manager-3" class="display-chat-name">
-                            <h3>Building Name: Emerald, Rakshita</h3>
-                            <div class="small-chat-display-box">
+                        <?php endforeach; ?>
 
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputBuildingManagerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="building-manager-4" class="display-chat-name">
-                            <h3>Building Name: Diamond, Alok</h3>
-                            <div class="small-chat-display-box">
-
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputBuildingManagerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
 
                 </div>
 
             </div>
-        </div> --}}
+        </div>
 
         
 
