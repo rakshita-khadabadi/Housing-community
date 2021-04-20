@@ -116,7 +116,7 @@
 
         <!-- Subdivision Manager Apartment Owner Chat -->
 
-        {{-- <div id="apartment-owner-chat" class="section-content">
+        <div id="apartment-owner-chat" class="section-content">
             <div class="section-heading">
                 <h1>Chat</h1>
             </div>
@@ -130,30 +130,21 @@
                     </div>
 
                     <div class="chat-name-list">
-                        <a href="#apartment-owner-1">
-                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-1')">
-                                Amlan <br />
-                                Apartment Number: 101 <br />
+                        <?php foreach ($aptList as $key => $value): ?>
+                        {{--  <a href="#apartment-owner-detail-<?= htmlspecialchars($key); ?>">
+                            <button class="apartment-owner-detail-tile" onclick="viewApartmentDetails(event, 'apartment-owner-detail-<?= htmlspecialchars($key); ?>')">
+                                Apartment Number: <?= $value->apartment_number; ?> <br />
+                                Building Name: <?= $value->building_name; ?>
                             </button>
                         </a>
-                        <a href="#apartment-owner-2">
-                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-2')">
-                                Kishore <br />
-                                Apartment Number: 102 <br />
-                            </button>
-                        </a>
-                        <a href="#apartment-owner-3">
-                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-3')">
-                                Rakshita <br />
-                                Apartment Number: 103 <br />
-                            </button>
-                        </a>
-                        <a href="#apartment-owner-4">
-                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-4')">
-                                Alok <br />
-                                Apartment Number: 104 <br />
-                            </button>
-                        </a>
+                        </a>  --}}
+                            <a href="#apartment-owner-<?= htmlspecialchars($key); ?>">
+                                <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-<?= htmlspecialchars($key); ?>')">
+                                    <?= $value->first_name; ?>  <?= $value->last_name; ?>, <?= $value->apartment_number; ?><br />
+                                    <?= $value->building_name; ?> <br />
+                                </button>
+                            </a>
+                        <?php endforeach; ?>
                     </div>
 
                 </div>
@@ -161,77 +152,34 @@
                 <div class="small-chat-frame">
 
                     <div class="chat-name-display">
-                        <div id="apartment-owner-1" class="display-chat-name">
-                            <h3>Apartment Number: 101, Amlan</h3>
-                            <div class="small-chat-display-box">
 
-                            </div>
+                        <?php foreach ($aptList as $key => $value): ?>
+                            <div id="apartment-owner-<?= htmlspecialchars($key); ?>" class="display-chat-name">
+                                <h3><?= $value->first_name; ?>  <?= $value->last_name; ?>, <?= $value->apartment_number; ?>, <?= $value->building_name; ?></h3>
+                                <div class="small-chat-display-box">
 
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
-                                <div>
-                                    <button class="send-button" onclick="inputApartmentOwnerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="apartment-owner-2" class="display-chat-name">
-                            <h3>Apartment Number: 102, Kishore</h3>
-                            <div class="small-chat-display-box">
 
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputApartmentOwnerChat()">Send</button>
+                                <div class="chat-input-bar">
+                                    <div class="chat-input">
+                                        <label for="send"></label>
+                                        <input type="text" id="apartment-owner-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
+                                    </div>
+                                    <div>
+                                        <button class="send-button" onclick="inputApartmentOwnerChat(event, 'apartment-owner-send-<?= htmlspecialchars($key); ?>')">Send</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="apartment-owner-3" class="display-chat-name">
-                            <h3>Apartment Number: 103, Rakshita</h3>
-                            <div class="small-chat-display-box">
-
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputApartmentOwnerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="apartment-owner-4" class="display-chat-name">
-                            <h3>Apartment Number: 104, Alok</h3>
-                            <div class="small-chat-display-box">
-
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputApartmentOwnerChat()">Send</button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
+                        
+                        
                     </div>
 
 
                 </div>
 
             </div>
-        </div> --}}
+        </div>
 
         <!-- Subdivision Manager Building Manager Chat -->
 
