@@ -16,6 +16,11 @@ class ItRequestController extends Controller
                     ->get();
     }
 
+    function fetchAllItRequests(){
+        
+        return ItRequest::all();
+    }
+
     function saveItRequest($itrMessage, $subdivisionId){
 
         $current_date_time = \Carbon\Carbon::now()->toDateTimeString();
