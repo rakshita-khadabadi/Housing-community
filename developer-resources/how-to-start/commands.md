@@ -23,6 +23,8 @@ For Chat
 
 npm i express
 
+npm install socket.io
+
 
 --------------------------------------------------------------
 Note:
