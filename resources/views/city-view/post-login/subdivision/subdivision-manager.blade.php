@@ -153,11 +153,11 @@
 
                 <div class="it-request-list">
                     <?php foreach ($itrlist as $itr): ?>
-                        <button class="it-request" onclick="viewItDetails(event, 'it-<?= $itr->id ?>')">
-                            IT Request ID: <?= $itr->id ?> <br />
-                            Date: <?= $itr->message_datetime ?> <br />
-                            Status: <?= $itr->status ?>
-                        </button>
+                    <button class="it-request" onclick="viewItDetails(event, 'it-<?= $itr->id ?>')">
+                        IT Request ID: <?= $itr->id ?> <br />
+                        Date: <?= $itr->message_datetime ?> <br />
+                        Status: <?= $itr->status ?>
+                    </button>
                     <?php endforeach; ?>
 
                 </div>
@@ -165,14 +165,14 @@
                 <div class="display-it-request">
                     <?php foreach ($itrlist as $itr): ?>
 
-                        <div id="it-<?= $itr->id ?>" class="it-request-details">
-                            <h3>Datetime</h3>
-                            <p><?= $itr->message_datetime ?></p>
-                            <h3>Message</h3>
-                            <p><?= $itr->message ?></p>
-                            <h3>Status</h3>
-                            <p><?= $itr->status ?></p>
-                        </div>
+                    <div id="it-<?= $itr->id ?>" class="it-request-details">
+                        <h3>Datetime</h3>
+                        <p><?= $itr->message_datetime ?></p>
+                        <h3>Message</h3>
+                        <p><?= $itr->message ?></p>
+                        <h3>Status</h3>
+                        <p><?= $itr->status ?></p>
+                    </div>
                     <?php endforeach; ?>
 
                 </div>
@@ -519,7 +519,7 @@
                             <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->building_name; ?></h3>
                             <div class="small-chat-display-box">
                                 <ul>
-                                
+
                                 </ul>
                             </div>
 
@@ -543,7 +543,7 @@
             </div>
         </div>
 
-          {{-- Subdivision Manager Apartment Owner Chat  --}}
+        {{-- Subdivision Manager Apartment Owner Chat  --}}
 
         <div id="apartment-owner-chat" class="section-content">
             <div class="section-heading">
@@ -578,8 +578,10 @@
                         <?php foreach ($aptList as $key => $value): ?>
                         <div id="apartment-owner-<?= htmlspecialchars($key); ?>" class="display-chat-name">
                             <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?>, <?= $value->building_name; ?></h3>
-                            <div class="small-chat-display-box">
-
+                            <div id="small-chat-display-box-<?= htmlspecialchars($key); ?>" class="small-chat-display-box">
+                                <ul id ='apt-owner-ul-<?= htmlspecialchars($key); ?>'>
+                                
+                                </ul>
                             </div>
 
                             <div class="chat-input-bar">
@@ -588,7 +590,7 @@
                                     <input type="text" id="apartment-owner-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="inputApartmentOwnerChat(event, 'apartment-owner-send-<?= htmlspecialchars($key); ?>')">Send</button>
+                                    <button class="send-button" onclick="sendChatmessage(event, 'apartment-owner-send-<?= htmlspecialchars($key); ?>', 'apt-owner-ul-', <?= htmlspecialchars($key); ?>)">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -607,39 +609,43 @@
 <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
 
 <script>
-    $(
-        function() {
-            let ip_address = '127.0.0.1';
-            let socket_port = '3000';
-            let socket = io(ip_address + ':' + socket_port);
+    function sendChatmessage(event, inputBoxId, displayChatBoxIdConst, key) {
+        console.log('hello');
+        console.log(event);
+        console.log(inputBoxId);
+        console.log(displayChatBoxIdConst);
+        console.log(key);
 
-            {{-- socket.on('connection'); --}}
+        var chatMessage = document.getElementById(inputBoxId).value;
+        console.log('chatMessage = ' + chatMessage);
 
-            let chatInput = $('#building-manager-send-0');
+        let ip_address = '127.0.0.1';
+        let socket_port = '3000';
+        let socket = io(ip_address + ':' + socket_port);
 
-            console.log(chatInput);
+        socket.emit('sendChatToServer', chatMessage, 'zoro');
 
-            chatInput.keypress(function(e) {
-                {{-- console.log(e); --}}
-                let message = $(this).val();
-                console.log(message);
+        document.getElementById(inputBoxId).value = '';
 
-                if(e.which == 13 && !e.shiftKey) {
-                    socket.emit('sendChatToServer', message, 'zoro');
-                    chatInput.val('');
-                    return false;
-                }
-            });
+        socket.on('sendChatToClient', (message) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            console.log('inside');
 
-            socket.on('sendChatToClient', (message) => {
-                var x = document.createElement("li");
-                x.innerHTML = message;
+            {{-- var polo = '.'+displayChatBoxIdConst+key+' '+'ul';
+            console.log(polo);
 
-                $('.small-chat-display-box ul').append(x);
-            });
+            $(polo).append(x); --}}
+            
 
-        }
-    );
+            var ul = document.getElementById(displayChatBoxIdConst+key);
+            console.log(ul);
+            ul.append(newMessage);
+        });
+
+
+    }
+
 </script>
 
 @endsection
