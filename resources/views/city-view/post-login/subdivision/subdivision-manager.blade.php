@@ -122,74 +122,6 @@
                 </div> -->
         </div>
 
-
-        <!-- Subdivision Manager Apartment Owner Chat -->
-
-        <div id="apartment-owner-chat" class="section-content">
-            <div class="section-heading">
-                <h1>Chat</h1>
-            </div>
-
-            <div class="chat-with-list">
-
-                <div class="chat-list">
-
-                    <div>
-                        <h3>Apartment Owners</h3>
-                    </div>
-
-                    <div class="chat-name-list">
-                        <?php foreach ($aptList as $key => $value): ?>
-                        {{-- <a href="#apartment-owner-detail-<?= htmlspecialchars($key); ?>">
-                            <button class="apartment-owner-detail-tile" onclick="viewApartmentDetails(event, 'apartment-owner-detail-<?= htmlspecialchars($key); ?>')">
-                                Apartment Number: <?= $value->apartment_number; ?> <br />
-                                Building Name: <?= $value->building_name; ?>
-                            </button>
-                        </a>
-                        </a>  --}}
-                        <a href="#apartment-owner-<?= htmlspecialchars($key); ?>">
-                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-<?= htmlspecialchars($key); ?>')">
-                                <?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?><br />
-                                <?= $value->building_name; ?> <br />
-                            </button>
-                        </a>
-                        <?php endforeach; ?>
-                    </div>
-
-                </div>
-
-                <div class="small-chat-frame">
-
-                    <div class="chat-name-display">
-
-                        <?php foreach ($aptList as $key => $value): ?>
-                        <div id="apartment-owner-<?= htmlspecialchars($key); ?>" class="display-chat-name">
-                            <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?>, <?= $value->building_name; ?></h3>
-                            <div class="small-chat-display-box">
-
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputApartmentOwnerChat(event, 'apartment-owner-send-<?= htmlspecialchars($key); ?>')">Send</button>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-
-
-                    </div>
-
-
-                </div>
-
-            </div>
-        </div>
-
         <!-- Subdivision Manager Building Manager Chat -->
 
         <div id="building-manager-chat" class="section-content">
@@ -612,6 +544,66 @@
 
             </script>
 
+        </div>
+
+         {{-- Subdivision Manager Apartment Owner Chat --}}
+
+        <div id="apartment-owner-chat" class="section-content">
+            <div class="section-heading">
+                <h1>Chat</h1>
+            </div>
+
+            <div class="chat-with-list">
+
+                <div class="chat-list">
+
+                    <div>
+                        <h3>Apartment Owners</h3>
+                    </div>
+
+                    <div class="chat-name-list">
+                        <?php foreach ($aptList as $key => $value): ?>
+                        <a href="#apartment-owner-<?= htmlspecialchars($key); ?>">
+                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-<?= htmlspecialchars($key); ?>')">
+                                <?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?><br />
+                                <?= $value->building_name; ?> <br />
+                            </button>
+                        </a>
+                        <?php endforeach; ?>
+                    </div>
+
+                </div>
+
+                <div class="small-chat-frame">
+
+                    <div class="chat-name-display">
+
+                        <?php foreach ($aptList as $key => $value): ?>
+                        <div id="apartment-owner-<?= htmlspecialchars($key); ?>" class="display-chat-name">
+                            <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?>, <?= $value->building_name; ?></h3>
+                            <div class="small-chat-display-box">
+
+                            </div>
+
+                            <div class="chat-input-bar">
+                                <div class="chat-input">
+                                    <label for="send"></label>
+                                    <input type="text" id="apartment-owner-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
+                                </div>
+                                <div>
+                                    <button class="send-button" onclick="inputApartmentOwnerChat(event, 'apartment-owner-send-<?= htmlspecialchars($key); ?>')">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
         </div>
 
     </div>
