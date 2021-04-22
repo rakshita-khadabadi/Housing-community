@@ -50,7 +50,7 @@ use App\Http\Controllers\ApartmentOwnerController;
 //     return view('city-view.index', []);
 // })->name('home.index');
 
-Route::view('/', 'city-view.home')->name('city-view.home');
+Route::view('/', 'city-view.app')->name('city-view.app');
 
 // Route::get('/change', function() {
 //     return redirect('/showRoles');
