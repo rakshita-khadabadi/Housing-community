@@ -122,70 +122,6 @@
                 </div> -->
         </div>
 
-        <!-- Subdivision Manager Building Manager Chat -->
-
-        <div id="building-manager-chat" class="section-content">
-            <div class="section-heading">
-                <h1>Chat</h1>
-            </div>
-
-            <div class="chat-with-list">
-
-                <div class="chat-list">
-
-                    <div>
-                        <h3>Building Manager</h3>
-                    </div>
-
-                    <div class="chat-name-list">
-                        <?php foreach ($buildingList as $key => $value): ?>
-                        <a href="#building-manager-<?= htmlspecialchars($key); ?>">
-                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-<?= htmlspecialchars($key); ?>')">
-                                <?= $value->first_name; ?> <?= $value->last_name; ?> <br />
-                                <?= $value->building_name; ?> <br />
-                            </button>
-                        </a>
-                        <?php endforeach; ?>
-                    </div>
-
-                </div>
-
-                <div class="small-chat-frame">
-
-                    <div class="chat-name-display">
-
-                        <?php foreach ($buildingList as $key => $value): ?>
-                        <div id="building-manager-<?= htmlspecialchars($key); ?>" class="display-chat-name">
-                            <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->building_name; ?></h3>
-                            <div class="small-chat-display-box">
-
-                            </div>
-
-                            <div class="chat-input-bar">
-                                <div class="chat-input">
-                                    <label for="send"></label>
-                                    <input type="text" id="building-manager-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
-                                </div>
-                                <div>
-                                    <button class="send-button" onclick="inputForChat(event, 'building-manager-send-<?= htmlspecialchars($key); ?>')">Send</button>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-        </div>
-
-
-
-
-
-
         {{-- <!-- Subdivision Manager New IT Requests --> --}}
 
         <div id="new-it-request" class="section-content">
@@ -475,10 +411,10 @@
                 let eDashboard = new Chart(eChart, {
                     type: 'bar'
                     , data: {
-                        labels: < ? php echo $monthLabels ? > 
+                        labels: <?php echo $monthLabels ?> 
                         , datasets: [{
                             label: 'Total Electricty Bill of Subdivision/Month'
-                            , data: < ? php echo $electricityBillLabels ? > 
+                            , data: <?php echo $electricityBillLabels ?> 
                             , backgroundColor: 'green'
                         }]
                     }
@@ -504,10 +440,10 @@
                 let gasDashboard = new Chart(gasChart, {
                     type: 'bar'
                     , data: {
-                        labels: < ? php echo $monthLabels ? > 
+                        labels: <?php echo $monthLabels ?> 
                         , datasets: [{
                             label: 'Total Gas Bill of Subdivision/Month'
-                            , data: < ? php echo $gasBillLabels ? > 
+                            , data: <?php echo $gasBillLabels ?> 
                             , backgroundColor: 'red'
                         }]
                     }
@@ -533,10 +469,10 @@
                 let waterDashboard = new Chart(waterChart, {
                     type: 'bar'
                     , data: {
-                        labels: < ? php echo $monthLabels ? > 
+                        labels: <?php echo $monthLabels ?> 
                         , datasets: [{
                             label: 'Total Gas Bill of Subdivision/Month'
-                            , data: < ? php echo $waterBillLabels ? > 
+                            , data: <?php echo $waterBillLabels ?> 
                             , backgroundColor: 'blue'
                         }]
                     }
@@ -546,7 +482,66 @@
 
         </div>
 
-         {{-- Subdivision Manager Apartment Owner Chat --}}
+        {{-- Subdivision Manager Building Manager Chat --}}
+
+        <div id="building-manager-chat" class="section-content">
+            <div class="section-heading">
+                <h1>Chat</h1>
+            </div>
+
+            <div class="chat-with-list">
+
+                <div class="chat-list">
+
+                    <div>
+                        <h3>Building Manager</h3>
+                    </div>
+
+                    <div class="chat-name-list">
+                        <?php foreach ($buildingList as $key => $value): ?>
+                        <a href="#building-manager-<?= htmlspecialchars($key); ?>">
+                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-<?= htmlspecialchars($key); ?>')">
+                                <?= $value->first_name; ?> <?= $value->last_name; ?> <br />
+                                <?= $value->building_name; ?> <br />
+                            </button>
+                        </a>
+                        <?php endforeach; ?>
+                    </div>
+
+                </div>
+
+                <div class="small-chat-frame">
+
+                    <div class="chat-name-display">
+
+                        <?php foreach ($buildingList as $key => $value): ?>
+                        <div id="building-manager-<?= htmlspecialchars($key); ?>" class="display-chat-name">
+                            <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->building_name; ?></h3>
+                            <div class="small-chat-display-box">
+
+                            </div>
+
+                            <div class="chat-input-bar">
+                                <div class="chat-input">
+                                    <label for="send"></label>
+                                    <input type="text" id="building-manager-send-<?= htmlspecialchars($key); ?>" value="" name="send" class="chat-input-box" placeholder="Enter Message">
+                                </div>
+                                <div>
+                                    <button class="send-button" onclick="inputForChat(event, 'building-manager-send-<?= htmlspecialchars($key); ?>')">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+          {{-- Subdivision Manager Apartment Owner Chat  --}}
 
         <div id="apartment-owner-chat" class="section-content">
             <div class="section-heading">
@@ -616,7 +611,24 @@
             let socket_port = '3000';
             let socket = io(ip_address + ':' + socket_port);
 
-            socket.on('connection');
+            {{-- socket.on('connection'); --}}
+
+            let chatInput = $('#building-manager-send-0');
+
+            console.log(chatInput);
+
+            chatInput.keypress(function(e) {
+                {{-- console.log(e); --}}
+                let message = $(this).val();
+                console.log(message);
+
+                if(e.which == 13 && !e.shiftKey) {
+                    socket.emit('sendChatToServer', message, 'zoro');
+                    chatInput.val('');
+                    return false;
+                }
+            })
+
         }
     );
 </script>

@@ -1,18 +1,17 @@
 function myFunction(event, selectedSection){
-    console.log('Inside func -> myFunction')
-    console.log(event)
-    console.log(selectedSection)
-    // document.getElementById("add-subdivision-section").innerHTML = "Amlan Alok";
+    // console.log('Inside func -> myFunction')
+    // console.log(event)
+    // console.log(selectedSection)
 
     sectionContentList = document.getElementsByClassName("section-content");
-    console.log(sectionContentList)
+    // console.log(sectionContentList)
 
     for (i=0; i<sectionContentList.length; i++){
         sectionContentList[i].style.display = "none";
     }
 
     adminOptionList = document.getElementsByClassName("sidebar-option");
-    console.log(adminOptionList)
+    // console.log(adminOptionList)
 
     for (i=0; i<adminOptionList.length; i++){
         adminOptionList[i].className = adminOptionList[i].className.replace(" active", "");
@@ -20,16 +19,16 @@ function myFunction(event, selectedSection){
 
     document.getElementById(selectedSection).style.display = "block";
 
-    console.log(event.currentTarget)
+    // console.log(event.currentTarget)
     event.currentTarget.className += " active";
 }
 
 function openMenu(event, menuType){
-    console.log('Inside func -> Open Menu Function')
+    // console.log('Inside func -> Open Menu Function')
 
-    console.log(menuType);
+    // console.log(menuType);
     var apartmentChatMenu = document.getElementById(menuType);
-    console.log(apartmentChatMenu)
+    // console.log(apartmentChatMenu)
 
     if(apartmentChatMenu.style.display === "block"){
         apartmentChatMenu.style.display = "none";
@@ -55,26 +54,27 @@ function menuFunction(event){
 function inputApartmentOwnerChat(event){
 
     inputMessage = document.getElementById("apartment-owner-send").value
-    console.log(inputMessage)
+    // console.log(inputMessage)
+
 }
 
 function inputBuildingManagerChat(event){
 
     inputMessage = document.getElementById("building-manager-send").value
-    console.log(inputMessage)
+    // console.log(inputMessage)
 }
 
 function viewApartmentOwnerChatMenu(event, elementId){
 
     displayChatNameList = document.getElementsByClassName("display-chat-name");
-    console.log(displayChatNameList)
+    // console.log(displayChatNameList)
 
     for (i=0; i<displayChatNameList.length; i++){
         displayChatNameList[i].style.display = "none";
     }
 
     apartmentOwnerChatTileList = document.getElementsByClassName("apartment-owner-chat-tile");
-    console.log(apartmentOwnerChatTileList)
+    // console.log(apartmentOwnerChatTileList)
 
     for (i=0; i<apartmentOwnerChatTileList.length; i++){
         apartmentOwnerChatTileList[i].className = apartmentOwnerChatTileList[i].className.replace(" active", "");
@@ -82,21 +82,21 @@ function viewApartmentOwnerChatMenu(event, elementId){
 
     document.getElementById(elementId).style.display = "block";
 
-    console.log(event.currentTarget)
+    // console.log(event.currentTarget)
     event.currentTarget.className += " active";
 }
 
 function viewBuildingManagerChatMenu(event, elementId){
 
     displayChatNameList = document.getElementsByClassName("display-chat-name");
-    console.log(displayChatNameList)
+    // console.log(displayChatNameList)
 
     for (i=0; i<displayChatNameList.length; i++){
         displayChatNameList[i].style.display = "none";
     }
 
     apartmentOwnerChatTileList = document.getElementsByClassName("building-manager-chat-tile");
-    console.log(apartmentOwnerChatTileList)
+    // console.log(apartmentOwnerChatTileList)
 
     for (i=0; i<apartmentOwnerChatTileList.length; i++){
         apartmentOwnerChatTileList[i].className = apartmentOwnerChatTileList[i].className.replace(" active", "");
@@ -104,21 +104,21 @@ function viewBuildingManagerChatMenu(event, elementId){
 
     document.getElementById(elementId).style.display = "block";
 
-    console.log(event.currentTarget)
+    // console.log(event.currentTarget)
     event.currentTarget.className += " active";
 }
 
 function viewItDetails(event, elementId){
 
     itRequestDetailsList = document.getElementsByClassName("it-request-details");
-    console.log(itRequestDetailsList)
+    // console.log(itRequestDetailsList)
 
     for (i=0; i<itRequestDetailsList.length; i++){
         itRequestDetailsList[i].style.display = "none";
     }
 
     itRequestList = document.getElementsByClassName("it-request");
-    console.log(itRequestList)
+    // console.log(itRequestList)
 
     for (i=0; i<itRequestList.length; i++){
         itRequestList[i].className = itRequestList[i].className.replace(" active", "");
@@ -126,21 +126,21 @@ function viewItDetails(event, elementId){
 
     document.getElementById(elementId).style.display = "block";
 
-    console.log(event.currentTarget)
+    // console.log(event.currentTarget)
     event.currentTarget.className += " active";
 }
 
 function viewApartmentDetails(event, elementId){
 
     apartmentOwnerDetailsList = document.getElementsByClassName("apartment-owner-detail");
-    console.log(apartmentOwnerDetailsList)
+    // console.log(apartmentOwnerDetailsList)
 
     for (i=0; i<apartmentOwnerDetailsList.length; i++){
         apartmentOwnerDetailsList[i].style.display = "none";
     }
 
     apartmentList = document.getElementsByClassName("apartment-owner-detail-tile");
-    console.log(apartmentList)
+    // console.log(apartmentList)
 
     for (i=0; i<apartmentList.length; i++){
         apartmentList[i].className = apartmentList[i].className.replace(" active", "");
@@ -148,7 +148,7 @@ function viewApartmentDetails(event, elementId){
 
     document.getElementById(elementId).style.display = "block";
 
-    console.log(event.currentTarget)
+    // console.log(event.currentTarget)
     event.currentTarget.className += " active";
 }
 
