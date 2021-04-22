@@ -8,7 +8,23 @@ npm install
 
 npm run dev
 
+--------------------------------------------------------------
+After pulling fresh code from git:
 
+composer update
+
+php artisan key:generate
+
+php artisan serve
+
+
+--------------------------------------------------------------
+For Chat 
+
+npm i express
+
+
+--------------------------------------------------------------
 Note:
 
 All after login pages will have its root blade.php = app.blade.php
