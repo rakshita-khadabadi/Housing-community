@@ -13,6 +13,8 @@ io.on('connection', (socket) => {
 
     socket.on('sendChatToServer', (message, second) => {
         console.log('message from frontend = ' + message + ' ' + second);
+
+        io.sockets.emit('sendChatToClient', message);
     });
 
 

@@ -518,7 +518,9 @@
                         <div id="building-manager-<?= htmlspecialchars($key); ?>" class="display-chat-name">
                             <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->building_name; ?></h3>
                             <div class="small-chat-display-box">
-
+                                <ul>
+                                
+                                </ul>
                             </div>
 
                             <div class="chat-input-bar">
@@ -627,7 +629,14 @@
                     chatInput.val('');
                     return false;
                 }
-            })
+            });
+
+            socket.on('sendChatToClient', (message) => {
+                var x = document.createElement("li");
+                x.innerHTML = message;
+
+                $('.small-chat-display-box ul').append(x);
+            });
 
         }
     );
