@@ -17,6 +17,10 @@ class ApartmentController extends Controller
 
         return Apartment::find($apartmentId);
     }
+    
+    function getApartmentByUserId($userId){
+        return DB::table('apartments')->where('users_id','=',$userId)->get()->first(); 
+    }
 
     function addApartmentsToBuilding($request, $buildingId, $subdivisionId, $userId){
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SubdivisionManagerController;
 use App\Http\Controllers\MockCommunityServiceBillController;
+use App\Http\Controllers\ApartmentOwnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,9 @@ Route::post('/admin', [AdminController::class, 'checkFeature']);
 
 Route::get('/subdivision-manager', [SubdivisionManagerController::class, 'initializeSubdivisionManager']);
 Route::post('/subdivision-manager', [SubdivisionManagerController::class, 'checkFeature']);
+
+Route::get('/apartment-owner', [ApartmentOwnerController::class, 'initializeApartmentOwner']);
+Route::post('/apartment-owner', [ApartmentOwnerController::class, 'checkFeature']);
 
 Route::get('/sign-up', [SignUpController::class, 'initializeSignUp']);
 Route::post('/sign-up', [SignUpController::class, 'signUpNewUser']);

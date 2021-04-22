@@ -56,6 +56,7 @@ class LoginController extends Controller
 
         }
         elseif($roleName == 'apartment owner'){
+            return redirect('/apartment-owner?userId='.$userId);
 
         }
         else{
