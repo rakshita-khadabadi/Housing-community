@@ -78,3 +78,5 @@ Route::post('/sign-up', [SignUpController::class, 'signUpNewUser']);
 
 Route::get('/login', [LoginController::class, 'showLogin']);
 Route::post('/login', [LoginController::class, 'login']);
+
+Route::view('/contact-us', 'city-view.contact-us');
