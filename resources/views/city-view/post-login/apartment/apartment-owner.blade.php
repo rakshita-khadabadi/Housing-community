@@ -415,14 +415,15 @@
 
 <!-- Apartment Owner Subdivision Manager Chat -->
 
- {{-- <div id="subdivision-manager-chat" class="section-content">
+ <div id="subdivision-manager-chat" class="section-content">
     <div class="section-heading"><h1>Chat</h1></div>
     <h3>Subdivision Manager</h3>
 
     <div class="chat-frame">
 
         <div class="chat-display-box">
-
+            <ul id="subdivision-manager-chat-display-box">
+            </ul>
         </div>
 
         <div class="chat-input-bar">
@@ -431,17 +432,61 @@
                 <input type="text" id="subdivision-manager-send" name="send" class="chat-input-box" placeholder="Enter Message">
             </div>
             <div>
-                <button class="send-button" onclick="inputSubdivisionManagerChat()">Send</button>
+                <button class="send-button" onclick="sendChatMessage(event, 'subdivision-manager-send', 'subdivision-manager-chat-display-box')">Send</button>
             </div>
         </div>
     </div>
 
-</div> --}}
+</div>
 
 </div>
 
 </div>
 
 <script src="{{ asset('js/apartment-owner-page.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
+
+<script>
+    function sendChatMessage(event, inputBoxId, displayChatBoxIdConst) {
+        console.log('hello');
+        console.log(event);
+        console.log(inputBoxId);
+        console.log(displayChatBoxIdConst);
+
+        var chatMessage = document.getElementById(inputBoxId).value;
+        console.log('chatMessage = ' + chatMessage);
+
+        let ip_address = '127.0.0.1';
+        let socket_port = '3000';
+        let socket = io(ip_address + ':' + socket_port);
+
+        {{-- socket.emit('sendChatToServer', chatMessage, 'zoro'); --}}
+        socket.emit('sendChatMessageToSMFromAO', chatMessage, 'zoro');
+
+        document.getElementById(inputBoxId).value = '';
+
+        socket.on('sendChatToSMFromAO', (message) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            console.log('inside sendChatMessageToSubdivisionManagerFromApartmentOwner');
+            var ul = document.getElementById(displayChatBoxIdConst);
+            console.log(ul);
+            ul.append(newMessage);
+        });
+
+        socket.on('sendChatToClient', (message) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            console.log('inside');
+            
+            var ul = document.getElementById(displayChatBoxIdConst);
+            console.log(ul);
+            ul.append(newMessage);
+        });
+
+
+    }
+</script>
 
 @endsection

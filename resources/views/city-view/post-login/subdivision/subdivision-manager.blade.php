@@ -590,7 +590,7 @@
                                     <input type="text" id="apartment-owner-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="sendChatmessage(event, 'apartment-owner-send-<?= htmlspecialchars($key); ?>', 'apt-owner-ul-', <?= htmlspecialchars($key); ?>)">Send</button>
+                                    <button class="send-button" onclick="sendChatMessage(event, 'apartment-owner-send-<?= htmlspecialchars($key); ?>', 'apt-owner-ul-', <?= htmlspecialchars($key); ?>)">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -609,7 +609,7 @@
 <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
 
 <script>
-    function sendChatmessage(event, inputBoxId, displayChatBoxIdConst, key) {
+    function sendChatMessage(event, inputBoxId, displayChatBoxIdConst, key) {
         console.log('hello');
         console.log(event);
         console.log(inputBoxId);
@@ -627,16 +627,19 @@
 
         document.getElementById(inputBoxId).value = '';
 
+        socket.on('sendChatToSMFromAO', (message) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            console.log('inside sendChatToSMFromAO');
+            var ul = document.getElementById(displayChatBoxIdConst+key);
+            console.log(ul);
+            ul.append(newMessage);
+        });
+
         socket.on('sendChatToClient', (message) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
-            console.log('inside');
-
-            {{-- var polo = '.'+displayChatBoxIdConst+key+' '+'ul';
-            console.log(polo);
-
-            $(polo).append(x); --}}
-            
+            console.log('inside sendChatToClient');
 
             var ul = document.getElementById(displayChatBoxIdConst+key);
             console.log(ul);

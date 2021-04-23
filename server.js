@@ -17,6 +17,13 @@ io.on('connection', (socket) => {
         io.sockets.emit('sendChatToClient', message);
     });
 
+    socket.on('sendChatMessageToSMFromAO', (message, second) => {
+        console.log('message from frontend AO to SM = ' + message + ' ' + second);
+
+        io.sockets.emit('sendChatToSMFromAO', message);
+        // io.sockets.emit('sendChatToClient', message);
+    });
+
 
 
     socket.on('disconnect', (socket) => {
