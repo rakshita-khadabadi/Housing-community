@@ -56,7 +56,7 @@
             <button class="sidebar-option text-left opacity" onclick="myFunction(event, 'new-complaint')">New Complaint</button>
             <button class="sidebar-option text-left opacity" onclick="myFunction(event, 'view-complaints')">View Complaints</button>
             </div>
-            <a href="../../index.php">
+            <a href="/">
             <button class="sidebar-option text-left opacity" onclick="myFunction(event, 'sign-out')">Sign out</button>
              </a>
         </div>
@@ -181,7 +181,7 @@
     </div>
 </div>
 
-{{-- <div id="dashboard-electricity-bill" class="section-content">
+<div id="dashboard-electricity-bill" class="section-content">
     <div class="section-heading"><h1>Electricity Dashboard</h1></div>
 
     <div>
@@ -205,9 +205,9 @@
         });
     </script>
     
-</div>  --}}
+</div>  
 
- {{-- <div id="dashboard-gas-bill" class="section-content">
+<div id="dashboard-gas-bill" class="section-content">
     <div class="section-heading"><h1>Gas Dashboard</h1></div>
 
     <div>
@@ -216,7 +216,7 @@
 
     <script>
         let gasChart = document.getElementById('gas-chart').getContext('2d');
-        // let polo = JSON.stringify(<?php $ebilljson ?>);
+         {{-- let polo = JSON.stringify(<?php $ebilljson ?>); --}}
 
         let gasDashboard = new Chart(gasChart, {
             type:'bar',
@@ -231,9 +231,9 @@
         });
     </script>
     
-</div>  --}}
+</div>  
 
- {{-- <div id="dashboard-water-bill" class="section-content">
+<div id="dashboard-water-bill" class="section-content">
     <div class="section-heading"><h1>Water Dashboard</h1></div>
 
     <div>
@@ -242,7 +242,7 @@
 
     <script>
         let waterChart = document.getElementById('water-chart').getContext('2d');
-        // let polo = JSON.stringify(<?php $ebilljson ?>);
+         {{-- let polo = JSON.stringify(<?php $ebilljson ?>); --}}
 
         let waterDashboard = new Chart(waterChart, {
             type:'bar',
@@ -257,9 +257,9 @@
         });
     </script>
     
-</div>  --}}
+</div>  
 
- {{-- <div id="dashboard-internet-bill" class="section-content">
+ <div id="dashboard-internet-bill" class="section-content">
     <div class="section-heading"><h1>Internet Dashboard</h1></div>
 
     <div>
@@ -268,7 +268,7 @@
 
     <script>
         let internetChart = document.getElementById('internet-chart').getContext('2d');
-        // let polo = JSON.stringify(<?php $ebilljson ?>);
+         {{-- let polo = JSON.stringify(<?php $ebilljson ?>); --}}
 
         let internetDashboard = new Chart(internetChart, {
             type:'bar',
@@ -283,50 +283,51 @@
         });
     </script>
     
-</div>  --}}
+</div> 
 
 <!-- Apartment Owner New Maintenance Requests -->
 
- {{-- <div id="new-maintenance-request" class="section-content">
+  <div id="new-maintenance-request" class="section-content">
     <div class="section-heading"><h1>Maintenance Request</h1></div>
     <h3>Create New Maintenance Request</h3>
 
     <div>
         <form method="post">
+        @csrf
             <label for="maintenance-request-input-message"><h4>Enter details:</h4></label>
             <textarea id="maintenance-request-input-message" name="maintenance-request-input-message" class="textarea-size"rows="4" cols="50"></textarea><br/>
-            <button  class="submit-button">Submit</button>
+            <input type="submit" value="Submit" class="submit-button">
         </form>
     </div>
-</div>  --}}
+</div> 
 
 <!-- Apartment Owner View Maintenance Requests -->
 
-{{-- <div id="view-maintenance-requests" class="section-content">
+<div id="view-maintenance-requests" class="section-content">
     <div class="section-heading"><h1>Maintenance Request</h1></div>
     <h3>View Maintenance Request</h3>
     <div>
 
         <div class="maintenance-request-list-apt">
-            <?php foreach ($mrList as $mr): ?>
-                <button class="maintenance-request" onclick="viewMaintenanceDetails(event, 'mr-<?= htmlspecialchars($mr->maintenance_request_id); ?>')">
-                    Maintenance Request ID: <?= htmlspecialchars($mr->maintenance_request_id); ?> <br />
-                    Date: <?= htmlspecialchars($mr->message_datetime); ?> <br />
-                    Status: <?= htmlspecialchars($mr->status); ?>
+            <?php foreach ($mrlist as $mr): ?>
+                <button class="maintenance-request" onclick="viewMaintenanceDetails(event, 'mr-<?= $mr->id ?>')">
+                    Maintenance Request ID: <?= $mr->id ?> <br />
+                    Date: <?= $mr->message_datetime ?> <br />
+                    Status: <?= $mr->status ?>
                 </button>
             <?php endforeach; ?>
             
         </div>
 
         <div class="display-maintenance-request">
-            <?php foreach ($mrList as $mr): ?>
-                <div id="mr-<?= htmlspecialchars($mr->maintenance_request_id); ?>" class="maintenance-request-details">
+            <?php foreach ($mrlist as $mr): ?>
+                <div id="mr-<?= $mr->id ?>" class="maintenance-request-details">
                     <h3>Datetime</h3>
-                    <p><?= htmlspecialchars($mr->message_datetime); ?></p>
+                    <p><?= $mr->message_datetime ?></p>
                     <h3>Message</h3>
-                    <p><?= htmlspecialchars($mr->message); ?></p>
+                    <p><?= $mr->message ?></p>
                     <h3>Status</h3>
-                    <p><?= htmlspecialchars($mr->status); ?></p>
+                    <p><?= $mr->status ?></p>
                 </div>
             <?php endforeach; ?>
 
@@ -334,36 +335,37 @@
         </div>
     </div>
     
-</div>  --}}
+</div>  
 
 <!-- Apartment Owner New Complaints -->
 
-{{-- <div id="new-complaint" class="section-content">
+<div id="new-complaint" class="section-content">
     <div class="section-heading"><h1>Complaints</h1></div>
     <h3>Create New Complaint</h3>
 
     <div>
         <form method="post">
+         @csrf
             <label for="complaints-request-input-message"><h4>Enter details:</h4></label>
             <textarea id="complaints-request-input-message" name="complaints-request-input-message" class="textarea-size" rows="4" cols="50"></textarea><br/>
             <input type="submit" value="Submit" class="submit-button">
         </form>
     </div>
-</div>  --}}
+</div> 
 
 <!-- Apartment Owner View Complaints -->
-{{-- 
+
  <div id="view-complaints" class="section-content">
     <div class="section-heading"><h1>View Complaints</h1></div>
     <h3>View Complaints</h3>
     <div>
 
         <div class="complaint-list">
-        <?php foreach ($cmList as $cm): ?>
-            <button class="complaint" onclick="viewComplaintDetails(event, 'cm-<?= htmlspecialchars($cm->complaint_id); ?>')">
-                   Complaint ID: <?= htmlspecialchars($cm->complaint_id); ?> <br />
-                    Date: <?= htmlspecialchars($cm->message_datetime); ?> <br />
-                    Status: <?= htmlspecialchars($cm->status); ?>
+        <?php foreach ($crlist as $cm): ?>
+            <button class="complaint" onclick="viewComplaintDetails(event, 'cm-<?= $cm->id ?>')">
+                   Complaint ID: <?= $cm->id ?> <br />
+                    Date: <?= $cm->message_datetime ?> <br />
+                    Status: <?= $cm->status ?>
                 
             </button>
             <?php endforeach; ?>
@@ -372,19 +374,19 @@
 
         <div class="display-complaint">
 
-            <?php foreach ($cmList as $cm): ?>
-                <div id="cm-<?= htmlspecialchars($cm->complaint_id); ?>" class="complaint-details">
+            <?php foreach ($crlist as $cm): ?>
+                <div id="cm-<?= $cm->id ?>" class="complaint-details">
                     <h3>Datetime</h3>
-                    <p><?= htmlspecialchars($cm->message_datetime); ?></p>
+                    <p><?= $cm->message_datetime ?></p>
                     <h3>Message</h3>
-                    <p><?= htmlspecialchars($cm->message); ?></p>
+                    <p><?= $cm->message ?></p>
                     <h3>Status</h3>
-                    <p><?= htmlspecialchars($cm->status); ?></p>
+                    <p><?= $cm->status ?></p>
                 </div>
             <?php endforeach;?>    
         </div>
     </div>
-</div> --}}
+</div>
 
 <!-- Apartment Owner Building Manager Chat -->
 
