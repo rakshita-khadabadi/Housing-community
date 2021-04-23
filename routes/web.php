@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SubdivisionManagerController;
+use App\Http\Controllers\BuildingManagerController;
 use App\Http\Controllers\MockCommunityServiceBillController;
 
 /*
@@ -74,3 +75,6 @@ Route::post('/sign-up', [SignUpController::class, 'signUpNewUser']);
 
 Route::get('/login', [LoginController::class, 'showLogin']);
 Route::post('/login', [LoginController::class, 'login']);
+
+//BUILDING MANAGER
+Route::get('/building-manager', [BuildingManagerController::class, 'initializeBuildingManager']);

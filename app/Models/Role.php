@@ -19,7 +19,7 @@ class Role extends Model
         // echo $this->getForeignKey();
         // echo $this->$primaryKey;
 
-        // var_dump(response()->$this->hasMany(User::class));
+        // // var_dump(response()->$this->hasMany(User::class));
         return $this->hasMany(User::class, 'roles_id')->get();
     }
 }
