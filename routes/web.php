@@ -50,7 +50,7 @@ use App\Http\Controllers\ApartmentOwnerController;
 //     return view('city-view.index', []);
 // })->name('home.index');
 
-Route::view('/', 'city-view.app')->name('city-view.app');
+Route::view('/', 'city-view.main')->name('city-view.main');
 
 // Route::get('/change', function() {
 //     return redirect('/showRoles');
@@ -78,3 +78,6 @@ Route::post('/sign-up', [SignUpController::class, 'signUpNewUser']);
 
 Route::get('/login', [LoginController::class, 'showLogin']);
 Route::post('/login', [LoginController::class, 'login']);
+
+Route::view('/contact-us', 'city-view.contact-us');
+Route::view('/about', 'city-view.about');

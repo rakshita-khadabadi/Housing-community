@@ -151,7 +151,6 @@ CREATE TABLE IF NOT EXISTS `city_view_database`.`apartment_utility_bills` (
   `buildings_id` INT UNSIGNED NOT NULL,
   `subdivisions_id` INT UNSIGNED NOT NULL,
   `users_id` INT UNSIGNED NOT NULL,
-  `utility_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `month_year_idx` (`month` ASC, `year` ASC),
   INDEX `service_provider_type_idx` (`service_provider_type` ASC),
@@ -407,7 +406,6 @@ CREATE TABLE IF NOT EXISTS `city_view_database`.`apartment_utility_service_provi
   `buildings_id` INT UNSIGNED NOT NULL,
   `subdivisions_id` INT UNSIGNED NOT NULL,
   `users_id` INT UNSIGNED NOT NULL,
-  `utility_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_apartment_utility_service_provider_types_utilities1_idx` (`utilities_id` ASC),
   INDEX `fk_apartment_utility_service_provider_types_apartments1_idx` (`apartments_id` ASC),
@@ -443,43 +441,25 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `city_view_database`.`conversations`
+-- Table `city_view_database`.`chats`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `city_view_database`.`conversations` (
+CREATE TABLE IF NOT EXISTS `city_view_database`.`chats` (
   `sender_user_id` INT UNSIGNED NOT NULL,
   `receiver_user_id` INT UNSIGNED NOT NULL,
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`, `sender_user_id`, `receiver_user_id`),
+  `message` VARCHAR(500) NOT NULL,
+  `message_datetime` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
   INDEX `fk_users_has_users_users2_idx` (`receiver_user_id` ASC),
   INDEX `fk_users_has_users_users1_idx` (`sender_user_id` ASC),
-  CONSTRAINT `fk_users_conversations_users1`
+  CONSTRAINT `fk_users_chats_users1`
     FOREIGN KEY (`sender_user_id`)
     REFERENCES `city_view_database`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_users_conversations_users2`
+  CONSTRAINT `fk_users_chats_users2`
     FOREIGN KEY (`receiver_user_id`)
     REFERENCES `city_view_database`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `city_view_database`.`chat_messages`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `city_view_database`.`chat_messages` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `message` VARCHAR(500) NOT NULL,
-  `message_datetime` DATETIME NOT NULL,
-  `conversations_id` INT UNSIGNED NOT NULL,
-  `sender_user_id` INT UNSIGNED NOT NULL,
-  `receiver_user_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_chat_messages_users_has_users1_idx` (`conversations_id` ASC, `sender_user_id` ASC, `receiver_user_id` ASC),
-  CONSTRAINT `fk_chat_messages_users_has_users1`
-    FOREIGN KEY (`conversations_id` , `sender_user_id` , `receiver_user_id`)
-    REFERENCES `city_view_database`.`conversations` (`id` , `sender_user_id` , `receiver_user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

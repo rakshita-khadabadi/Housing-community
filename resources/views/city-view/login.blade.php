@@ -7,7 +7,7 @@
     City View
     <a href="./login">Login</a>
     <a class="active" href="./sign-up">SignUp</a>
-    <a href="./contact_us">Contact Us</a>
+    <a href="./contact-us">Contact Us</a>
     <a href="/blog">Forum</a>
     <a href="./about">About Us</a>
     <a href="../">Home</a>

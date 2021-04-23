@@ -15,7 +15,6 @@ class ApartmentOwnerController extends Controller
 
         $userController = new UserController();
         $personalDetails = $userController->getUserById($userId);
-        //echo 'Hi its working';
 
         $apartmentOwnerController = new ApartmentOwnerController();
         $utilityReportMonth = $apartmentOwnerController->getPreviousMonth();
@@ -52,6 +51,12 @@ class ApartmentOwnerController extends Controller
         $gasBillLabels = json_encode($apartmentOwnerController->getGasChartLabels($apartmentId));
         $waterBillLabels = json_encode($apartmentOwnerController->getWaterChartLabels($apartmentId));
 
+        $subdivisionManagerUserId = $apartmentOwnerController->getApartmentsSMUserId($apartmentId);
+        // echo $subdivisionManagerUserId;
+
+        $chats = $apartmentOwnerController->getAllChats();
+        // echo $chats;
+
         $monthLabels = json_encode(['Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec']);
         return view('city-view.post-login.apartment.apartment-owner', [
             'personalDetails' => $personalDetails,
@@ -75,7 +80,9 @@ class ApartmentOwnerController extends Controller
             // 'buildingList' => $buildingList,
             // 'aptList' => $aptList,
              'mrlist' => $mrlist,
-             'crlist' => $crlist
+             'crlist' => $crlist,
+             'subdivisionManagerUserId' => $subdivisionManagerUserId,
+             'chats' => $chats
             ]);
         //return $personalDetails;
         //echo "printing personal details";
@@ -115,6 +122,24 @@ class ApartmentOwnerController extends Controller
             return $crRequestController->saveComplaintRequest($crMessage, $apartmentId,$apartmentRecord);
 
         }
+    }
+
+    function getAllChats(){
+        $chatController = new ChatController();
+        return $chatController->fetchAllChats();
+    }
+
+    function getApartmentsSMUserId($apartmentId){
+        
+        $apartmentController = new ApartmentController();
+        $apartmentRecord = $apartmentController->getApartmentById($apartmentId);
+
+        $subdivisionId = $apartmentRecord->subdivisions_id;
+
+        $subdivisionController = new SubdivisionController();
+        $subdivisionRecord = $subdivisionController->getSubdivisionById($subdivisionId);
+
+        return $subdivisionRecord->users_id;
     }
 
     function getPreviousMonth(){

@@ -415,14 +415,23 @@
 
 <!-- Apartment Owner Subdivision Manager Chat -->
 
- {{-- <div id="subdivision-manager-chat" class="section-content">
+ <div id="subdivision-manager-chat" class="section-content">
     <div class="section-heading"><h1>Chat</h1></div>
     <h3>Subdivision Manager</h3>
 
     <div class="chat-frame">
 
         <div class="chat-display-box">
+            <ul id="subdivision-manager-chat-display-box" class="ul-design">
 
+                @foreach ($chats as $chat)
+                    @if ($chat->sender_user_id == $personalDetails->id && $chat->receiver_user_id == $subdivisionManagerUserId)
+                        <li class="chat-sender-msg">{{ $chat->message }}</li>
+                    @elseif ($chat->sender_user_id == $subdivisionManagerUserId && $chat->receiver_user_id == $personalDetails->id)
+                        <li class="chat-receiver-msg">{{ $chat->message }}</li>
+                    @endif
+                @endforeach
+            </ul>
         </div>
 
         <div class="chat-input-bar">
@@ -431,17 +440,106 @@
                 <input type="text" id="subdivision-manager-send" name="send" class="chat-input-box" placeholder="Enter Message">
             </div>
             <div>
-                <button class="send-button" onclick="inputSubdivisionManagerChat()">Send</button>
+                <button class="send-button" onclick="sendChatMessage(event, 'subdivision-manager-send', 'subdivision-manager-chat-display-box', <?= $personalDetails->id; ?>, <?= $subdivisionManagerUserId ?>)">Send</button>
             </div>
         </div>
     </div>
 
-</div> --}}
+</div>
 
 </div>
 
 </div>
 
 <script src="{{ asset('js/apartment-owner-page.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
+
+<script>
+
+        let ip_address = '127.0.0.1';
+        let socket_port = '3000';
+        let socket = io(ip_address + ':' + socket_port);
+        
+    function sendChatMessage(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, smUserId) {
+        {{-- console.log('hello');
+        console.log(event);
+        console.log(inputBoxId);
+        console.log(displayChatBoxIdConst); --}}
+
+        var chatMessage = document.getElementById(inputBoxId).value;
+        console.log('chatMessage = ' + chatMessage);
+
+        {{-- let ip_address = '127.0.0.1';
+        let socket_port = '3000';
+        let socket = io(ip_address + ':' + socket_port); --}}
+        let connectedSocketCount = 0;
+
+        {{-- socket.emit('sendChatToServer', chatMessage, 'zoro'); --}}
+        socket.emit('sendChatMessageToSMFromAO', chatMessage, smUserId, aptOwnerUserId);
+
+        document.getElementById(inputBoxId).value = '';
+
+        {{-- socket.once('sendChatToSMFromAO', (message) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            console.log('inside sendChatToSMFromAO');
+            var ul = document.getElementById(displayChatBoxIdConst);
+            console.log(ul);
+            ul.append(newMessage);
+        }); --}}
+
+        {{-- socket.on('sendChatToClient', (message) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            console.log('inside sendChatToClient');
+            
+            var ul = document.getElementById(displayChatBoxIdConst);
+            console.log(ul);
+            ul.append(newMessage);
+
+            connectedSocketCount = connectedSocketCount + 1;
+            console.log('connectedSocketCount = '+ connectedSocketCount);
+            console.log(socket);
+            console.log('---------------');
+            console.log('socket.id = '+socket.id);
+
+        }); --}}
+
+        
+        var newMessage = document.createElement("li");
+        newMessage.innerHTML = chatMessage;
+        newMessage.className = "chat-sender-msg";
+
+        console.log('inside sendChatToSMFromAO');
+        var ul = document.getElementById(displayChatBoxIdConst);
+        console.log(ul);
+        ul.append(newMessage);
+        
+
+        {{-- var timestamp = new Date().toISOString(); --}}
+        {{-- var timestamp = new moment().tz('America/Chicago').format('hh:mm:ss z');
+        var msgTimestamp = document.createElement("li");
+        newMessage.innerHTML = timestamp;
+        newMessage.className = "chat-sender-msg";
+        var ulTime = document.getElementById(displayChatBoxIdConst);
+        ulTime.append(msgTimestamp); --}}
+
+
+    }
+
+
+    socket.on('sendChatToClient', (message) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            newMessage.className = "chat-receiver-msg";
+            console.log('inside sendChatToClient');
+            
+            var ul = document.getElementById('subdivision-manager-chat-display-box');
+            console.log(ul);
+            ul.append(newMessage);
+
+        });
+</script>
 
 @endsection
