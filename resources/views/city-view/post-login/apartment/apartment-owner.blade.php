@@ -432,7 +432,7 @@
                 <input type="text" id="subdivision-manager-send" name="send" class="chat-input-box" placeholder="Enter Message">
             </div>
             <div>
-                <button class="send-button" onclick="sendChatMessage(event, 'subdivision-manager-send', 'subdivision-manager-chat-display-box')">Send</button>
+                <button class="send-button" onclick="sendChatMessage(event, 'subdivision-manager-send', 'subdivision-manager-chat-display-box', <?= $personalDetails->id; ?>)">Send</button>
             </div>
         </div>
     </div>
@@ -453,7 +453,7 @@
         let socket_port = '3000';
         let socket = io(ip_address + ':' + socket_port);
         
-    function sendChatMessage(event, inputBoxId, displayChatBoxIdConst) {
+    function sendChatMessage(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId) {
         {{-- console.log('hello');
         console.log(event);
         console.log(inputBoxId);
@@ -468,7 +468,7 @@
         let connectedSocketCount = 0;
 
         {{-- socket.emit('sendChatToServer', chatMessage, 'zoro'); --}}
-        socket.emit('sendChatMessageToSMFromAO', chatMessage, 'zoro');
+        socket.emit('sendChatMessageToSMFromAO', chatMessage, aptOwnerUserId);
 
         document.getElementById(inputBoxId).value = '';
 

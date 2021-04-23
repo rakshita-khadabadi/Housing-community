@@ -669,12 +669,12 @@
 
     }
 
-    socket.on('sendChatToSMFromAO', (message) => {
+    socket.on('sendChatToSMFromAO', (message, aptOwnerUserId) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
             console.log('inside sendChatToSMFromAO');
-            console.log('globalKey = ', globalKey);
-            var ul = document.getElementById('apt-owner-ul-'+globalKey);
+            {{-- console.log('globalKey = ', globalKey); --}}
+            var ul = document.getElementById('apt-owner-ul-'+aptOwnerUserId);
             console.log(ul);
             ul.append(newMessage);
 

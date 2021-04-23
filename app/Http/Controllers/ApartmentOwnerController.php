@@ -15,7 +15,6 @@ class ApartmentOwnerController extends Controller
 
         $userController = new UserController();
         $personalDetails = $userController->getUserById($userId);
-        //echo 'Hi its working';
 
         $apartmentOwnerController = new ApartmentOwnerController();
         $utilityReportMonth = $apartmentOwnerController->getPreviousMonth();
