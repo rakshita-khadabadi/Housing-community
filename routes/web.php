@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SubdivisionManagerController;
+use App\Http\Controllers\BuildingManagerController;
 use App\Http\Controllers\MockCommunityServiceBillController;
 use App\Http\Controllers\ApartmentOwnerController;
 
@@ -81,3 +82,5 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::view('/contact-us', 'city-view.contact-us');
 Route::view('/about', 'city-view.about');
+//BUILDING MANAGER
+Route::get('/building-manager', [BuildingManagerController::class, 'initializeBuildingManager']);
