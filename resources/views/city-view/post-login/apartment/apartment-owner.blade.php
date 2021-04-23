@@ -423,6 +423,14 @@
 
         <div class="chat-display-box">
             <ul id="subdivision-manager-chat-display-box" class="ul-design">
+
+                @foreach ($chats as $chat)
+                    @if ($chat->sender_user_id == $personalDetails->id && $chat->receiver_user_id == $subdivisionManagerUserId)
+                        <li class="chat-sender-msg">{{ $chat->message }}</li>
+                    @elseif ($chat->sender_user_id == $subdivisionManagerUserId && $chat->receiver_user_id == $personalDetails->id)
+                        <li class="chat-receiver-msg">{{ $chat->message }}</li>
+                    @endif
+                @endforeach
             </ul>
         </div>
 

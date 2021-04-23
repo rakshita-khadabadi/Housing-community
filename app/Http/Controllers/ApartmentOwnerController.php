@@ -54,6 +54,9 @@ class ApartmentOwnerController extends Controller
         $subdivisionManagerUserId = $apartmentOwnerController->getApartmentsSMUserId($apartmentId);
         // echo $subdivisionManagerUserId;
 
+        $chats = $apartmentOwnerController->getAllChats();
+        // echo $chats;
+
         $monthLabels = json_encode(['Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec']);
         return view('city-view.post-login.apartment.apartment-owner', [
             'personalDetails' => $personalDetails,
@@ -78,7 +81,8 @@ class ApartmentOwnerController extends Controller
             // 'aptList' => $aptList,
              'mrlist' => $mrlist,
              'crlist' => $crlist,
-             'subdivisionManagerUserId' => $subdivisionManagerUserId
+             'subdivisionManagerUserId' => $subdivisionManagerUserId,
+             'chats' => $chats
             ]);
         //return $personalDetails;
         //echo "printing personal details";
@@ -118,6 +122,11 @@ class ApartmentOwnerController extends Controller
             return $crRequestController->saveComplaintRequest($crMessage, $apartmentId,$apartmentRecord);
 
         }
+    }
+
+    function getAllChats(){
+        $chatController = new ChatController();
+        return $chatController->fetchAllChats();
     }
 
     function getApartmentsSMUserId($apartmentId){
