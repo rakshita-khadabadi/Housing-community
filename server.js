@@ -33,6 +33,7 @@ io.on('connection', (socket) => {
         console.log('message from frontend AO to SM = ' + message + ' from ' + aptOwnerUserId);
         console.log('socket.id = '+socket.id);
         // io.sockets.emit('sendChatToSMFromAO', message);
+        // socket.broadcast.emit('sendChatToSMFromAO', message+','+aptOwnerUserId);
         socket.broadcast.emit('sendChatToSMFromAO', message, aptOwnerUserId);
         // io.sockets.emit('sendChatToClient', message);
         // socket.disconnect(0);

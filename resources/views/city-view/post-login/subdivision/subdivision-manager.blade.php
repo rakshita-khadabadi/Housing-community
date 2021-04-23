@@ -560,8 +560,8 @@
 
                     <div class="chat-name-list">
                         <?php foreach ($aptList as $key => $value): ?>
-                        <a href="#apartment-owner-<?= htmlspecialchars($key); ?>">
-                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-<?= htmlspecialchars($key); ?>')">
+                        <a href="#apartment-owner-<?= htmlspecialchars($value->id); ?>">
+                            <button class="apartment-owner-chat-tile" onclick="viewApartmentOwnerChatMenu(event, 'apartment-owner-<?= htmlspecialchars($value->id); ?>')">
                                 <?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?><br />
                                 <?= $value->building_name; ?> <br />
                             </button>
@@ -576,10 +576,10 @@
                     <div class="chat-name-display">
 
                         <?php foreach ($aptList as $key => $value): ?>
-                        <div id="apartment-owner-<?= htmlspecialchars($key); ?>" class="display-chat-name">
+                        <div id="apartment-owner-<?= htmlspecialchars($value->id); ?>" class="display-chat-name">
                             <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?>, <?= $value->building_name; ?></h3>
-                            <div id="small-chat-display-box-<?= htmlspecialchars($key); ?>" class="small-chat-display-box">
-                                <ul id ='apt-owner-ul-<?= htmlspecialchars($key); ?>'>
+                            <div id="small-chat-display-box-<?= htmlspecialchars($value->id); ?>" class="small-chat-display-box">
+                                <ul id ='apt-owner-ul-<?= htmlspecialchars($value->id); ?>'>
                                 
                                 </ul>
                             </div>
@@ -587,10 +587,10 @@
                             <div class="chat-input-bar">
                                 <div class="chat-input">
                                     <label for="send"></label>
-                                    <input type="text" id="apartment-owner-send-<?= htmlspecialchars($key); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
+                                    <input type="text" id="apartment-owner-send-<?= htmlspecialchars($value->id); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="sendChatMessage(event, 'apartment-owner-send-<?= htmlspecialchars($key); ?>', 'apt-owner-ul-', <?= htmlspecialchars($key); ?>)">Send</button>
+                                    <button class="send-button" onclick="sendChatMessage(event, 'apartment-owner-send-<?= htmlspecialchars($value->id); ?>', 'apt-owner-ul-', <?= htmlspecialchars($value->id); ?>)">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -674,6 +674,8 @@
             newMessage.innerHTML = message;
             console.log('inside sendChatToSMFromAO');
             {{-- console.log('globalKey = ', globalKey); --}}
+            {{-- var data = message.split(','); --}}
+            {{-- console.log('message from frontend AO to SM = ' + message[0]+ 'from '+ message[1]); --}}
             var ul = document.getElementById('apt-owner-ul-'+aptOwnerUserId);
             console.log(ul);
             ul.append(newMessage);
