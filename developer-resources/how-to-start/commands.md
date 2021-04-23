@@ -8,7 +8,25 @@ npm install
 
 npm run dev
 
+--------------------------------------------------------------
+After pulling fresh code from git:
 
+composer update
+
+php artisan key:generate
+
+php artisan serve
+
+
+--------------------------------------------------------------
+For Chat 
+
+npm i express
+
+npm install socket.io
+
+
+--------------------------------------------------------------
 Note:
 
 All after login pages will have its root blade.php = app.blade.php
