@@ -590,7 +590,7 @@
                                     <input type="text" id="apartment-owner-send-<?= htmlspecialchars($value->id); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="sendChatMessage(event, 'apartment-owner-send-<?= htmlspecialchars($value->id); ?>', 'apt-owner-ul-', <?= htmlspecialchars($value->id); ?>)">Send</button>
+                                    <button class="send-button" onclick="sendChatMessage(event, 'apartment-owner-send-<?= htmlspecialchars($value->id); ?>', 'apt-owner-ul-', <?= htmlspecialchars($value->id); ?>, <?= $personalDetails->id; ?>)">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -615,14 +615,13 @@
     let socket = io(ip_address + ':' + socket_port);
     let globalKey = 0;
 
-    function sendChatMessage(event, inputBoxId, displayChatBoxIdConst, key) {
-        console.log('hello');
+    function sendChatMessage(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, subManagerUserId) {
+        {{-- console.log('hello');
         console.log(event);
         console.log(inputBoxId);
-        console.log(displayChatBoxIdConst);
-        console.log(key);
+        console.log(displayChatBoxIdConst); --}}
+        
 
-        globalKey = key;
 
         var chatMessage = document.getElementById(inputBoxId).value;
         console.log('chatMessage = ' + chatMessage);
@@ -631,7 +630,7 @@
         let socket_port = '3000';
         let socket = io(ip_address + ':' + socket_port); --}}
 
-        socket.emit('sendChatToServer', chatMessage, 'zoro');
+        socket.emit('sendChatToServer', chatMessage, aptOwnerUserId, subManagerUserId);
 
         document.getElementById(inputBoxId).value = '';
 
@@ -662,7 +661,7 @@
         newMessage.innerHTML = chatMessage;
         console.log('inside sendChatToClient');
 
-        var ul = document.getElementById(displayChatBoxIdConst+key);
+        var ul = document.getElementById(displayChatBoxIdConst+aptOwnerUserId);
         console.log(ul);
         ul.append(newMessage);
 

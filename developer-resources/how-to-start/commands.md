@@ -25,7 +25,10 @@ npm i express
 
 npm install socket.io
 
+npm install mysql
+
 npm install moment-timezone
+
 --------------------------------------------------------------
 Note:
 
