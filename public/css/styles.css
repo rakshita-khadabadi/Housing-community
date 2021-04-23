@@ -349,6 +349,7 @@ tr {
     float: right;
     height: 35px;
     width: 10%;
+    margin-top: 18px;
 }
 
 .chat-frame {
