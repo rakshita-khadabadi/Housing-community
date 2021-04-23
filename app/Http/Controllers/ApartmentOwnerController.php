@@ -51,6 +51,9 @@ class ApartmentOwnerController extends Controller
         $gasBillLabels = json_encode($apartmentOwnerController->getGasChartLabels($apartmentId));
         $waterBillLabels = json_encode($apartmentOwnerController->getWaterChartLabels($apartmentId));
 
+        $subdivisionManagerUserId = $apartmentOwnerController->getApartmentsSMUserId($apartmentId);
+        // echo $subdivisionManagerUserId;
+
         $monthLabels = json_encode(['Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec']);
         return view('city-view.post-login.apartment.apartment-owner', [
             'personalDetails' => $personalDetails,
@@ -74,7 +77,8 @@ class ApartmentOwnerController extends Controller
             // 'buildingList' => $buildingList,
             // 'aptList' => $aptList,
              'mrlist' => $mrlist,
-             'crlist' => $crlist
+             'crlist' => $crlist,
+             'subdivisionManagerUserId' => $subdivisionManagerUserId
             ]);
         //return $personalDetails;
         //echo "printing personal details";
@@ -114,6 +118,19 @@ class ApartmentOwnerController extends Controller
             return $crRequestController->saveComplaintRequest($crMessage, $apartmentId,$apartmentRecord);
 
         }
+    }
+
+    function getApartmentsSMUserId($apartmentId){
+        
+        $apartmentController = new ApartmentController();
+        $apartmentRecord = $apartmentController->getApartmentById($apartmentId);
+
+        $subdivisionId = $apartmentRecord->subdivisions_id;
+
+        $subdivisionController = new SubdivisionController();
+        $subdivisionRecord = $subdivisionController->getSubdivisionById($subdivisionId);
+
+        return $subdivisionRecord->users_id;
     }
 
     function getPreviousMonth(){
