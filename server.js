@@ -10,24 +10,44 @@ const io = require('socket.io')(server, {
 
 io.on('connection', (socket) => {
     console.log('NodeJS server connection established.');
+    console.log("The number of connected sockets: "+socket.adapter.sids.size);
+    console.log('socket.id = '+socket.id);
+    // console.log(socket.adapter.sids)
+    // console.log(socket.adapter)
+    console.log('-----------------------');
+
+    socket.on('new_visitor', user => {
+        console.log('new_visitor', user);
+        socket.user = user;
+    });
 
     socket.on('sendChatToServer', (message, second) => {
         console.log('message from frontend = ' + message + ' ' + second);
-
-        io.sockets.emit('sendChatToClient', message);
+        console.log('socket.id = '+socket.id);
+        // io.sockets.emit('sendChatToClient', message);
+        socket.broadcast.emit('sendChatToClient', message);
+        
     });
 
     socket.on('sendChatMessageToSMFromAO', (message, second) => {
         console.log('message from frontend AO to SM = ' + message + ' ' + second);
-
-        io.sockets.emit('sendChatToSMFromAO', message);
+        console.log('socket.id = '+socket.id);
+        // io.sockets.emit('sendChatToSMFromAO', message);
+        socket.broadcast.emit('sendChatToSMFromAO', message);
         // io.sockets.emit('sendChatToClient', message);
+        // socket.disconnect(0);
     });
 
+        
+    // socket.on('end', function (){
+    //     socket.disconnect(0);
+    // });
 
 
     socket.on('disconnect', (socket) => {
+        console.log('socket.id = '+socket.id);
         console.log('NodeJS server connection disconnected.');
+        // socket.removeAllListeners();
     });
 });
 

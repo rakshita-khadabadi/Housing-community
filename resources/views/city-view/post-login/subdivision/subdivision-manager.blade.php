@@ -609,6 +609,12 @@
 <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
 
 <script>
+
+    let ip_address = '127.0.0.1';
+    let socket_port = '3000';
+    let socket = io(ip_address + ':' + socket_port);
+    let globalKey = 0;
+
     function sendChatMessage(event, inputBoxId, displayChatBoxIdConst, key) {
         console.log('hello');
         console.log(event);
@@ -616,27 +622,31 @@
         console.log(displayChatBoxIdConst);
         console.log(key);
 
+        globalKey = key;
+
         var chatMessage = document.getElementById(inputBoxId).value;
         console.log('chatMessage = ' + chatMessage);
 
-        let ip_address = '127.0.0.1';
+        {{-- let ip_address = '127.0.0.1';
         let socket_port = '3000';
-        let socket = io(ip_address + ':' + socket_port);
+        let socket = io(ip_address + ':' + socket_port); --}}
 
         socket.emit('sendChatToServer', chatMessage, 'zoro');
 
         document.getElementById(inputBoxId).value = '';
 
-        socket.on('sendChatToSMFromAO', (message) => {
+        {{-- socket.on('sendChatToSMFromAO', (message) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
             console.log('inside sendChatToSMFromAO');
             var ul = document.getElementById(displayChatBoxIdConst+key);
             console.log(ul);
             ul.append(newMessage);
-        });
 
-        socket.on('sendChatToClient', (message) => {
+            socket.off('sendChatToSMFromAO', message);
+        }); --}}
+
+        {{-- socket.on('sendChatToClient', (message) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
             console.log('inside sendChatToClient');
@@ -644,10 +654,32 @@
             var ul = document.getElementById(displayChatBoxIdConst+key);
             console.log(ul);
             ul.append(newMessage);
-        });
+        }); --}}
+
+        {{-- socket.emit('end'); --}}
+
+        var newMessage = document.createElement("li");
+        newMessage.innerHTML = chatMessage;
+        console.log('inside sendChatToClient');
+
+        var ul = document.getElementById(displayChatBoxIdConst+key);
+        console.log(ul);
+        ul.append(newMessage);
 
 
     }
+
+    socket.on('sendChatToSMFromAO', (message) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            console.log('inside sendChatToSMFromAO');
+            console.log('globalKey = ', globalKey);
+            var ul = document.getElementById('apt-owner-ul-'+globalKey);
+            console.log(ul);
+            ul.append(newMessage);
+
+            socket.off('sendChatToSMFromAO', message);
+        });
 
 </script>
 

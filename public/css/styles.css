@@ -363,6 +363,7 @@ tr {
     opacity: 0.7;
     margin-bottom: 5px;
     border: 1px solid black;
+    overflow-y: scroll;
 }
 
 .small-chat-display-box {
@@ -371,6 +372,7 @@ tr {
     opacity: 0.7;
     margin-bottom: 5px;
     border: 1px solid black;
+    overflow-y: scroll;
 }
 
 /* Personal Details */
@@ -713,6 +715,7 @@ tr {
         height: 400px;
         margin-bottom: 5px;
         border: 1px solid black;
+        overflow-y: scroll;
     }
 
     .chat-list {
