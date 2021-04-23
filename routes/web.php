@@ -80,3 +80,4 @@ Route::get('/login', [LoginController::class, 'showLogin']);
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::view('/contact-us', 'city-view.contact-us');
+Route::view('/about', 'city-view.about');
