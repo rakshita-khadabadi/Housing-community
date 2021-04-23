@@ -44,8 +44,9 @@ io.on('connection', (socket) => {
         console.log('socket.id = '+socket.id);
         // io.sockets.emit('sendChatToClient', message);
         socket.broadcast.emit('sendChatToClient', message);
-        var conversationId = saveUserIdsToDB(aptOwnerUserId, subManagerUserId, message);
-        console.log('conversationId = ' + conversationId);
+        
+        saveChatToDB(aptOwnerUserId, subManagerUserId, message);
+        
         
     });
 
@@ -81,7 +82,8 @@ server.listen(3000, () => {
 
 
 
-function saveUserIdsToDB(receiverUserId, senderUserId, message){
+function saveChatToDB(receiverUserId, senderUserId, message){
+
     console.log('Inside saveUserIdsToDB');
 
     var conversation_id;
