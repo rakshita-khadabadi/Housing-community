@@ -376,6 +376,23 @@ tr {
     overflow-y: scroll;
 }
 
+.chat-sender-msg {
+    list-style: none;
+    display: block;
+    width: 100%;
+    position: right;
+    text-align: right;
+}
+
+.chat-receiver-msg {
+    list-style: none;
+    display: block;
+}
+
+.ul-design {
+    padding-left: 10px;
+    padding-right: 10px;
+}
 /* Personal Details */
 
 .personal-details-table {

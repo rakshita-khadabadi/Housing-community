@@ -422,7 +422,7 @@
     <div class="chat-frame">
 
         <div class="chat-display-box">
-            <ul id="subdivision-manager-chat-display-box">
+            <ul id="subdivision-manager-chat-display-box" class="ul-design">
             </ul>
         </div>
 
@@ -498,12 +498,24 @@
 
         }); --}}
 
+        
         var newMessage = document.createElement("li");
         newMessage.innerHTML = chatMessage;
+        newMessage.className = "chat-sender-msg";
+
         console.log('inside sendChatToSMFromAO');
         var ul = document.getElementById(displayChatBoxIdConst);
         console.log(ul);
         ul.append(newMessage);
+        
+
+        {{-- var timestamp = new Date().toISOString(); --}}
+        {{-- var timestamp = new moment().tz('America/Chicago').format('hh:mm:ss z');
+        var msgTimestamp = document.createElement("li");
+        newMessage.innerHTML = timestamp;
+        newMessage.className = "chat-sender-msg";
+        var ulTime = document.getElementById(displayChatBoxIdConst);
+        ulTime.append(msgTimestamp); --}}
 
 
     }
@@ -512,28 +524,14 @@
     socket.on('sendChatToClient', (message) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
+            newMessage.className = "chat-receiver-msg";
             console.log('inside sendChatToClient');
             
             var ul = document.getElementById('subdivision-manager-chat-display-box');
             console.log(ul);
             ul.append(newMessage);
 
-            {{-- connectedSocketCount = connectedSocketCount + 1;
-            console.log('connectedSocketCount = '+ connectedSocketCount);
-            console.log(socket);
-            console.log('---------------');
-            console.log('socket.id = '+socket.id); --}}
-
         });
 </script>
 
 @endsection
-
-
-           {{-- if(connectedSocketCount > 1){
-                
-                console.log('deleting socket');
-                connectedSocketCount = connectedSocketCount - 1;
-                socket.disconnect(0);
-                socket.connect();
-            } --}}
