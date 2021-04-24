@@ -54,6 +54,9 @@ class ApartmentOwnerController extends Controller
         $subdivisionManagerUserId = $apartmentOwnerController->getApartmentsSMUserId($apartmentId);
         // echo $subdivisionManagerUserId;
 
+        $buildingManagerUserId = $this->getApartmentsBMUserId($apartmentId);
+        // echo $buildingManagerUserId;
+        
         $chats = $apartmentOwnerController->getAllChats();
         // echo $chats;
 
@@ -82,6 +85,7 @@ class ApartmentOwnerController extends Controller
              'mrlist' => $mrlist,
              'crlist' => $crlist,
              'subdivisionManagerUserId' => $subdivisionManagerUserId,
+             'buildingManagerUserId' => $buildingManagerUserId,
              'chats' => $chats
             ]);
         //return $personalDetails;
@@ -140,6 +144,19 @@ class ApartmentOwnerController extends Controller
         $subdivisionRecord = $subdivisionController->getSubdivisionById($subdivisionId);
 
         return $subdivisionRecord->users_id;
+    }
+
+    function getApartmentsBMUserId($apartmentId){
+
+        $apartmentController = new ApartmentController();
+        $apartmentRecord = $apartmentController->getApartmentById($apartmentId);
+
+        $buildingId = $apartmentRecord->buildings_id;
+
+        $buildingController = new BuildingController();
+        $buildingrecord = $buildingController->getBuildingById($buildingId);
+
+        return $buildingrecord->users_id;
     }
 
     function getPreviousMonth(){

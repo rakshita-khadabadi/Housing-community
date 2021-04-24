@@ -624,6 +624,7 @@
 
         var newMessage = document.createElement("li");
         newMessage.innerHTML = chatMessage;
+        newMessage.className = "chat-sender-msg";
         console.log('inside sendChatToClient');
 
         var ul = document.getElementById(displayChatBoxIdConst+aptOwnerUserId);

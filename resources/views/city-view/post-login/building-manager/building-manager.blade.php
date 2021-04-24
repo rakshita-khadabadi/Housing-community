@@ -614,16 +614,33 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
-
 <script src="{{ asset('js/building-manager-page.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
 
+<script>
 
+    let ip_address = '127.0.0.1';
+    let socket_port = '3000';
+    let socket = io(ip_address + ':' + socket_port);
 
+    function sendChatMessageToAO(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, buildingManagerUserId) {
+
+        var chatMessage = document.getElementById(inputBoxId).value;
+        console.log('chatMessage = ' + chatMessage);
+        socket.emit('sendChatMessageFromBMToAO', chatMessage, aptOwnerUserId, buildingManagerUserId);
+
+        document.getElementById(inputBoxId).value = '';
+
+        var newMessage = document.createElement("li");
+        newMessage.innerHTML = chatMessage;
+        newMessage.className = "chat-sender-msg";
+        console.log('inside sendChatMessageToAO');
+
+        var ul = document.getElementById(displayChatBoxIdConst+aptOwnerUserId);
+        console.log(ul);
+        ul.append(newMessage);
+    }
+
+</script>
 @endsection

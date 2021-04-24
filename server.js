@@ -40,14 +40,21 @@ io.on('connection', (socket) => {
     });
 
     socket.on('sendChatMessageFromSMToAO', (message, aptOwnerUserId, subManagerUserId) => {
-        console.log('message from frontend = ' + message + ' aptOwnerUserId = ' + aptOwnerUserId + 'subManagerUserId = ' + subManagerUserId);
+        console.log('message from SM to AO = ' + message + ' aptOwnerUserId = ' + aptOwnerUserId + 'subManagerUserId = ' + subManagerUserId);
         console.log('socket.id = '+socket.id);
-        // io.sockets.emit('sendChatToClient', message);
+
         socket.broadcast.emit('sendChatToClient', message);
         
         saveChatToDB(aptOwnerUserId, subManagerUserId, message);
+    });
+
+    socket.on('sendChatMessageFromBMToAO', (message, aptOwnerUserId, buildingManagerUserId) => {
+        console.log('message from BM to AO = ' + message + ' aptOwnerUserId = ' + aptOwnerUserId + ' ,buildingManagerUserId = ' + buildingManagerUserId);
+        console.log('socket.id = '+socket.id);
+
+        socket.broadcast.emit('sendChatToAOFromBM', message);
         
-        
+        // saveChatToDB(aptOwnerUserId, buildingManagerUserId, message);
     });
 
     socket.on('sendChatMessageToSMFromAO', (message, smUserId, aptOwnerUserId) => {
@@ -85,7 +92,7 @@ server.listen(3000, () => {
 
 function saveChatToDB(receiverUserId, senderUserId, message){
 
-    console.log('Inside saveUserIdsToDB');
+    // console.log('Inside saveUserIdsToDB');
 
     var conversation_id;
 
@@ -107,7 +114,7 @@ function saveChatToDB(receiverUserId, senderUserId, message){
         }
     })
 
-    console.log('conversation_id = '+conversation_id);
+    // console.log('conversation_id = '+conversation_id);
 
     return conversation_id;
 }

@@ -390,14 +390,23 @@
 
 <!-- Apartment Owner Building Manager Chat -->
 
-{{-- <div id="building-manager-chat" class="section-content">
+<div id="building-manager-chat" class="section-content">
     <div class="section-heading"><h1>Chat</h1></div>
     <h3>Building Manager</h3>
 
     <div class="chat-frame">
 
         <div class="chat-display-box">
+            <ul id="building-manager-chat-display-box" class="ul-design">
 
+                @foreach ($chats as $chat)
+                    @if ($chat->sender_user_id == $personalDetails->id && $chat->receiver_user_id == $buildingManagerUserId)
+                        <li class="chat-sender-msg">{{ $chat->message }}</li>
+                    @elseif ($chat->sender_user_id == $buildingManagerUserId && $chat->receiver_user_id == $personalDetails->id)
+                        <li class="chat-receiver-msg">{{ $chat->message }}</li>
+                    @endif
+                @endforeach
+            </ul>
         </div>
 
         <div class="chat-input-bar">
@@ -411,7 +420,7 @@
         </div>
     </div>
 
-</div>  --}}
+</div> 
 
 <!-- Apartment Owner Subdivision Manager Chat -->
 
@@ -488,6 +497,18 @@
             console.log('inside sendChatToClient');
             
             var ul = document.getElementById('subdivision-manager-chat-display-box');
+            console.log(ul);
+            ul.append(newMessage);
+
+        });
+
+    socket.on('sendChatToAOFromBM', (message) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            newMessage.className = "chat-receiver-msg";
+            console.log('inside sendChatToAOFromBM');
+            
+            var ul = document.getElementById('building-manager-chat-display-box');
             console.log(ul);
             ul.append(newMessage);
 
