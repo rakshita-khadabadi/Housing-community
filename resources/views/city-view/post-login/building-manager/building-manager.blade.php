@@ -588,7 +588,7 @@
                             <div id="apartment-owner-<?= htmlspecialchars($value->id); ?>" class="display-chat-name">
                                 <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?></h3>
                                 <div class="small-chat-display-box">
-                                    <ul id ='apt-owner-ul-<?= htmlspecialchars($value->id); ?>'>
+                                    <ul id ='apt-owner-ul-<?= htmlspecialchars($value->id); ?>' class="ul-design">
                                 
                                     </ul>
                                 </div>
@@ -641,6 +641,18 @@
         console.log(ul);
         ul.append(newMessage);
     }
+
+    socket.on('sendChatToBMFromAO', (message, aptOwnerUserId) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            newMessage.className = "chat-receiver-msg";
+            console.log('inside sendChatToBMFromAO');
+            var ul = document.getElementById('apt-owner-ul-'+aptOwnerUserId);
+            console.log(ul);
+            ul.append(newMessage);
+
+            {{-- socket.off('sendChatToSMFromAO', message); --}}
+        });
 
 </script>
 @endsection

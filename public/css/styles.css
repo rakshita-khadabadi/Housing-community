@@ -402,6 +402,14 @@ tr {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.make-small{
+    font-size: 10px;
+}
+
+.make-larger{
+    font-size: 16px;
+}
 /* Personal Details */
 
 .personal-details-table {

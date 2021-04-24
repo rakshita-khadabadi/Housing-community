@@ -34,10 +34,7 @@ io.on('connection', (socket) => {
     // console.log(socket.adapter)
     console.log('-----------------------');
 
-    socket.on('new_visitor', user => {
-        console.log('new_visitor', user);
-        socket.user = user;
-    });
+    // receive chat message from Subdivision Manager -----------------------------------
 
     socket.on('sendChatMessageFromSMToAO', (message, aptOwnerUserId, subManagerUserId) => {
         console.log('message from SM to AO = ' + message + ' aptOwnerUserId = ' + aptOwnerUserId + 'subManagerUserId = ' + subManagerUserId);
@@ -48,30 +45,38 @@ io.on('connection', (socket) => {
         saveChatToDB(aptOwnerUserId, subManagerUserId, message);
     });
 
+    // receive chat message from Building Manager -----------------------------------
+
     socket.on('sendChatMessageFromBMToAO', (message, aptOwnerUserId, buildingManagerUserId) => {
         console.log('message from BM to AO = ' + message + ' aptOwnerUserId = ' + aptOwnerUserId + ' ,buildingManagerUserId = ' + buildingManagerUserId);
         console.log('socket.id = '+socket.id);
 
         socket.broadcast.emit('sendChatToAOFromBM', message);
         
-        // saveChatToDB(aptOwnerUserId, buildingManagerUserId, message);
+        saveChatToDB(aptOwnerUserId, buildingManagerUserId, message);
     });
 
+
+    // receive chat message from Apartment Owner -----------------------------------
+
     socket.on('sendChatMessageToSMFromAO', (message, smUserId, aptOwnerUserId) => {
-        console.log('message from frontend AO to SM = ' + message + ' from ' + aptOwnerUserId);
+        console.log('message from frontend AO to SM = ' + message + ' ,smUserId = '+ smUserId +' ,aptOwnerUserId = ' + aptOwnerUserId);
         console.log('socket.id = '+socket.id);
-        // io.sockets.emit('sendChatToSMFromAO', message);
-        // socket.broadcast.emit('sendChatToSMFromAO', message+','+aptOwnerUserId);
+
         socket.broadcast.emit('sendChatToSMFromAO', message, aptOwnerUserId);
-        // io.sockets.emit('sendChatToClient', message);
-        // socket.disconnect(0);
+
         saveChatToDB(smUserId, aptOwnerUserId, message);
     });
 
         
-    // socket.on('end', function (){
-    //     socket.disconnect(0);
-    // });
+    socket.on('sendChatMessageToBMFromAO', (message, bmUserId, aptOwnerUserId) => {
+        console.log('message from frontend AO to SM = ' + message + ' ,bmUserId = '+ bmUserId +' ,aptOwnerUserId = ' + aptOwnerUserId);
+        console.log('socket.id = '+socket.id);
+
+        socket.broadcast.emit('sendChatToBMFromAO', message, aptOwnerUserId);
+
+        saveChatToDB(bmUserId, aptOwnerUserId, message);
+    });
 
 
     socket.on('disconnect', (socket) => {

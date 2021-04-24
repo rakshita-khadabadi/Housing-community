@@ -401,9 +401,11 @@
 
                 @foreach ($chats as $chat)
                     @if ($chat->sender_user_id == $personalDetails->id && $chat->receiver_user_id == $buildingManagerUserId)
-                        <li class="chat-sender-msg">{{ $chat->message }}</li>
+                        <li class="chat-sender-msg make-larger">{{ $chat->message }}</li>
+                        <li class="chat-sender-msg make-small">{{ $chat->message_datetime }}</li>
                     @elseif ($chat->sender_user_id == $buildingManagerUserId && $chat->receiver_user_id == $personalDetails->id)
-                        <li class="chat-receiver-msg">{{ $chat->message }}</li>
+                        <li class="chat-receiver-msg make-larger">{{ $chat->message }}</li>
+                        <li class="chat-receiver-msg make-small">{{ $chat->message_datetime }}</li>
                     @endif
                 @endforeach
             </ul>
@@ -415,7 +417,7 @@
                 <input type="text" id="building-manager-send" name="send" class="chat-input-box" placeholder="Enter Message">
             </div>
             <div>
-                <button class="send-button" onclick="inputBuildingManagerChat()">Send</button>
+                <button class="send-button" onclick="sendChatMessageToBM(event, 'building-manager-send', 'building-manager-chat-display-box', <?= $personalDetails->id; ?>, <?= $buildingManagerUserId ?>)">Send</button>
             </div>
         </div>
     </div>
@@ -435,9 +437,11 @@
 
                 @foreach ($chats as $chat)
                     @if ($chat->sender_user_id == $personalDetails->id && $chat->receiver_user_id == $subdivisionManagerUserId)
-                        <li class="chat-sender-msg">{{ $chat->message }}</li>
+                        <li class="chat-sender-msg make-larger">{{ $chat->message }}</li>
+                        <li class="chat-sender-msg make-small">{{ $chat->message_datetime }}</li>
                     @elseif ($chat->sender_user_id == $subdivisionManagerUserId && $chat->receiver_user_id == $personalDetails->id)
-                        <li class="chat-receiver-msg">{{ $chat->message }}</li>
+                        <li class="chat-receiver-msg make-larger">{{ $chat->message }}</li>
+                        <li class="chat-receiver-msg make-small">{{ $chat->message_datetime }}</li>
                     @endif
                 @endforeach
             </ul>
@@ -501,6 +505,26 @@
             ul.append(newMessage);
 
         });
+
+    function sendChatMessageToBM(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, bmUserId) {
+
+        var chatMessage = document.getElementById(inputBoxId).value;
+        console.log('chatMessage = ' + chatMessage);
+        let connectedSocketCount = 0;
+
+        socket.emit('sendChatMessageToBMFromAO', chatMessage, bmUserId, aptOwnerUserId);
+
+        document.getElementById(inputBoxId).value = '';
+
+        var newMessage = document.createElement("li");
+        newMessage.innerHTML = chatMessage;
+        newMessage.className = "chat-sender-msg";
+
+        console.log('inside sendChatToSMFromAO');
+        var ul = document.getElementById(displayChatBoxIdConst);
+        console.log(ul);
+        ul.append(newMessage);
+    }
 
     socket.on('sendChatToAOFromBM', (message) => {
             var newMessage = document.createElement("li");
