@@ -59,7 +59,7 @@
 
             <a href="#manage-complaints"><button class="sidebar-menu-option sidebar-option text-left opacity" onclick="myFunction(event, 'manage-complaints')">View Complaints</button></a>
 
-            <a href="../../index.php">
+            <a href="/">
                 <button class="admin-option text-left opacity" onclick="myFunction(event, 'sign-out')">Sign out</button>
             </a>
         </div>
