@@ -47,6 +47,15 @@ io.on('connection', (socket) => {
 
     // receive chat message from Building Manager -----------------------------------
 
+    socket.on('sendChatMessageFromBMToSM', (message, smUserId, bmUserId) => {
+        console.log('message from frontend AO to SM = ' + message + ' ,smUserId = '+ smUserId +' ,bmUserId = ' + bmUserId);
+        console.log('socket.id = '+socket.id);
+
+        socket.broadcast.emit('sendChatToSMFromBM', message, bmUserId);
+
+        // saveChatToDB(smUserId, bmUserId, message);
+    });
+
     socket.on('sendChatMessageFromBMToAO', (message, aptOwnerUserId, buildingManagerUserId) => {
         console.log('message from BM to AO = ' + message + ' aptOwnerUserId = ' + aptOwnerUserId + ' ,buildingManagerUserId = ' + buildingManagerUserId);
         console.log('socket.id = '+socket.id);

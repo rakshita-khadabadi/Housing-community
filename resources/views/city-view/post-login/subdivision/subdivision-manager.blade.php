@@ -499,8 +499,8 @@
 
                     <div class="chat-name-list">
                         <?php foreach ($buildingList as $key => $value): ?>
-                        <a href="#building-manager-<?= htmlspecialchars($key); ?>">
-                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-<?= htmlspecialchars($key); ?>')">
+                        <a href="#building-manager-<?= htmlspecialchars($value->id); ?>">
+                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-<?= htmlspecialchars($value->id); ?>')">
                                 <?= $value->first_name; ?> <?= $value->last_name; ?> <br />
                                 <?= $value->building_name; ?> <br />
                             </button>
@@ -515,10 +515,10 @@
                     <div class="chat-name-display">
 
                         <?php foreach ($buildingList as $key => $value): ?>
-                        <div id="building-manager-<?= htmlspecialchars($key); ?>" class="display-chat-name">
+                        <div id="building-manager-<?= htmlspecialchars($value->id); ?>" class="display-chat-name">
                             <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->building_name; ?></h3>
                             <div class="small-chat-display-box">
-                                <ul class="ul-design">
+                                <ul id ='building-manager-ul-<?= htmlspecialchars($value->id); ?>' class="ul-design">
 
                                 </ul>
                             </div>
@@ -526,10 +526,10 @@
                             <div class="chat-input-bar">
                                 <div class="chat-input">
                                     <label for="send"></label>
-                                    <input type="text" id="building-manager-send-<?= htmlspecialchars($key); ?>" value="" name="send" class="chat-input-box" placeholder="Enter Message">
+                                    <input type="text" id="building-manager-send-<?= htmlspecialchars($value->id); ?>" value="" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="inputForChat(event, 'building-manager-send-<?= htmlspecialchars($key); ?>')">Send</button>
+                                    <button class="send-button" onclick="sendChatMessageToAO(event, 'building-manager-send-<?= htmlspecialchars($value->id); ?>', 'building-manager-ul-', <?= htmlspecialchars($value->id); ?>, <?= $personalDetails->id; ?>)">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -579,7 +579,7 @@
                         <div id="apartment-owner-<?= htmlspecialchars($value->id); ?>" class="display-chat-name">
                             <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?>, <?= $value->building_name; ?></h3>
                             <div id="small-chat-display-box-<?= htmlspecialchars($value->id); ?>" class="small-chat-display-box">
-                                <ul id ='apt-owner-ul-<?= htmlspecialchars($value->id); ?>' class="ul-design" class="ul-design">
+                                <ul id ='apt-owner-ul-<?= htmlspecialchars($value->id); ?>' class="ul-design">
                                 
                                 </ul>
                             </div>
@@ -613,6 +613,18 @@
     let ip_address = '127.0.0.1';
     let socket_port = '3000';
     let socket = io(ip_address + ':' + socket_port);
+
+    socket.on('sendChatToSMFromBM', (message, buildingManagerUserId) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            newMessage.className = "chat-receiver-msg make-larger";
+            console.log('inside sendChatToSMFromBM');
+            var ul = document.getElementById('building-manager-ul-'+buildingManagerUserId);
+            console.log(ul);
+            ul.append(newMessage);
+
+            {{-- socket.off('sendChatToSMFromAO', message); --}}
+        });
 
     function sendChatMessageToAO(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, subManagerUserId) {
 

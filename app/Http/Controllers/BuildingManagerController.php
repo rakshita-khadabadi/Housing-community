@@ -26,6 +26,7 @@ class BuildingManagerController extends Controller
         $csb=$this-> getCommunityServiceBils($userId);
         $mr=$this->getMaintenanceRequestReport($userId);
         $complaints=$this->getComplaintReport($userId);
+        $subdivisionManagerUserId = $this->getBuildingsSMUserId($userId);
 
         
 
@@ -38,10 +39,23 @@ class BuildingManagerController extends Controller
             'utils' => $utils,
             'csb'=>$csb,
             'mr'=>$mr,
-            'complaints'=>$complaints
+            'complaints'=>$complaints,
+            'subdivisionManagerUserId'=>$subdivisionManagerUserId
             ]);
     }
 
+    function getBuildingsSMUserId($userId){
+
+        $buildingController = new BuildingController();
+        $buildingRecord = $buildingController->getBuildingByUserId($userId);
+
+        $subdivisionId = $buildingRecord->subdivisions_id;
+
+        $subdivisionController = new SubdivisionController();
+        $subdivisionRecord = $subdivisionController->getSubdivisionById($subdivisionId);
+
+        return $subdivisionRecord->users_id;
+    }
 
     function getElectricityBill($userId){
     //    $BuldingManager= new BuildingManager();

@@ -539,7 +539,18 @@
             <div class="chat-frame">
 
                 <div class="chat-display-box">
+                    <ul id="subdivision-manager-chat-display-box" class="ul-design">
 
+                        {{-- @foreach ($chats as $chat)
+                            @if ($chat->sender_user_id == $user->id && $chat->receiver_user_id == $subdivisionManagerUserId)
+                                <li class="chat-sender-msg make-larger">{{ $chat->message }}</li>
+                                <li class="chat-sender-msg make-small">{{ $chat->message_datetime }}</li>
+                            @elseif ($chat->sender_user_id == $subdivisionManagerUserId && $chat->receiver_user_id == $user->id)
+                                <li class="chat-receiver-msg make-larger">{{ $chat->message }}</li>
+                                <li class="chat-receiver-msg make-small">{{ $chat->message_datetime }}</li>
+                            @endif
+                        @endforeach --}}
+                    </ul>
                 </div>
 
                 <div class="chat-input-bar">
@@ -548,7 +559,7 @@
                         <input type="text" id="subdivision-manager-send" name="send" class="chat-input-box" placeholder="Enter Message">
                     </div>
                     <div>
-                        <button class="send-button" onclick="inputSubdivisionManagerChat()">Send</button>
+                        <button class="send-button" onclick="sendChatMessageToSM(event, 'subdivision-manager-send', 'subdivision-manager-chat-display-box', <?= $user->id; ?>, <?= $subdivisionManagerUserId ?>)">Send</button>
                     </div>
                 </div>
             </div>
@@ -623,6 +634,26 @@
     let ip_address = '127.0.0.1';
     let socket_port = '3000';
     let socket = io(ip_address + ':' + socket_port);
+
+    function sendChatMessageToSM(event, inputBoxId, displayChatBoxIdConst, bmUserId, smUserId) {
+
+        var chatMessage = document.getElementById(inputBoxId).value;
+        console.log('chatMessage = ' + chatMessage);
+        let connectedSocketCount = 0;
+
+        socket.emit('sendChatMessageFromBMToSM', chatMessage, smUserId, bmUserId);
+
+        document.getElementById(inputBoxId).value = '';
+
+        var newMessage = document.createElement("li");
+        newMessage.innerHTML = chatMessage;
+        newMessage.className = "chat-sender-msg";
+
+        console.log('inside sendChatToSMFromAO');
+        var ul = document.getElementById(displayChatBoxIdConst);
+        console.log(ul);
+        ul.append(newMessage);
+    }
 
     function sendChatMessageToAO(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, buildingManagerUserId) {
 
