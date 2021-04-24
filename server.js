@@ -39,7 +39,7 @@ io.on('connection', (socket) => {
         socket.user = user;
     });
 
-    socket.on('sendChatToServer', (message, aptOwnerUserId, subManagerUserId) => {
+    socket.on('sendChatMessageFromSMToAO', (message, aptOwnerUserId, subManagerUserId) => {
         console.log('message from frontend = ' + message + ' aptOwnerUserId = ' + aptOwnerUserId + 'subManagerUserId = ' + subManagerUserId);
         console.log('socket.id = '+socket.id);
         // io.sockets.emit('sendChatToClient', message);

@@ -440,7 +440,7 @@
                 <input type="text" id="subdivision-manager-send" name="send" class="chat-input-box" placeholder="Enter Message">
             </div>
             <div>
-                <button class="send-button" onclick="sendChatMessage(event, 'subdivision-manager-send', 'subdivision-manager-chat-display-box', <?= $personalDetails->id; ?>, <?= $subdivisionManagerUserId ?>)">Send</button>
+                <button class="send-button" onclick="sendChatMessageToSM(event, 'subdivision-manager-send', 'subdivision-manager-chat-display-box', <?= $personalDetails->id; ?>, <?= $subdivisionManagerUserId ?>)">Send</button>
             </div>
         </div>
     </div>
@@ -457,56 +457,20 @@
 
 <script>
 
-        let ip_address = '127.0.0.1';
-        let socket_port = '3000';
-        let socket = io(ip_address + ':' + socket_port);
+    let ip_address = '127.0.0.1';
+    let socket_port = '3000';
+    let socket = io(ip_address + ':' + socket_port);
         
-    function sendChatMessage(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, smUserId) {
-        {{-- console.log('hello');
-        console.log(event);
-        console.log(inputBoxId);
-        console.log(displayChatBoxIdConst); --}}
+    function sendChatMessageToSM(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, smUserId) {
 
         var chatMessage = document.getElementById(inputBoxId).value;
         console.log('chatMessage = ' + chatMessage);
-
-        {{-- let ip_address = '127.0.0.1';
-        let socket_port = '3000';
-        let socket = io(ip_address + ':' + socket_port); --}}
         let connectedSocketCount = 0;
 
-        {{-- socket.emit('sendChatToServer', chatMessage, 'zoro'); --}}
         socket.emit('sendChatMessageToSMFromAO', chatMessage, smUserId, aptOwnerUserId);
 
         document.getElementById(inputBoxId).value = '';
 
-        {{-- socket.once('sendChatToSMFromAO', (message) => {
-            var newMessage = document.createElement("li");
-            newMessage.innerHTML = message;
-            console.log('inside sendChatToSMFromAO');
-            var ul = document.getElementById(displayChatBoxIdConst);
-            console.log(ul);
-            ul.append(newMessage);
-        }); --}}
-
-        {{-- socket.on('sendChatToClient', (message) => {
-            var newMessage = document.createElement("li");
-            newMessage.innerHTML = message;
-            console.log('inside sendChatToClient');
-            
-            var ul = document.getElementById(displayChatBoxIdConst);
-            console.log(ul);
-            ul.append(newMessage);
-
-            connectedSocketCount = connectedSocketCount + 1;
-            console.log('connectedSocketCount = '+ connectedSocketCount);
-            console.log(socket);
-            console.log('---------------');
-            console.log('socket.id = '+socket.id);
-
-        }); --}}
-
-        
         var newMessage = document.createElement("li");
         newMessage.innerHTML = chatMessage;
         newMessage.className = "chat-sender-msg";
@@ -515,19 +479,7 @@
         var ul = document.getElementById(displayChatBoxIdConst);
         console.log(ul);
         ul.append(newMessage);
-        
-
-        {{-- var timestamp = new Date().toISOString(); --}}
-        {{-- var timestamp = new moment().tz('America/Chicago').format('hh:mm:ss z');
-        var msgTimestamp = document.createElement("li");
-        newMessage.innerHTML = timestamp;
-        newMessage.className = "chat-sender-msg";
-        var ulTime = document.getElementById(displayChatBoxIdConst);
-        ulTime.append(msgTimestamp); --}}
-
-
     }
-
 
     socket.on('sendChatToClient', (message) => {
             var newMessage = document.createElement("li");

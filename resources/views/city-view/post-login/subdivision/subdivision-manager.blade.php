@@ -590,7 +590,7 @@
                                     <input type="text" id="apartment-owner-send-<?= htmlspecialchars($value->id); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="sendChatMessage(event, 'apartment-owner-send-<?= htmlspecialchars($value->id); ?>', 'apt-owner-ul-', <?= htmlspecialchars($value->id); ?>, <?= $personalDetails->id; ?>)">Send</button>
+                                    <button class="send-button" onclick="sendChatMessageToAO(event, 'apartment-owner-send-<?= htmlspecialchars($value->id); ?>', 'apt-owner-ul-', <?= htmlspecialchars($value->id); ?>, <?= $personalDetails->id; ?>)">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -613,49 +613,14 @@
     let ip_address = '127.0.0.1';
     let socket_port = '3000';
     let socket = io(ip_address + ':' + socket_port);
-    let globalKey = 0;
 
-    function sendChatMessage(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, subManagerUserId) {
-        {{-- console.log('hello');
-        console.log(event);
-        console.log(inputBoxId);
-        console.log(displayChatBoxIdConst); --}}
-        
-
+    function sendChatMessageToAO(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, subManagerUserId) {
 
         var chatMessage = document.getElementById(inputBoxId).value;
         console.log('chatMessage = ' + chatMessage);
-
-        {{-- let ip_address = '127.0.0.1';
-        let socket_port = '3000';
-        let socket = io(ip_address + ':' + socket_port); --}}
-
-        socket.emit('sendChatToServer', chatMessage, aptOwnerUserId, subManagerUserId);
+        socket.emit('sendChatMessageFromSMToAO', chatMessage, aptOwnerUserId, subManagerUserId);
 
         document.getElementById(inputBoxId).value = '';
-
-        {{-- socket.on('sendChatToSMFromAO', (message) => {
-            var newMessage = document.createElement("li");
-            newMessage.innerHTML = message;
-            console.log('inside sendChatToSMFromAO');
-            var ul = document.getElementById(displayChatBoxIdConst+key);
-            console.log(ul);
-            ul.append(newMessage);
-
-            socket.off('sendChatToSMFromAO', message);
-        }); --}}
-
-        {{-- socket.on('sendChatToClient', (message) => {
-            var newMessage = document.createElement("li");
-            newMessage.innerHTML = message;
-            console.log('inside sendChatToClient');
-
-            var ul = document.getElementById(displayChatBoxIdConst+key);
-            console.log(ul);
-            ul.append(newMessage);
-        }); --}}
-
-        {{-- socket.emit('end'); --}}
 
         var newMessage = document.createElement("li");
         newMessage.innerHTML = chatMessage;
@@ -664,17 +629,12 @@
         var ul = document.getElementById(displayChatBoxIdConst+aptOwnerUserId);
         console.log(ul);
         ul.append(newMessage);
-
-
     }
 
     socket.on('sendChatToSMFromAO', (message, aptOwnerUserId) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
             console.log('inside sendChatToSMFromAO');
-            {{-- console.log('globalKey = ', globalKey); --}}
-            {{-- var data = message.split(','); --}}
-            {{-- console.log('message from frontend AO to SM = ' + message[0]+ 'from '+ message[1]); --}}
             var ul = document.getElementById('apt-owner-ul-'+aptOwnerUserId);
             console.log(ul);
             ul.append(newMessage);
