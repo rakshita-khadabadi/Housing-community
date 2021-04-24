@@ -491,7 +491,7 @@
         ul.append(newMessage);
     }
 
-    socket.on('sendChatToClient', (message) => {
+    socket.on('sendChatToAOFromSM', (message) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
             newMessage.className = "chat-receiver-msg make-larger";
@@ -528,7 +528,7 @@
             ul.append(newMessage);
 
         });
-        
+
 </script>
 
 @endsection
