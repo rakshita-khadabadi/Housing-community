@@ -18,7 +18,7 @@ class BuildingManager extends Model
 	}
 
     public static function getApartmentsUnderBm($userId){
-        $sql = "SELECT a.apartment_number, u.first_name, u.last_name, u.email_id, u.phone_number, u.joining_datetime FROM `apartments` as a 
+        $sql = "SELECT u.id, a.apartment_number, u.first_name, u.last_name, u.email_id, u.phone_number, u.joining_datetime FROM `apartments` as a 
 		JOIN users as u ON a.users_id = u.id
 		JOIN buildings as b ON a.buildings_id=b.id
 		WHERE b.users_id = $userId and a.occupancy_status = 'occupied'";
