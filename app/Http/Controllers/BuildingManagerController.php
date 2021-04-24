@@ -26,7 +26,8 @@ class BuildingManagerController extends Controller
         $csb=$this-> getCommunityServiceBils($userId);
         $mr=$this->getMaintenanceRequestReport($userId);
         $complaints=$this->getComplaintReport($userId);
-
+        $subdivisionManagerUserId = $this->getBuildingsSMUserId($userId);
+        $chats = $this->getAllChats();
         
 
         return view('city-view.post-login.building-manager.building-manager', [
@@ -38,10 +39,29 @@ class BuildingManagerController extends Controller
             'utils' => $utils,
             'csb'=>$csb,
             'mr'=>$mr,
-            'complaints'=>$complaints
+            'complaints'=>$complaints,
+            'subdivisionManagerUserId'=>$subdivisionManagerUserId,
+            'chats' => $chats
             ]);
     }
 
+    function getBuildingsSMUserId($userId){
+
+        $buildingController = new BuildingController();
+        $buildingRecord = $buildingController->getBuildingByUserId($userId);
+
+        $subdivisionId = $buildingRecord->subdivisions_id;
+
+        $subdivisionController = new SubdivisionController();
+        $subdivisionRecord = $subdivisionController->getSubdivisionById($subdivisionId);
+
+        return $subdivisionRecord->users_id;
+    }
+
+    function getAllChats(){
+        $chatController = new ChatController();
+        return $chatController->fetchAllChats();
+    }
 
     function getElectricityBill($userId){
     //    $BuldingManager= new BuildingManager();

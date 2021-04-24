@@ -499,8 +499,8 @@
 
                     <div class="chat-name-list">
                         <?php foreach ($buildingList as $key => $value): ?>
-                        <a href="#building-manager-<?= htmlspecialchars($key); ?>">
-                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-<?= htmlspecialchars($key); ?>')">
+                        <a href="#building-manager-<?= htmlspecialchars($value->id); ?>">
+                            <button class="building-manager-chat-tile" onclick="viewBuildingManagerChatMenu(event, 'building-manager-<?= htmlspecialchars($value->id); ?>')">
                                 <?= $value->first_name; ?> <?= $value->last_name; ?> <br />
                                 <?= $value->building_name; ?> <br />
                             </button>
@@ -515,21 +515,29 @@
                     <div class="chat-name-display">
 
                         <?php foreach ($buildingList as $key => $value): ?>
-                        <div id="building-manager-<?= htmlspecialchars($key); ?>" class="display-chat-name">
+                        <div id="building-manager-<?= htmlspecialchars($value->id); ?>" class="display-chat-name">
                             <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->building_name; ?></h3>
                             <div class="small-chat-display-box">
-                                <ul>
-
+                                <ul id ='building-manager-ul-<?= htmlspecialchars($value->id); ?>' class="ul-design">
+                                    @foreach ($chats as $chat)
+                                        @if ($chat->sender_user_id == $personalDetails->id && $chat->receiver_user_id == $value->id)
+                                            <li class="chat-sender-msg make-larger">{{ $chat->message }}</li>
+                                            <li class="chat-sender-msg make-small">{{ $chat->message_datetime }}</li>
+                                        @elseif ($chat->sender_user_id == $value->id && $chat->receiver_user_id == $personalDetails->id)
+                                            <li class="chat-receiver-msg make-larger">{{ $chat->message }}</li>
+                                            <li class="chat-receiver-msg make-small">{{ $chat->message_datetime }}</li>
+                                        @endif
+                                    @endforeach
                                 </ul>
                             </div>
 
                             <div class="chat-input-bar">
                                 <div class="chat-input">
                                     <label for="send"></label>
-                                    <input type="text" id="building-manager-send-<?= htmlspecialchars($key); ?>" value="" name="send" class="chat-input-box" placeholder="Enter Message">
+                                    <input type="text" id="building-manager-send-<?= htmlspecialchars($value->id); ?>" value="" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="inputForChat(event, 'building-manager-send-<?= htmlspecialchars($key); ?>')">Send</button>
+                                    <button class="send-button" onclick="sendChatMessageToBM(event, 'building-manager-send-<?= htmlspecialchars($value->id); ?>', 'building-manager-ul-', <?= htmlspecialchars($value->id); ?>, <?= $personalDetails->id; ?>)">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -579,8 +587,16 @@
                         <div id="apartment-owner-<?= htmlspecialchars($value->id); ?>" class="display-chat-name">
                             <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?>, <?= $value->building_name; ?></h3>
                             <div id="small-chat-display-box-<?= htmlspecialchars($value->id); ?>" class="small-chat-display-box">
-                                <ul id ='apt-owner-ul-<?= htmlspecialchars($value->id); ?>'>
-                                
+                                <ul id ='apt-owner-ul-<?= htmlspecialchars($value->id); ?>' class="ul-design">
+                                    @foreach ($chats as $chat)
+                                        @if ($chat->sender_user_id == $personalDetails->id && $chat->receiver_user_id == $value->id)
+                                            <li class="chat-sender-msg make-larger">{{ $chat->message }}</li>
+                                            <li class="chat-sender-msg make-small">{{ $chat->message_datetime }}</li>
+                                        @elseif ($chat->sender_user_id == $value->id && $chat->receiver_user_id == $personalDetails->id)
+                                            <li class="chat-receiver-msg make-larger">{{ $chat->message }}</li>
+                                            <li class="chat-receiver-msg make-small">{{ $chat->message_datetime }}</li>
+                                        @endif
+                                    @endforeach
                                 </ul>
                             </div>
 
@@ -590,7 +606,7 @@
                                     <input type="text" id="apartment-owner-send-<?= htmlspecialchars($value->id); ?>" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="sendChatMessage(event, 'apartment-owner-send-<?= htmlspecialchars($value->id); ?>', 'apt-owner-ul-', <?= htmlspecialchars($value->id); ?>, <?= $personalDetails->id; ?>)">Send</button>
+                                    <button class="send-button" onclick="sendChatMessageToAO(event, 'apartment-owner-send-<?= htmlspecialchars($value->id); ?>', 'apt-owner-ul-', <?= htmlspecialchars($value->id); ?>, <?= $personalDetails->id; ?>)">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -613,73 +629,59 @@
     let ip_address = '127.0.0.1';
     let socket_port = '3000';
     let socket = io(ip_address + ':' + socket_port);
-    let globalKey = 0;
 
-    function sendChatMessage(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, subManagerUserId) {
-        {{-- console.log('hello');
-        console.log(event);
-        console.log(inputBoxId);
-        console.log(displayChatBoxIdConst); --}}
-        
-
+    function sendChatMessageToBM(event, inputBoxId, displayChatBoxIdConst, buildingManagerUserId, subManagerUserId) {
 
         var chatMessage = document.getElementById(inputBoxId).value;
-        console.log('chatMessage = ' + chatMessage);
-
-        {{-- let ip_address = '127.0.0.1';
-        let socket_port = '3000';
-        let socket = io(ip_address + ':' + socket_port); --}}
-
-        socket.emit('sendChatToServer', chatMessage, aptOwnerUserId, subManagerUserId);
+        {{-- console.log('chatMessage = ' + chatMessage); --}}
+        socket.emit('sendChatMessageFromSMToBM', chatMessage, buildingManagerUserId, subManagerUserId);
 
         document.getElementById(inputBoxId).value = '';
 
-        {{-- socket.on('sendChatToSMFromAO', (message) => {
+        var newMessage = document.createElement("li");
+        newMessage.innerHTML = chatMessage;
+        newMessage.className = "chat-sender-msg make-larger";
+
+        var ul = document.getElementById(displayChatBoxIdConst+buildingManagerUserId);
+        {{-- console.log(ul); --}}
+        ul.append(newMessage);
+    }
+
+    socket.on('sendChatToSMFromBM', (message, buildingManagerUserId) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
-            console.log('inside sendChatToSMFromAO');
-            var ul = document.getElementById(displayChatBoxIdConst+key);
+            newMessage.className = "chat-receiver-msg make-larger";
+
+            var ul = document.getElementById('building-manager-ul-'+buildingManagerUserId);
             console.log(ul);
             ul.append(newMessage);
+        });
 
-            socket.off('sendChatToSMFromAO', message);
-        }); --}}
+    function sendChatMessageToAO(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, subManagerUserId) {
 
-        {{-- socket.on('sendChatToClient', (message) => {
-            var newMessage = document.createElement("li");
-            newMessage.innerHTML = message;
-            console.log('inside sendChatToClient');
+        var chatMessage = document.getElementById(inputBoxId).value;
+        {{-- console.log('chatMessage = ' + chatMessage); --}}
+        socket.emit('sendChatMessageFromSMToAO', chatMessage, aptOwnerUserId, subManagerUserId);
 
-            var ul = document.getElementById(displayChatBoxIdConst+key);
-            console.log(ul);
-            ul.append(newMessage);
-        }); --}}
-
-        {{-- socket.emit('end'); --}}
+        document.getElementById(inputBoxId).value = '';
 
         var newMessage = document.createElement("li");
         newMessage.innerHTML = chatMessage;
-        console.log('inside sendChatToClient');
+        newMessage.className = "chat-sender-msg make-larger";
 
         var ul = document.getElementById(displayChatBoxIdConst+aptOwnerUserId);
-        console.log(ul);
+        {{-- console.log(ul); --}}
         ul.append(newMessage);
-
-
     }
 
     socket.on('sendChatToSMFromAO', (message, aptOwnerUserId) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
-            console.log('inside sendChatToSMFromAO');
-            {{-- console.log('globalKey = ', globalKey); --}}
-            {{-- var data = message.split(','); --}}
-            {{-- console.log('message from frontend AO to SM = ' + message[0]+ 'from '+ message[1]); --}}
-            var ul = document.getElementById('apt-owner-ul-'+aptOwnerUserId);
-            console.log(ul);
-            ul.append(newMessage);
+            newMessage.className = "chat-receiver-msg make-larger";
 
-            socket.off('sendChatToSMFromAO', message);
+            var ul = document.getElementById('apt-owner-ul-'+aptOwnerUserId);
+            {{-- console.log(ul); --}}
+            ul.append(newMessage);
         });
 
 </script>

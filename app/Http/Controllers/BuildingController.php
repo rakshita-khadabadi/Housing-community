@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Building;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class BuildingController extends Controller
 {   
@@ -16,6 +17,10 @@ class BuildingController extends Controller
     function getBuildingById($buildingId){
 
         return Building::find($buildingId);
+    }
+
+    function getBuildingByUserId($userId){
+        return DB::table('buildings')->where('users_id','=',$userId)->get()->first(); 
     }
 
     function addNewBuilding($request, $buildingName, $subdivisionId, $userId){
