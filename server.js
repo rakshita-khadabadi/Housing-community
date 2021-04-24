@@ -27,17 +27,27 @@ con.connect((err) => {
 
 
 io.on('connection', (socket) => {
+
+    console.log('-----------------------------------------------------------------------');
     console.log('NodeJS server connection established.');
     console.log("The number of connected sockets: "+socket.adapter.sids.size);
     console.log('socket.id = '+socket.id);
     // console.log(socket.adapter.sids)
     // console.log(socket.adapter)
-    console.log('-----------------------');
-
+    
     // receive chat message from Subdivision Manager -----------------------------------
 
+    socket.on('sendChatMessageFromSMToBM', (message, buildingManagerUserId, subManagerUserId) => {
+        console.log('message from SM to BM = ' + message + ' ,buildingManagerUserId = ' + buildingManagerUserId + ' ,subManagerUserId = ' + subManagerUserId);
+        console.log('socket.id = '+socket.id);
+
+        socket.broadcast.emit('sendChatToBMFromSM', message);
+        
+        saveChatToDB(buildingManagerUserId, subManagerUserId, message);
+    });
+
     socket.on('sendChatMessageFromSMToAO', (message, aptOwnerUserId, subManagerUserId) => {
-        console.log('message from SM to AO = ' + message + ' aptOwnerUserId = ' + aptOwnerUserId + 'subManagerUserId = ' + subManagerUserId);
+        console.log('message from SM to AO = ' + message + ' ,aptOwnerUserId = ' + aptOwnerUserId + ' ,subManagerUserId = ' + subManagerUserId);
         console.log('socket.id = '+socket.id);
 
         socket.broadcast.emit('sendChatToClient', message);
@@ -48,16 +58,16 @@ io.on('connection', (socket) => {
     // receive chat message from Building Manager -----------------------------------
 
     socket.on('sendChatMessageFromBMToSM', (message, smUserId, bmUserId) => {
-        console.log('message from frontend AO to SM = ' + message + ' ,smUserId = '+ smUserId +' ,bmUserId = ' + bmUserId);
+        console.log('message from frontend BM to SM = ' + message + ' ,smUserId = '+ smUserId +' ,bmUserId = ' + bmUserId);
         console.log('socket.id = '+socket.id);
 
         socket.broadcast.emit('sendChatToSMFromBM', message, bmUserId);
 
-        // saveChatToDB(smUserId, bmUserId, message);
+        saveChatToDB(smUserId, bmUserId, message);
     });
 
     socket.on('sendChatMessageFromBMToAO', (message, aptOwnerUserId, buildingManagerUserId) => {
-        console.log('message from BM to AO = ' + message + ' aptOwnerUserId = ' + aptOwnerUserId + ' ,buildingManagerUserId = ' + buildingManagerUserId);
+        console.log('message from BM to AO = ' + message + ' ,aptOwnerUserId = ' + aptOwnerUserId + ' ,buildingManagerUserId = ' + buildingManagerUserId);
         console.log('socket.id = '+socket.id);
 
         socket.broadcast.emit('sendChatToAOFromBM', message);
@@ -79,7 +89,7 @@ io.on('connection', (socket) => {
 
         
     socket.on('sendChatMessageToBMFromAO', (message, bmUserId, aptOwnerUserId) => {
-        console.log('message from frontend AO to SM = ' + message + ' ,bmUserId = '+ bmUserId +' ,aptOwnerUserId = ' + aptOwnerUserId);
+        console.log('message from frontend AO to BM = ' + message + ' ,bmUserId = '+ bmUserId +' ,aptOwnerUserId = ' + aptOwnerUserId);
         console.log('socket.id = '+socket.id);
 
         socket.broadcast.emit('sendChatToBMFromAO', message, aptOwnerUserId);
@@ -89,9 +99,8 @@ io.on('connection', (socket) => {
 
 
     socket.on('disconnect', (socket) => {
-        console.log('socket.id = '+socket.id);
-        console.log('NodeJS server connection disconnected.');
-        // socket.removeAllListeners();
+        // console.log('socket.id = '+socket.id); // this only gives undefined
+        console.log('socket connection disconnected.');
     });
 });
 

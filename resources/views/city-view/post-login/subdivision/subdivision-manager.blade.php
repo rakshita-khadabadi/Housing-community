@@ -529,7 +529,7 @@
                                     <input type="text" id="building-manager-send-<?= htmlspecialchars($value->id); ?>" value="" name="send" class="chat-input-box" placeholder="Enter Message">
                                 </div>
                                 <div>
-                                    <button class="send-button" onclick="sendChatMessageToAO(event, 'building-manager-send-<?= htmlspecialchars($value->id); ?>', 'building-manager-ul-', <?= htmlspecialchars($value->id); ?>, <?= $personalDetails->id; ?>)">Send</button>
+                                    <button class="send-button" onclick="sendChatMessageToBM(event, 'building-manager-send-<?= htmlspecialchars($value->id); ?>', 'building-manager-ul-', <?= htmlspecialchars($value->id); ?>, <?= $personalDetails->id; ?>)">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -614,6 +614,24 @@
     let socket_port = '3000';
     let socket = io(ip_address + ':' + socket_port);
 
+    function sendChatMessageToBM(event, inputBoxId, displayChatBoxIdConst, buildingManagerUserId, subManagerUserId) {
+
+        var chatMessage = document.getElementById(inputBoxId).value;
+        console.log('chatMessage = ' + chatMessage);
+        socket.emit('sendChatMessageFromSMToBM', chatMessage, buildingManagerUserId, subManagerUserId);
+
+        document.getElementById(inputBoxId).value = '';
+
+        var newMessage = document.createElement("li");
+        newMessage.innerHTML = chatMessage;
+        newMessage.className = "chat-sender-msg make-larger";
+        console.log('inside sendChatToClient');
+
+        var ul = document.getElementById(displayChatBoxIdConst+buildingManagerUserId);
+        console.log(ul);
+        ul.append(newMessage);
+    }
+
     socket.on('sendChatToSMFromBM', (message, buildingManagerUserId) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
@@ -622,8 +640,6 @@
             var ul = document.getElementById('building-manager-ul-'+buildingManagerUserId);
             console.log(ul);
             ul.append(newMessage);
-
-            {{-- socket.off('sendChatToSMFromAO', message); --}}
         });
 
     function sendChatMessageToAO(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, subManagerUserId) {
@@ -636,7 +652,7 @@
 
         var newMessage = document.createElement("li");
         newMessage.innerHTML = chatMessage;
-        newMessage.className = "chat-sender-msg";
+        newMessage.className = "chat-sender-msg make-larger";
         console.log('inside sendChatToClient');
 
         var ul = document.getElementById(displayChatBoxIdConst+aptOwnerUserId);
@@ -647,7 +663,7 @@
     socket.on('sendChatToSMFromAO', (message, aptOwnerUserId) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
-            newMessage.className = "chat-receiver-msg";
+            newMessage.className = "chat-receiver-msg make-larger";
             console.log('inside sendChatToSMFromAO');
             var ul = document.getElementById('apt-owner-ul-'+aptOwnerUserId);
             console.log(ul);

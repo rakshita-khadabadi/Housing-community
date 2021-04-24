@@ -655,6 +655,16 @@
         ul.append(newMessage);
     }
 
+    socket.on('sendChatToBMFromSM', (message) => {
+            var newMessage = document.createElement("li");
+            newMessage.innerHTML = message;
+            newMessage.className = "chat-receiver-msg make-larger";
+            console.log('inside sendChatToBMFromSM');
+            var ul = document.getElementById('subdivision-manager-chat-display-box');
+            console.log(ul);
+            ul.append(newMessage);
+        });
+
     function sendChatMessageToAO(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, buildingManagerUserId) {
 
         var chatMessage = document.getElementById(inputBoxId).value;
@@ -676,13 +686,11 @@
     socket.on('sendChatToBMFromAO', (message, aptOwnerUserId) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
-            newMessage.className = "chat-receiver-msg";
+            newMessage.className = "chat-receiver-msg make-larger";
             console.log('inside sendChatToBMFromAO');
             var ul = document.getElementById('apt-owner-ul-'+aptOwnerUserId);
             console.log(ul);
             ul.append(newMessage);
-
-            {{-- socket.off('sendChatToSMFromAO', message); --}}
         });
 
 </script>
