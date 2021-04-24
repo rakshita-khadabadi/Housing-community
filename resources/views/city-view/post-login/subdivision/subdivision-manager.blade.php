@@ -519,7 +519,15 @@
                             <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->building_name; ?></h3>
                             <div class="small-chat-display-box">
                                 <ul id ='building-manager-ul-<?= htmlspecialchars($value->id); ?>' class="ul-design">
-
+                                    @foreach ($chats as $chat)
+                                        @if ($chat->sender_user_id == $personalDetails->id && $chat->receiver_user_id == $value->id)
+                                            <li class="chat-sender-msg make-larger">{{ $chat->message }}</li>
+                                            <li class="chat-sender-msg make-small">{{ $chat->message_datetime }}</li>
+                                        @elseif ($chat->sender_user_id == $value->id && $chat->receiver_user_id == $personalDetails->id)
+                                            <li class="chat-receiver-msg make-larger">{{ $chat->message }}</li>
+                                            <li class="chat-receiver-msg make-small">{{ $chat->message_datetime }}</li>
+                                        @endif
+                                    @endforeach
                                 </ul>
                             </div>
 
@@ -580,7 +588,15 @@
                             <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?>, <?= $value->building_name; ?></h3>
                             <div id="small-chat-display-box-<?= htmlspecialchars($value->id); ?>" class="small-chat-display-box">
                                 <ul id ='apt-owner-ul-<?= htmlspecialchars($value->id); ?>' class="ul-design">
-                                
+                                    @foreach ($chats as $chat)
+                                        @if ($chat->sender_user_id == $personalDetails->id && $chat->receiver_user_id == $value->id)
+                                            <li class="chat-sender-msg make-larger">{{ $chat->message }}</li>
+                                            <li class="chat-sender-msg make-small">{{ $chat->message_datetime }}</li>
+                                        @elseif ($chat->sender_user_id == $value->id && $chat->receiver_user_id == $personalDetails->id)
+                                            <li class="chat-receiver-msg make-larger">{{ $chat->message }}</li>
+                                            <li class="chat-receiver-msg make-small">{{ $chat->message_datetime }}</li>
+                                        @endif
+                                    @endforeach
                                 </ul>
                             </div>
 

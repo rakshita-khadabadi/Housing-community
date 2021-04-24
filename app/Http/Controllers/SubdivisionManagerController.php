@@ -51,6 +51,7 @@ class SubdivisionManagerController extends Controller
         $itRequestController = new ItRequestController();
         $itrlist = $itRequestController->fetchItRequestWithSubdivisionId($subdivisionId);
         // echo $itrlist;
+        $chats = $this->getAllChats();
 
         return view('city-view.post-login.subdivision.subdivision-manager', [
             'personalDetails' => $personalDetails,
@@ -71,7 +72,8 @@ class SubdivisionManagerController extends Controller
             'communityServiceBillTotal' => $communityServiceBillTotal,
             'buildingList' => $buildingList,
             'aptList' => $aptList,
-            'itrlist' => $itrlist
+            'itrlist' => $itrlist,
+            'chats' => $chats
             ]);
     }
 
@@ -95,6 +97,11 @@ class SubdivisionManagerController extends Controller
             return $itRequestController->saveItRequest($itrMessage, $subdivisionId);
 
         }
+    }
+
+    function getAllChats(){
+        $chatController = new ChatController();
+        return $chatController->fetchAllChats();
     }
 
     function getLastMonthUtilityReport($subdivisionId, $utilityReportMonth, $utilityReportYear){
