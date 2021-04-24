@@ -30,6 +30,11 @@ npm install mysql
 npm install moment-timezone
 
 --------------------------------------------------------------
+
+Query to delete all chats:
+
+delete from `chats` where message != '';
+
 Note:
 
 All after login pages will have its root blade.php = app.blade.php
