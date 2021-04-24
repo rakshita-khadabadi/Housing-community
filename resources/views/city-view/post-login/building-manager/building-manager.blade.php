@@ -646,8 +646,7 @@
     function sendChatMessageToSM(event, inputBoxId, displayChatBoxIdConst, bmUserId, smUserId) {
 
         var chatMessage = document.getElementById(inputBoxId).value;
-        console.log('chatMessage = ' + chatMessage);
-        let connectedSocketCount = 0;
+        {{-- console.log('chatMessage = ' + chatMessage); --}}
 
         socket.emit('sendChatMessageFromBMToSM', chatMessage, smUserId, bmUserId);
 
@@ -655,11 +654,10 @@
 
         var newMessage = document.createElement("li");
         newMessage.innerHTML = chatMessage;
-        newMessage.className = "chat-sender-msg";
+        newMessage.className = "chat-sender-msg make-larger";
 
-        console.log('inside sendChatToSMFromAO');
         var ul = document.getElementById(displayChatBoxIdConst);
-        console.log(ul);
+        {{-- console.log(ul); --}}
         ul.append(newMessage);
     }
 
@@ -667,27 +665,27 @@
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
             newMessage.className = "chat-receiver-msg make-larger";
-            console.log('inside sendChatToBMFromSM');
+
             var ul = document.getElementById('subdivision-manager-chat-display-box');
-            console.log(ul);
+            {{-- console.log(ul); --}}
             ul.append(newMessage);
         });
 
     function sendChatMessageToAO(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, buildingManagerUserId) {
 
         var chatMessage = document.getElementById(inputBoxId).value;
-        console.log('chatMessage = ' + chatMessage);
+        {{-- console.log('chatMessage = ' + chatMessage); --}}
         socket.emit('sendChatMessageFromBMToAO', chatMessage, aptOwnerUserId, buildingManagerUserId);
 
         document.getElementById(inputBoxId).value = '';
 
         var newMessage = document.createElement("li");
         newMessage.innerHTML = chatMessage;
-        newMessage.className = "chat-sender-msg";
+        newMessage.className = "chat-sender-msg make-larger";
         console.log('inside sendChatMessageToAO');
 
         var ul = document.getElementById(displayChatBoxIdConst+aptOwnerUserId);
-        console.log(ul);
+        {{-- console.log(ul); --}}
         ul.append(newMessage);
     }
 
@@ -695,9 +693,9 @@
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
             newMessage.className = "chat-receiver-msg make-larger";
-            console.log('inside sendChatToBMFromAO');
+
             var ul = document.getElementById('apt-owner-ul-'+aptOwnerUserId);
-            console.log(ul);
+            {{-- console.log(ul); --}}
             ul.append(newMessage);
         });
 

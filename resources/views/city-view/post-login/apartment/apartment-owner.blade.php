@@ -477,66 +477,58 @@
     function sendChatMessageToSM(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, smUserId) {
 
         var chatMessage = document.getElementById(inputBoxId).value;
-        console.log('chatMessage = ' + chatMessage);
-        let connectedSocketCount = 0;
-
+        {{-- console.log('chatMessage = ' + chatMessage); --}}
         socket.emit('sendChatMessageToSMFromAO', chatMessage, smUserId, aptOwnerUserId);
 
         document.getElementById(inputBoxId).value = '';
 
         var newMessage = document.createElement("li");
         newMessage.innerHTML = chatMessage;
-        newMessage.className = "chat-sender-msg";
+        newMessage.className = "chat-sender-msg make-larger";
 
-        console.log('inside sendChatToSMFromAO');
         var ul = document.getElementById(displayChatBoxIdConst);
-        console.log(ul);
+        {{-- console.log(ul); --}}
         ul.append(newMessage);
     }
 
     socket.on('sendChatToClient', (message) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
-            newMessage.className = "chat-receiver-msg";
-            console.log('inside sendChatToClient');
+            newMessage.className = "chat-receiver-msg make-larger";
             
             var ul = document.getElementById('subdivision-manager-chat-display-box');
-            console.log(ul);
+            {{-- console.log(ul); --}}
             ul.append(newMessage);
-
         });
 
     function sendChatMessageToBM(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, bmUserId) {
 
         var chatMessage = document.getElementById(inputBoxId).value;
-        console.log('chatMessage = ' + chatMessage);
-        let connectedSocketCount = 0;
-
+        {{-- console.log('chatMessage = ' + chatMessage); --}}
         socket.emit('sendChatMessageToBMFromAO', chatMessage, bmUserId, aptOwnerUserId);
 
         document.getElementById(inputBoxId).value = '';
 
         var newMessage = document.createElement("li");
         newMessage.innerHTML = chatMessage;
-        newMessage.className = "chat-sender-msg";
+        newMessage.className = "chat-sender-msg make-larger";
 
-        console.log('inside sendChatToSMFromAO');
         var ul = document.getElementById(displayChatBoxIdConst);
-        console.log(ul);
+        {{-- console.log(ul); --}}
         ul.append(newMessage);
     }
 
     socket.on('sendChatToAOFromBM', (message) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
-            newMessage.className = "chat-receiver-msg";
-            console.log('inside sendChatToAOFromBM');
+            newMessage.className = "chat-receiver-msg make-larger";
             
             var ul = document.getElementById('building-manager-chat-display-box');
-            console.log(ul);
+            {{-- console.log(ul); --}}
             ul.append(newMessage);
 
         });
+        
 </script>
 
 @endsection
