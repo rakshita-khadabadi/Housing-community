@@ -541,7 +541,7 @@
                 <div class="chat-display-box">
                     <ul id="subdivision-manager-chat-display-box" class="ul-design">
 
-                        {{-- @foreach ($chats as $chat)
+                        @foreach ($chats as $chat)
                             @if ($chat->sender_user_id == $user->id && $chat->receiver_user_id == $subdivisionManagerUserId)
                                 <li class="chat-sender-msg make-larger">{{ $chat->message }}</li>
                                 <li class="chat-sender-msg make-small">{{ $chat->message_datetime }}</li>
@@ -549,7 +549,7 @@
                                 <li class="chat-receiver-msg make-larger">{{ $chat->message }}</li>
                                 <li class="chat-receiver-msg make-small">{{ $chat->message_datetime }}</li>
                             @endif
-                        @endforeach --}}
+                        @endforeach
                     </ul>
                 </div>
 
@@ -600,7 +600,15 @@
                                 <h3><?= $value->first_name; ?> <?= $value->last_name; ?>, <?= $value->apartment_number; ?></h3>
                                 <div class="small-chat-display-box">
                                     <ul id ='apt-owner-ul-<?= htmlspecialchars($value->id); ?>' class="ul-design">
-                                
+                                        @foreach ($chats as $chat)
+                                            @if ($chat->sender_user_id == $user->id && $chat->receiver_user_id == $value->id)
+                                                <li class="chat-sender-msg make-larger">{{ $chat->message }}</li>
+                                                <li class="chat-sender-msg make-small">{{ $chat->message_datetime }}</li>
+                                            @elseif ($chat->sender_user_id == $value->id && $chat->receiver_user_id == $user->id)
+                                                <li class="chat-receiver-msg make-larger">{{ $chat->message }}</li>
+                                                <li class="chat-receiver-msg make-small">{{ $chat->message_datetime }}</li>
+                                            @endif
+                                        @endforeach
                                     </ul>
                                 </div>
 
