@@ -36,9 +36,13 @@
                     <label for="email"></label>
                     <input type="email" id="email" name="email" value="" required placeholder="Email"> <br><br>
                     <label for="password"></label>
-                    <input type="password" id="password" name="password" pattern="[A-Za-z0-9]{8,12}" title="Password should be within 8-12 charaters" value="" required placeholder="Password"> <br><br>
+                    <input type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,30}$"
+                     title="Password should have ATLEAST 1 Uppercase,1 Lowercase ,one Number and 1 of these special 
+                     characters(!@#$%^&*_=+-) and between 8-30 chars" value="" required placeholder="Password"> <br><br>
                     <label for="repassword"></label>
-                    <input type="password" id="repassword" name="retypePassword" pattern="[A-Za-z0-9]{8,12}" title="Password should be within 8-12 charaters" value="" required placeholder="Retype Password"> <br><br>
+                    <input type="password" id="repassword" name="retypePassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,30}$" 
+                    title="Password should have ATLEAST 1 Uppercase,1 Lowercase,one Number and 1 of these special 
+                     characters(!@#$%^&*_=+-) and between 8-30 chars" value="" required placeholder="Retype Password"> <br><br>
                 </div>
                 <div>
                     <label for="address1" style="color:#4F4846;">User's Address:</label> <br>
