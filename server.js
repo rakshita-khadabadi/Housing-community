@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
         console.log('message from SM to AO = ' + message + ' ,aptOwnerUserId = ' + aptOwnerUserId + ' ,subManagerUserId = ' + subManagerUserId);
         console.log('socket.id = '+socket.id);
 
-        socket.broadcast.emit('sendChatToAOFromSM', message);
+        socket.broadcast.emit('sendChatToAOFromSM', message, aptOwnerUserId);
         
         saveChatToDB(aptOwnerUserId, subManagerUserId, message);
     });
