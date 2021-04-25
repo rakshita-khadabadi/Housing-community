@@ -539,7 +539,7 @@
             <div class="chat-frame">
 
                 <div class="chat-display-box">
-                    <ul id="subdivision-manager-chat-display-box" class="ul-design">
+                    <ul id="subdivision-manager-chat-display-box-<?= $user->id; ?>" class="ul-design">
 
                         @foreach ($chats as $chat)
                             @if ($chat->sender_user_id == $user->id && $chat->receiver_user_id == $subdivisionManagerUserId)
@@ -559,7 +559,7 @@
                         <input type="text" id="subdivision-manager-send" name="send" class="chat-input-box" placeholder="Enter Message">
                     </div>
                     <div>
-                        <button class="send-button" onclick="sendChatMessageToSM(event, 'subdivision-manager-send', 'subdivision-manager-chat-display-box', <?= $user->id; ?>, <?= $subdivisionManagerUserId ?>)">Send</button>
+                        <button class="send-button" onclick="sendChatMessageToSM(event, 'subdivision-manager-send', 'subdivision-manager-chat-display-box-', <?= $user->id; ?>, <?= $subdivisionManagerUserId ?>)">Send</button>
                     </div>
                 </div>
             </div>
@@ -656,17 +656,17 @@
         newMessage.innerHTML = chatMessage;
         newMessage.className = "chat-sender-msg make-larger";
 
-        var ul = document.getElementById(displayChatBoxIdConst);
+        var ul = document.getElementById(displayChatBoxIdConst+bmUserId);
         {{-- console.log(ul); --}}
         ul.append(newMessage);
     }
 
-    socket.on('sendChatToBMFromSM', (message) => {
+    socket.on('sendChatToBMFromSM', (message, buildingManagerUserId) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
             newMessage.className = "chat-receiver-msg make-larger";
 
-            var ul = document.getElementById('subdivision-manager-chat-display-box');
+            var ul = document.getElementById('subdivision-manager-chat-display-box-'+buildingManagerUserId);
             {{-- console.log(ul); --}}
             ul.append(newMessage);
         });

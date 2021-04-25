@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
         console.log('message from SM to BM = ' + message + ' ,buildingManagerUserId = ' + buildingManagerUserId + ' ,subManagerUserId = ' + subManagerUserId);
         console.log('socket.id = '+socket.id);
 
-        socket.broadcast.emit('sendChatToBMFromSM', message);
+        socket.broadcast.emit('sendChatToBMFromSM', message, buildingManagerUserId);
         
         saveChatToDB(buildingManagerUserId, subManagerUserId, message);
     });
