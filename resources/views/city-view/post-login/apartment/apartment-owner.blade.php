@@ -397,7 +397,7 @@
     <div class="chat-frame">
 
         <div class="chat-display-box">
-            <ul id="building-manager-chat-display-box" class="ul-design">
+            <ul id="building-manager-chat-display-box-<?= htmlspecialchars($personalDetails->id); ?>" class="ul-design">
 
                 @foreach ($chats as $chat)
                     @if ($chat->sender_user_id == $personalDetails->id && $chat->receiver_user_id == $buildingManagerUserId)
@@ -417,7 +417,7 @@
                 <input type="text" id="building-manager-send" name="send" class="chat-input-box" placeholder="Enter Message">
             </div>
             <div>
-                <button class="send-button" onclick="sendChatMessageToBM(event, 'building-manager-send', 'building-manager-chat-display-box', <?= $personalDetails->id; ?>, <?= $buildingManagerUserId ?>)">Send</button>
+                <button class="send-button" onclick="sendChatMessageToBM(event, 'building-manager-send', 'building-manager-chat-display-box-', <?= $personalDetails->id; ?>, <?= $buildingManagerUserId ?>)">Send</button>
             </div>
         </div>
     </div>
@@ -513,17 +513,17 @@
         newMessage.innerHTML = chatMessage;
         newMessage.className = "chat-sender-msg make-larger";
 
-        var ul = document.getElementById(displayChatBoxIdConst);
+        var ul = document.getElementById(displayChatBoxIdConst+aptOwnerUserId);
         {{-- console.log(ul); --}}
         ul.append(newMessage);
     }
 
-    socket.on('sendChatToAOFromBM', (message) => {
+    socket.on('sendChatToAOFromBM', (message, aptOwnerUserId) => {
             var newMessage = document.createElement("li");
             newMessage.innerHTML = message;
             newMessage.className = "chat-receiver-msg make-larger";
             
-            var ul = document.getElementById('building-manager-chat-display-box');
+            var ul = document.getElementById('building-manager-chat-display-box-'+aptOwnerUserId);
             {{-- console.log(ul); --}}
             ul.append(newMessage);
 
