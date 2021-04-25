@@ -186,9 +186,14 @@ h2.normal {
 }
 .footer{
     background-color: #E8CEBF;
-    padding: 6px;
+    /* padding: 6px; */
     margin: auto;
     color: #4F4846;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
 }
 
 .login-button {
