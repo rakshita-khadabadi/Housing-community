@@ -23,9 +23,11 @@ class BuildingManagerController extends Controller
         $waterBill=$this->getWaterBill($userId);
         $apartments = $this->getApartmentDetails($userId);
         $utils=$this->getUtilityBills($userId);
+        
         $csb=$this-> getCommunityServiceBils($userId);
         $mr=$this->getMaintenanceRequestReport($userId);
         $complaints=$this->getComplaintReport($userId);
+        
         $subdivisionManagerUserId = $this->getBuildingsSMUserId($userId);
         $chats = $this->getAllChats();
         
@@ -110,7 +112,7 @@ class BuildingManagerController extends Controller
         $object = new stdClass();
         $object->eJson = json_encode($water);
         $object->billJson = json_encode($bill);
-        // // var_dump($object);
+        //  var_dump($object);
         return $object;
     }
 
@@ -125,11 +127,31 @@ class BuildingManagerController extends Controller
         // // var_dump($object);
         return $object;
     }
+    
     function getUtilityBills($userId){
-        return BuildingManager::getUtilityBillsByUserId($userId);
+        $results = BuildingManager::getUtilityBillsByUserId($userId);
+        $currentMonth = date('m');
+        $previousMonth = $currentMonth -1;
+        $monthBills = [];
+        foreach($results as $u){
+            if($u->month === $previousMonth){
+                array_push($monthBills, $u);
+            }
+        }
+        return $monthBills;
     }
+
     function getCommunityServiceBils($userId){
-        return BuildingManager::getCsbReportById($userId);
+        $results = BuildingManager::getCsbReportById($userId);
+        $currentMonth = date('m');
+        $previousMonth = $currentMonth -1;
+        $monthBills = [];
+        foreach($results as $u){
+            if($u->month === $previousMonth){
+                array_push($monthBills, $u);
+            }
+        }
+        return $monthBills;
     }
 
     function getMaintenanceRequestReport($userId){
@@ -143,6 +165,10 @@ class BuildingManagerController extends Controller
 
     function viewMaintenanceRequest($userId){
         return BuildingManager::getMaintenanceRequestByUserId($userId);
+    }
+
+    function viewComplaintRequest($userId){
+        return BuildingManager::getComplaintsByUserId($userId);
     }
 
 }

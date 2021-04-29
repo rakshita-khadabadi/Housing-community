@@ -43,11 +43,11 @@ class BuildingManager extends Model
 
 
          public static function getCsbReportById($userId){
-
-            $sql = "SELECT a.apartment_number, SUM(acsb.bill_amount) as bill FROM `apartment_community_service_bills` as acsb 
+            $sql = "SELECT a.apartment_number, acsb.bill_amount as bill, acsb.month , acsb.year, cs.community_service_name  as 'service_name' FROM `apartment_community_service_bills` as acsb 
             JOIN `apartments` as a ON a.id=acsb.apartments_id 
             LEFT JOIN buildings as b ON b.id = a.buildings_id 
-            WHERE b.users_id = $userId GROUP BY a.apartment_number";
+            LEFT JOIN community_services as cs ON cs.id=acsb.community_services_id
+            WHERE b.users_id = $userId";
 
         $value = DB::select(DB::raw($sql));
         return $value;
@@ -66,6 +66,8 @@ class BuildingManager extends Model
                     return $value;
 
         }
+
+	
 
         public static function getComplaintsByUserId($userId){
             $sql = "SELECT * FROM `complaints` as mr 
