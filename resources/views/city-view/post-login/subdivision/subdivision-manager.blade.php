@@ -653,7 +653,7 @@
             newMessage.className = "chat-receiver-msg make-larger";
 
             var ul = document.getElementById('building-manager-ul-'+buildingManagerUserId);
-            console.log(ul);
+            {{-- console.log(ul); --}}
             ul.append(newMessage);
         });
 
