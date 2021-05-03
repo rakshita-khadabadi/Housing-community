@@ -110,8 +110,10 @@ class SubdivisionManagerController extends Controller
             ->select('b.building_name', 'a.apartment_number','eb.bill_amount as electricity_bill', 
             'gb.bill_amount as gas_bill', 'wb.bill_amount as water_bill',
             DB::raw('eb.bill_amount + gb.bill_amount + wb.bill_amount as total'))
-            ->join('gas_bills AS gb','gb.subdivisions_id','=','eb.subdivisions_id')
-            ->join('water_bills AS wb','wb.subdivisions_id','=','eb.subdivisions_id')
+            // ->join('gas_bills AS gb','gb.subdivisions_id','=','eb.subdivisions_id')
+            // ->join('water_bills AS wb','wb.subdivisions_id','=','eb.subdivisions_id')
+            ->join('gas_bills AS gb','gb.apartments_id','=','eb.apartments_id')
+            ->join('water_bills AS wb','wb.apartments_id','=','eb.apartments_id')
             ->join('buildings AS b','b.id','=','eb.buildings_id')
             ->join('apartments AS a','a.id','=','eb.apartments_id')
             ->where('eb.subdivisions_id','=',$subdivisionId)

@@ -660,7 +660,6 @@
     function sendChatMessageToAO(event, inputBoxId, displayChatBoxIdConst, aptOwnerUserId, subManagerUserId) {
 
         var chatMessage = document.getElementById(inputBoxId).value;
-        {{-- console.log('chatMessage = ' + chatMessage); --}}
         socket.emit('sendChatMessageFromSMToAO', chatMessage, aptOwnerUserId, subManagerUserId);
 
         document.getElementById(inputBoxId).value = '';
@@ -670,7 +669,6 @@
         newMessage.className = "chat-sender-msg make-larger";
 
         var ul = document.getElementById(displayChatBoxIdConst+aptOwnerUserId);
-        {{-- console.log(ul); --}}
         ul.append(newMessage);
     }
 
