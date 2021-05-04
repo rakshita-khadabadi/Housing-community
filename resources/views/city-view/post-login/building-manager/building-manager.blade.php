@@ -174,7 +174,7 @@
                     , data: {
                         labels: <?php echo $electricityBill->eJson; ?> 
                         , datasets : [{
-                            label: 'Total Electricty Bill of Buildings/Month'
+                            label: 'Total Electricty Bill of Building/Month'
                             , data: <?php echo $electricityBill->billJson; ?> 
                             , backgroundColor : '#bbb'
                         }]
@@ -201,7 +201,7 @@
                     , data: {
                         labels: <?php echo $gasBill->eJson; ?> 
                         , datasets : [{
-                            label: 'Total Gas Bill of Subdivision/Month'
+                            label: 'Total Gas Bill of Building/Month'
                             , data: <?php echo $gasBill->billJson; ?> 
                             , backgroundColor : 'red'
                         }]
@@ -230,7 +230,7 @@
                     , data: {
                         labels: <?php echo $waterBill->eJson; ?> 
                         , datasets : [{
-                            label: 'Total Water Bill of Subdivision/Month'
+                            label: 'Total Water Bill of Building/Month'
                             , data: <?php echo $waterBill->billJson; ?> 
                             , backgroundColor : 'blue'
                         }]
@@ -303,7 +303,8 @@
             </div>
 
             <div>
-                <h2></h2>
+                <h2>{{Date('F', strtotime(Date('F') . " last month")).' '. Date('Y')}}</h2>
+
             </div>
 
             <div class="apartment-owner-bill-table-position total-bill">
@@ -325,6 +326,21 @@
                             <td>{{$u->service_provider_type}}</td>
                         </tr>
                         @endforeach
+                        
+                        <tr>
+                            <td>Total</td>
+                            <td></td>
+                            <td><?php
+                            $sum = 0;
+                            foreach($utils as $u){
+                                $bill = $u->bill_amount;
+                                $sum = $sum+ $bill;
+                            };
+                            echo $sum;
+                            ?></td>
+                            <td></td>
+
+                            </tr>
                     </table>
                 </div>
             </div>
@@ -336,7 +352,7 @@
             </div>
 
             <div>
-                <h2></h2>
+                <h2>{{Date('F', strtotime(Date('F') . " last month")).' '. Date('Y')}}</h2>
             </div>
 
             <div class="apartment-owner-bill-table-position total-bill">
@@ -344,18 +360,30 @@
                     <table>
                         <tr>
                             <th>Apartment Number</th>
-                            <th>Maintenance Fee</th>
+                            <th>Community Service Name</th>
+                            <th> Community Service Bill</th>
                         </tr>
 
-                        @foreach ($csb as $csb)
+                        @foreach ($csb as $c)
 
                         <tr>
-                            <td>{{$csb->apartment_number}}</td>
-                            <td>{{$csb->bill}}</td>
-
-
+                            <td>{{$c->apartment_number}}</td>
+                            <td>{{$c->service_name}}</td>
+                            <td>{{$c->bill}}</td>
                         </tr>
                         @endforeach
+                        <tr>
+                            <td>Total</td>
+                            <td></td>
+                            <td><?php
+                            $sum = 0;
+                            foreach($csb as $u){
+                                $bill = $u->bill;
+                                $sum = $sum+ $bill;
+                            };
+                            echo $sum;
+                            ?></td>
+                            </tr>
                     </table>
                 </div>
             </div>
@@ -506,7 +534,7 @@
 
                 <div class="maintenance-request-list">
 
-                    @foreach ($mr as $m)
+                    @foreach ($complaints as $m)
                     <a href='#co-3'>
                         <button class="maintenance-request" onclick="viewMaintenanceDetails(event, 'co-3')">
                             Complaint ID: {{$m->id}} <br />
